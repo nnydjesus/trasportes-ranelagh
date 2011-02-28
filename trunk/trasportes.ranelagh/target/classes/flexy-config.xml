@@ -1,0 +1,61 @@
+<configuration>
+
+	<!--
+		Atencion!!
+		Leer http://wiki.mindset.com.ar/confluence/display/imported2/flexy-config.xml 
+	 -->
+
+    <include name="flexy-global-config.xml"/>
+
+    <section name="hibernate">
+<!--        <entry key="hibernate.connection.url" value="jdbc:derby:src/dev/derby-db;create=true"/>-->
+<!--        <entry key="hibernate.connection.username" value=""/>-->
+<!--        <entry key="hibernate.connection.password" value=""/>-->
+<!--        <entry key="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>-->
+<!--        <entry key="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+        <entry key="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+<!--        <entry key="hibernate.connection.url" value="jdbc:mysql://mindsetlab:3306/test"/> -->
+        <entry key="hibernate.connection.url" value="jdbc:mysql://localhost/test"/>
+        <entry key="hibernate.connection.username" value="root"/>
+        <entry key="hibernate.connection.password" value="root"/>
+        <entry key="hibernate.connection.pool_size" value="2"/>
+        <entry key="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+
+        <entry key="hibernate.format_sql" value="true"/>
+        <entry key="hibernate.show_sql" value="true"/>
+
+        <entry key="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider"/>
+
+        <entry key="hibernate.c3p0.acquire_increment" value="1"/>-->
+        <entry key="hibernate.c3p0.idle_test_period" value="20"/>
+
+        <entry key="hibernate.c3p0.max_size" value="3"/>
+        <entry key="hibernate.c3p0.max_statements" value="0"/>
+        <entry key="hibernate.c3p0.min_size" value="3"/>
+        <entry key="hibernate.c3p0.timeout" value="200"/>
+
+        <entry key="hibernate.c3p0.automatic_test_table" value="industry"/>
+        <entry key="hibernate.c3p0.idle_connection_test_period" value="60"/>
+    </section>
+
+    <section name="mailing">
+        <entry key="disabledAccount" value="rodrigomerino@mindset-designs.com"/>
+    </section>
+
+    <section name="modules">
+        <entry key="list" value="cindor"/>
+    </section>
+
+    <section name="pagination">
+        <entry key="MAX_RESULT_PAGE" value="6"/>
+    </section>
+
+    <section name="google">
+    	<entry key="applicationPage" value="flex-gui-debug/Main.html"/>
+
+    	<entry key="analytics.trackerId" value=""/>
+
+    	<entry key="adSense.adClient" value=""/>
+    	<entry key="adSense.adSlot" value=""/>
+    </section>
+</configuration>

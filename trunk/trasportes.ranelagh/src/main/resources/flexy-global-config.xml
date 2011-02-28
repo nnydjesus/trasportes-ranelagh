@@ -1,0 +1,97 @@
+<configuration>
+
+    <section name="enviroment">
+        <entry key="mac.address" value="255:255:255:0"/>
+        <entry key="working.directory" value="src/dev/local"/>
+        <entry key="webapp.directory" value="src/main/webapp"/>
+
+        <entry key="exception.syserr.logging" value="true"/>
+        <entry key="initializer.on" value="true"/>
+
+        <entry key="deny.remote.services" value="false"/>
+        <entry key="allow.anonymous.users" value="false"/>
+    </section>
+
+    <section name="webhostResolver">
+    	<entry key="resolverClass" value="ar.com.mindset.flexy.configuration.InFlexyConfigWebHostResolver"/>
+    	<entry key="contextName" value="http://www.mindset.com.ar:20005/cindor/"/>
+    	<entry key="attachmentsContextName" value="http://www.mindset.com.ar:20005/cindor/"/>
+	</section>
+
+	<section name="secureServices">
+	</section>
+
+    <section name="hibernate">
+        <entry key="alternateSessionFactories" value=""/>
+        <entry key="ddl.recreateSchema" value="true"/>
+
+        <entry key="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+        <entry key="hibernate.connection.url" value="jdbc:mysql://localhost/test"/>
+        <entry key="hibernate.connection.username" value="root"/>
+        <entry key="hibernate.connection.password" value="root"/>
+        <entry key="hibernate.connection.pool_size" value="5"/>
+        <entry key="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+
+        <entry key="hibernate.cache.provider_class" value="org.hibernate.cache.EhCacheProvider"/>
+        <entry key="hibernate.cache.use_query_cache" value="true"/>
+
+        <entry key="hibernate.format_sql" value="false"/>
+        <entry key="hibernate.show_sql" value="true"/>
+
+        <entry key="hibernate.bytecode.use_reflection_optimizer" value="true"/>
+        <entry key="hibernate.jdbc.use_streams_for_binary" value="true"/>
+        <entry key="hibernate.max_fetch_depth" value="10"/>
+        <entry key="hibernate.jdbc.batch_size" value="20"/>
+        <entry key="hibernate.jdbc.fetch_size" value="10"/>
+
+        <entry key="hibernate.search.default.directory_provider" value="org.hibernate.search.store.FSDirectoryProvider"/>
+        <entry key="hibernate.search.analyzer" value="ar.com.mindset.flexy.lucene.SpanishAnalyzer"/>
+
+    </section>
+
+    <!--  section name="hibernate.alternateSessionFactory">
+        Equals to another session factory configuration
+    </section-->
+
+    <section name="modules">
+        <entry key="package.prefix" value="ar.com.mindset.cindor"/>
+        <entry key="list" value=""/>
+    </section>
+
+    <section name="flex">
+        <entry key="retainExceptionStackTrace" value="true"/>
+    </section>
+
+    <section name="webservice">
+        <entry key="defaultNamespace" value="http://www.mindset.com.ar/flexy/ws"/>
+        <entry key="defaultTypeNamespace" value="http://www.mindset.com.ar/flexy/ws/types"/>
+
+        <entry key="attachment.directory" value="attachments"/>
+        <entry key="attachment.outboundThreshold" value="5000000"/>
+        <entry key="attachment.inboundThreshold" value="5000000"/>
+    </section>
+
+    <section name="mailing">
+        <entry key="user" value="jira@mindset-designs.com"/>
+        <entry key="password" value="theJira1234"/>
+		<entry key="from.defaultAddress" value="flexy@mindset-designs.com"/>
+        <entry key="from.defaultSender" value="Flexy"/>
+        <entry key="mail.smtp.host" value="smtp.gmail.com"/>
+        <entry key="mail.smtp.auth" value="true"/>
+        <entry key="mail.debug" value="true"/>
+        <entry key="mail.smtp.port" value="465"/>
+        <entry key="mail.smtp.socketFactory.port" value="465"/>
+        <entry key="mail.smtp.socketFactory.class" value="javax.net.ssl.SSLSocketFactory"/>
+        <entry key="mail.smtp.socketFactory.fallback" value="false"/>
+    </section>
+    
+   	<section name="attachments">
+        <entry key="directory" value="src/dev/work/uploads"/>
+        <entry key="servletName" value="attachment"/>
+	</section>
+    
+    <section name="initialStatements">
+        <entry key="postPath" value="[enviroment]{working.directory}/initialPostScript"/>
+        <entry key="prevPath" value="[enviroment]{working.directory}/initialPrevScript"/>
+    </section>
+</configuration>
