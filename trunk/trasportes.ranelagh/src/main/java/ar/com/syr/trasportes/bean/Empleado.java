@@ -2,6 +2,7 @@ package ar.com.syr.trasportes.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -21,7 +22,7 @@ public class Empleado extends Observable implements Serializable{
 	public static final String APELLIDO = "apellido";
 	public static final String NOMBRE = "nombre";
 	public static final String DNI ="dni";
-	public static final String REGISTRO  ="registro";
+	public static final String REGISTRO  ="registroc";
 	public static final String CUIL = "cuil";
 	public static final String DIRECCION ="direccion";
 	public static final String PROPIO = "propio";
@@ -42,7 +43,7 @@ public class Empleado extends Observable implements Serializable{
 	
 	@Basic
 	@Column(name="registro_conducir")
-	private Integer registro;
+	private Integer registroc;
 	
 	@Basic
 	private String cuil;
@@ -84,11 +85,11 @@ public class Empleado extends Observable implements Serializable{
 	public void setDni(Integer dni) {
 		this.dni = dni;
 	}
-	public Integer getRegistro() {
-		return registro;
+	public Integer getRegistroc() {
+		return registroc;
 	}
-	public void setRegistro(Integer registro) {
-		this.registro = registro;
+	public void setRegistroc(Integer registro) {
+		this.registroc = registro;
 	}
 	public String getCuil() {
 		return cuil;
@@ -107,6 +108,30 @@ public class Empleado extends Observable implements Serializable{
 	}
 	public void setLicencia(Licencia licencia) {
 		this.licencia = licencia;
+	}
+	public void setLibretaSanitaria(Date libretaSanitaria) {
+		this.getLicencia().setLibretaSanitaria(libretaSanitaria);
+	}
+	public Date getLibretaSanitaria() {
+		return this.getLicencia().getLibretaSanitaria();
+	}
+	public void setRegistro(Date registro) {
+		this.getLicencia().setRegistro(registro);
+	}
+	public Date getRegistro() {
+		return this.getLicencia().getRegistro();
+	}
+	public void setCnrt(Date cnrt) {
+		this.getLicencia().setCnrt(cnrt);
+	}
+	public Date getCnrt() {
+		return this.getLicencia().getCnrt();
+	}
+	public void setCategoria(Date categoria) {
+		this.getLicencia().setCategoria(categoria);
+	}
+	public Date getCategoria() {
+		return this.getLicencia().getCategoria();
 	}
 	
 	public String[] atributos() {
