@@ -47,10 +47,10 @@ public class Empleado extends Observable implements Serializable{
 	private String cuil;
 	
 	@Embedded
-	private Licencia licencia;
+	private static Licencia licencia;
 	
 	@Embedded
-	private Direccion direccionc;
+	private static Direccion direccionc;
 
 	
 	public String getLegajo() {
@@ -95,65 +95,65 @@ public class Empleado extends Observable implements Serializable{
 	public void setCuil(String cuil) {
 		this.cuil = cuil;
 	}
-	public Direccion getDireccionc() {
+	public static Direccion getDireccionc() {
 		return direccionc;
 	}
-	public void setDireccion(Direccion direccion) {
-		this.direccionc = direccion;
+	public static void setDireccion(Direccion direccion) {
+		direccionc = direccion;
 	}
-	public Licencia getLicencia() {
+	public static Licencia getLicencia() {
 		return licencia;
 	}
-	public void setLicencia(Licencia licencia) {
-		this.licencia = licencia;
+	public static void setLicencia(Licencia licenciac) {
+		licencia = licenciac;
 	}
 	public void setLibretaSanitaria(Date libretaSanitaria) {
-		this.getLicencia().setLibretaSanitaria(libretaSanitaria);
+		getLicencia().setLibretaSanitaria(libretaSanitaria);
 	}
 	public Date getLibretaSanitaria() {
-		return this.getLicencia().getLibretaSanitaria();
+		return getLicencia().getLibretaSanitaria();
 	}
 	public void setRegistro(Date registro) {
-		this.getLicencia().setRegistro(registro);
+		getLicencia().setRegistro(registro);
 	}
 	public Date getRegistro() {
-		return this.getLicencia().getRegistro();
+		return getLicencia().getRegistro();
 	}
 	public void setCnrt(Date cnrt) {
-		this.getLicencia().setCnrt(cnrt);
+		getLicencia().setCnrt(cnrt);
 	}
 	public Date getCnrt() {
-		return this.getLicencia().getCnrt();
+		return getLicencia().getCnrt();
 	}
 	public void setCategoria(Date categoria) {
-		this.getLicencia().setCategoria(categoria);
+		getLicencia().setCategoria(categoria);
 	}
 	public Date getCategoria() {
-		return this.getLicencia().getCategoria();
+		return getLicencia().getCategoria();
 	}
 	public void setLocalidad(String localidad) {
-		this.getDireccionc().setLocalidad(localidad);
+		getDireccionc().setLocalidad(localidad);
 	}
 	public String getLocalidad() {
-		return this.getDireccionc().getLocalidad();
+		return getDireccionc().getLocalidad();
 	}
 	public void setTelefono(Integer telefono) {
-		this.getDireccionc().setTelefono(telefono);
+		getDireccionc().setTelefono(telefono);
 	}
 	public Integer getTelefono() {
-		return this.getDireccionc().getTelefono();
+		return getDireccionc().getTelefono();
 	}
 	public void setCodPostal(Integer codPostal) {
-		this.getDireccionc().setCodPostal(codPostal);
+		getDireccionc().setCodPostal(codPostal);
 	}
 	public Integer getCodPostal() {
-		return this.getDireccionc().getCodPostal();
+		return getDireccionc().getCodPostal();
 	}
 	public void setDireccion(String direccion) {
-		this.getDireccionc().setDireccion(direccion);
+		getDireccionc().setDireccion(direccion);
 	}
 	public String getDireccion() {
-		return this.getDireccionc().getDireccion();
+		return getDireccionc().getDireccion();
 	}
 	
 	public String[] atributos() {

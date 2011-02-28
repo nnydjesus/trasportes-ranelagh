@@ -49,14 +49,14 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 		edicion.addBindingTextField(Empleado.CUIL,"Cuil");
 		edicion.addBindingCheckBox(Empleado.PROPIO, "Propio");
 		edicion.addBindingIntegerField(Empleado.REGISTRO, "Registro");
-//		licencia.addBindingDateField(Empleado.this.getLicencia().CATEGORIA, "Categoria");
-//		licencia.addBindingDateField(Empleado.this.getLicencia().CNRT, "Cnrt");
-//		licencia.addBindingDateField(Empleado.this.getLicencia().LIBRETA_SANITARIA, "LibretaSanitaria");
-//	    licencia.addBindingDateField(Empleado.this.getLicencia().REGISTRO, "Registro");
-//		direccion.addBindingTextField(Empleado.this.getDireccion().DIRECCION, "Direccion");
-//		direccion.addBindingTextField(Empleado.this.getDireccion().LOCALIDAD, "Localidad");
-//		direccion.addBindingIntegerField(Empleado.this.getDireccion().TELEFONO, "Telefono");
-//		direccion.addBindingIntegerField(Empleado.this.getDireccion().COD_POSTAL, "CodPostal");
+		licencia.addBindingDateField(Empleado.getLicencia().CATEGORIA, "Categoria");
+		licencia.addBindingDateField(Empleado.getLicencia().CNRT, "Cnrt");
+		licencia.addBindingDateField(Empleado.getLicencia().LIBRETA_SANITARIA, "LibretaSanitaria");
+	    licencia.addBindingDateField(Empleado.getLicencia().REGISTRO, "Registro");
+		direccion.addBindingTextField(Empleado.getDireccionc().DIRECCION, "Direccion");
+		direccion.addBindingTextField(Empleado.getDireccionc().LOCALIDAD, "Localidad");
+		direccion.addBindingIntegerField(Empleado.getDireccionc().TELEFONO, "Telefono");
+		direccion.addBindingIntegerField(Empleado.getDireccionc().CODPOSTAL, "CodPostal");
 //		ACA ES EN DONDE ME TIRA ERROR CUANDO DIGO Empleado.this ... :(
 		
 		edicion.getBotonAgregar().addActionListener(new ActionListener() {

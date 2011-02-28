@@ -37,8 +37,8 @@ public abstract class GeneralFrame<T extends Beans> extends JFrame implements It
 		try {
 			newInstance = (T) clase.newInstance();
 			edicion = new PanelEdicion<T>(name, newInstance);
-			direccion = new PanelEdicion<T>(name,newInstance);
-			licencia = new PanelEdicion<T>(name,newInstance);
+			//licencia = new PanelEdicion<T>(name,newInstance);
+			//direccion = new PanelEdicion<T>(name,newInstance);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
