@@ -1,9 +1,7 @@
 package ar.com.syr.trasportes.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -24,7 +22,7 @@ public class Empleado extends Observable implements Serializable{
 	public static final String DNI ="dni";
 	public static final String REGISTRO  ="registroc";
 	public static final String CUIL = "cuil";
-	public static final String DIRECCION ="direccion";
+	public static final String DIRECCION ="direccionc";
 	public static final String PROPIO = "propio";
 	public static final String LICENCIA ="licencia";
 	
@@ -52,7 +50,7 @@ public class Empleado extends Observable implements Serializable{
 	private Licencia licencia;
 	
 	@Embedded
-	private Direccion direccion;
+	private Direccion direccionc;
 
 	
 	public String getLegajo() {
@@ -97,11 +95,11 @@ public class Empleado extends Observable implements Serializable{
 	public void setCuil(String cuil) {
 		this.cuil = cuil;
 	}
-	public Direccion getDireccion() {
-		return direccion;
+	public Direccion getDireccionc() {
+		return direccionc;
 	}
 	public void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
+		this.direccionc = direccion;
 	}
 	public Licencia getLicencia() {
 		return licencia;
@@ -132,6 +130,30 @@ public class Empleado extends Observable implements Serializable{
 	}
 	public Date getCategoria() {
 		return this.getLicencia().getCategoria();
+	}
+	public void setLocalidad(String localidad) {
+		this.getDireccionc().setLocalidad(localidad);
+	}
+	public String getLocalidad() {
+		return this.getDireccionc().getLocalidad();
+	}
+	public void setTelefono(Integer telefono) {
+		this.getDireccionc().setTelefono(telefono);
+	}
+	public Integer getTelefono() {
+		return this.getDireccionc().getTelefono();
+	}
+	public void setCodPostal(Integer codPostal) {
+		this.getDireccionc().setCodPostal(codPostal);
+	}
+	public Integer getCodPostal() {
+		return this.getDireccionc().getCodPostal();
+	}
+	public void setDireccion(String direccion) {
+		this.getDireccionc().setDireccion(direccion);
+	}
+	public String getDireccion() {
+		return this.getDireccionc().getDireccion();
 	}
 	
 	public String[] atributos() {
