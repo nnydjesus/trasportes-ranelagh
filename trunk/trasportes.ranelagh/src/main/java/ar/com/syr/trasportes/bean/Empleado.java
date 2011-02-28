@@ -1,6 +1,8 @@
 package ar.com.syr.trasportes.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -108,8 +110,9 @@ public class Empleado extends Observable implements Serializable{
 	}
 	
 	public String[] atributos() {
-		return new String[] {LEGAJO, LICENCIA, REGISTRO, APELLIDO, CUIL, NOMBRE, DNI, DIRECCION, PROPIO};
+	return new String[] {LEGAJO,Licencia.REGISTRO,Licencia.LIBRETA_SANITARIA,Licencia.CNRT,Licencia.CATEGORIA, REGISTRO, APELLIDO, CUIL, NOMBRE, DNI, Direccion.DIRECCION,Direccion.LOCALIDAD,Direccion.TELEFONO,Direccion.CODPOSTAL, PROPIO};
 	}
+	
 	@Override
 	public String getId() {
 		return legajo;

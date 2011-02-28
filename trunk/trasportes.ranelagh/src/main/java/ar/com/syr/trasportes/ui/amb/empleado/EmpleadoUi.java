@@ -49,7 +49,16 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 		edicion.addBindingTextField(Empleado.CUIL,"Cuil");
 		edicion.addBindingCheckBox(Empleado.PROPIO, "Propio");
 		edicion.addBindingIntegerField(Empleado.REGISTRO, "Registro");
-
+//		licencia.addBindingDateField(Empleado.this.getLicencia().CATEGORIA, "Categoria");
+//		licencia.addBindingDateField(Empleado.this.getLicencia().CNRT, "Cnrt");
+//		licencia.addBindingDateField(Empleado.this.getLicencia().LIBRETA_SANITARIA, "LibretaSanitaria");
+//	    licencia.addBindingDateField(Empleado.this.getLicencia().REGISTRO, "Registro");
+//		direccion.addBindingTextField(Empleado.this.getDireccion().DIRECCION, "Direccion");
+//		direccion.addBindingTextField(Empleado.this.getDireccion().LOCALIDAD, "Localidad");
+//		direccion.addBindingIntegerField(Empleado.this.getDireccion().TELEFONO, "Telefono");
+//		direccion.addBindingIntegerField(Empleado.this.getDireccion().COD_POSTAL, "CodPostal");
+//		ACA ES EN DONDE ME TIRA ERROR CUANDO DIGO Empleado.this ... :(
+		
 		edicion.getBotonAgregar().addActionListener(new ActionListener() {
 		
 			@Override
@@ -90,6 +99,10 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 				if(e.getClickCount() ==2){
 					edicion.setModel(table.getSelected());
 					edicion.getBotonModificar().setEnabled(true);
+					direccion.setModel(table.getSelected());
+					direccion.getBotonModificar().setEnabled(true);
+					licencia.setModel(table.getSelected());
+					licencia.getBotonModificar().setEnabled(true);
 				}
 			}
 		});
@@ -100,10 +113,78 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 			public void actionPerformed(ActionEvent e) {
 				edicion.setModel(comboBox.getSelectedItem());
 				edicion.getBotonModificar().setEnabled(true);				
+				direccion.setModel(comboBox.getSelectedItem());
+				direccion.getBotonModificar().setEnabled(true);
+				licencia.setModel(table.getSelected());
+				licencia.getBotonModificar().setEnabled(true);
+			
 			}
 		});
-		
+		direccion.getBotonAgregar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tablaList.add(direccion.getModel());
+				dao.save(direccion.getModel());
+				direccion.setModel(new Empleado());
+				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
+			}	
+		});
 	
+		direccion.getBotonModificar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Empleado model = direccion.getModel();
+				tablaList.remove(model);
+				tablaList.add(model);
+				dao.update(model);
+				direccion.setModel(new Empleado());
+				direccion.getBotonModificar().setEnabled(false);
+				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
+			}
+		});
+		direccion.getBotonCancelar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				direccion.setModel(new Empleado());
+				direccion.getBotonModificar().setEnabled(false);
+			}
+		});
+		licencia.getBotonAgregar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tablaList.add(licencia.getModel());
+				dao.save(licencia.getModel());
+				licencia.setModel(new Empleado());
+				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
+			}	
+		});
+	
+		licencia.getBotonModificar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Empleado model = licencia.getModel();
+				tablaList.remove(model);
+				tablaList.add(model);
+				dao.update(model);
+				licencia.setModel(new Empleado());
+				licencia.getBotonModificar().setEnabled(false);
+				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
+			}
+		});
+		licencia.getBotonCancelar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				licencia.setModel(new Empleado());
+				licencia.getBotonModificar().setEnabled(false);
+			}
+		});
+
 	}
 
 public static void main(String[] args) {

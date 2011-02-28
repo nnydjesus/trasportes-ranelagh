@@ -74,7 +74,6 @@ public class Remito extends Observable implements Serializable{
 	
 	
 	
-	
 	public Date getFecha() {
 		return fecha;
 	}

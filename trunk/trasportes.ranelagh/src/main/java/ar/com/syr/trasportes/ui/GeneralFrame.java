@@ -22,6 +22,8 @@ public abstract class GeneralFrame<T extends Beans> extends JFrame implements It
 	protected GeneralTable table;
 	protected JTabbedPane panel = new JTabbedPane();
 	protected PanelEdicion<T> edicion;
+	protected PanelEdicion<T> direccion;
+	protected PanelEdicion<T> licencia;
 	protected GenericDao<Observable> dao;
 	protected List<Observable> tablaList;
 	private String nombre;
@@ -35,6 +37,8 @@ public abstract class GeneralFrame<T extends Beans> extends JFrame implements It
 		try {
 			newInstance = (T) clase.newInstance();
 			edicion = new PanelEdicion<T>(name, newInstance);
+			direccion = new PanelEdicion<T>(name,newInstance);
+			licencia = new PanelEdicion<T>(name,newInstance);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -52,6 +56,8 @@ public abstract class GeneralFrame<T extends Beans> extends JFrame implements It
 	
 	protected void addPanels(){
 		panel.addTab("General", edicion);
+//		panel.addTab("Direccion",direccion); No estoy segura de que esto valla aca, 
+//		panel.addTab("Licencia",licencia); Porque esta es una clase generica. 
 		panel.addTab("Tabla", table);
 	}
 	

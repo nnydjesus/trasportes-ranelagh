@@ -15,6 +15,7 @@ public class Direccion  implements Serializable{
 	public static final String DIRECCION = "direccion";
 	public static final String TELEFONO = "telefono";
 	public static final String CODPOSTAL = "codPostal";
+	
 	@Basic
 	private String localidad;
 	@Basic
@@ -48,6 +49,7 @@ public class Direccion  implements Serializable{
 	public void setCodPostal(int codPostal) {
 		this.codPostal = codPostal;
 	}
+	
 	public static String[] atributos() {
 		return new String[] {CODPOSTAL, LOCALIDAD, TELEFONO, DIRECCION};
 	}
