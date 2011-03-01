@@ -7,10 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
 import ar.com.syr.trasportes.utils.Observable;
 
 @Entity
-public class CostoEmpleado extends Observable implements Serializable{
+public class CostoEmpleado extends IdentificablePersistentObject implements Serializable{
 		
 		public static final String LEGAJO = "legajo";
 		public static final String COSTO_TOTAL = "costoTotal";

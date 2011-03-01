@@ -26,7 +26,7 @@ private EmpleadoDao dao = new EmpleadoDao();
 		empleado.setLegajo("Legajo "+i);
 		empleado.setNombre("Nombre "+i);
 		empleado.setPropio(true);
-		empleado.setRegistroc(2542*i);
+		empleado.setRegistro(2542*i);
 		Direccion direccion = new Direccion();
 		direccion.setCodPostal(i*55);
 		direccion.setDireccion("Calle "+i);

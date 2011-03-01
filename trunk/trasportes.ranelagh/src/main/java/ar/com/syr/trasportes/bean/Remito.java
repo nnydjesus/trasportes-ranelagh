@@ -11,12 +11,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
 import ar.com.syr.trasportes.utils.Observable;
 
 
 @Entity
 @Table(name = "remito")
-public class Remito extends Observable implements Serializable{
+public class Remito extends IdentificablePersistentObject implements Serializable{
 	
 	public static final String FECHA = "fecha";
 	public static final String FECHA_S = "fechaS";

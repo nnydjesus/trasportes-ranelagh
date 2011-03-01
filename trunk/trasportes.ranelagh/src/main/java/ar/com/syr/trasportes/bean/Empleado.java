@@ -10,19 +10,20 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
 import ar.com.syr.trasportes.utils.Observable;
 
 @Entity
 @Table(name = "empleado")
-public class Empleado extends Observable implements Serializable{
+public class Empleado extends IdentificablePersistentObject implements Serializable{
 	
 	public static final String LEGAJO = "legajo"; 
 	public static final String APELLIDO = "apellido";
 	public static final String NOMBRE = "nombre";
 	public static final String DNI ="dni";
-	public static final String REGISTRO  ="registroc";
+	public static final String REGISTRO  ="registro";
 	public static final String CUIL = "cuil";
-	public static final String DIRECCION ="direccionc";
+	public static final String DIRECCION ="direccion";
 	public static final String PROPIO = "propio";
 	public static final String LICENCIA ="licencia";
 	
@@ -41,16 +42,16 @@ public class Empleado extends Observable implements Serializable{
 	
 	@Basic
 	@Column(name="registro_conducir")
-	private Integer registroc;
+	private Integer registro;
 	
 	@Basic
 	private String cuil;
 	
 	@Embedded
-	private static Licencia licencia;
+	private  Licencia licencia = new Licencia();
 	
 	@Embedded
-	private static Direccion direccionc;
+	private  Direccion direccion = new Direccion();
 
 	
 	public String getLegajo() {
@@ -83,11 +84,11 @@ public class Empleado extends Observable implements Serializable{
 	public void setDni(Integer dni) {
 		this.dni = dni;
 	}
-	public Integer getRegistroc() {
-		return registroc;
+	public Integer getRegistro() {
+		return registro;
 	}
-	public void setRegistroc(Integer registro) {
-		this.registroc = registro;
+	public void setRegistro(Integer registro) {
+		this.registro = registro;
 	}
 	public String getCuil() {
 		return cuil;
@@ -95,69 +96,22 @@ public class Empleado extends Observable implements Serializable{
 	public void setCuil(String cuil) {
 		this.cuil = cuil;
 	}
-	public static Direccion getDireccionc() {
-		return direccionc;
+	public  Direccion getDireccion() {
+		return direccion;
 	}
-	public static void setDireccion(Direccion direccion) {
-		direccionc = direccion;
+	public  void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
-	public static Licencia getLicencia() {
+	public  Licencia getLicencia() {
 		return licencia;
 	}
-	public static void setLicencia(Licencia licenciac) {
+	public  void setLicencia(Licencia licenciac) {
 		licencia = licenciac;
 	}
-	public void setLibretaSanitaria(Date libretaSanitaria) {
-		getLicencia().setLibretaSanitaria(libretaSanitaria);
-	}
-	public Date getLibretaSanitaria() {
-		return getLicencia().getLibretaSanitaria();
-	}
-	public void setRegistro(Date registro) {
-		getLicencia().setRegistro(registro);
-	}
-	public Date getRegistro() {
-		return getLicencia().getRegistro();
-	}
-	public void setCnrt(Date cnrt) {
-		getLicencia().setCnrt(cnrt);
-	}
-	public Date getCnrt() {
-		return getLicencia().getCnrt();
-	}
-	public void setCategoria(Date categoria) {
-		getLicencia().setCategoria(categoria);
-	}
-	public Date getCategoria() {
-		return getLicencia().getCategoria();
-	}
-	public void setLocalidad(String localidad) {
-		getDireccionc().setLocalidad(localidad);
-	}
-	public String getLocalidad() {
-		return getDireccionc().getLocalidad();
-	}
-	public void setTelefono(Integer telefono) {
-		getDireccionc().setTelefono(telefono);
-	}
-	public Integer getTelefono() {
-		return getDireccionc().getTelefono();
-	}
-	public void setCodPostal(Integer codPostal) {
-		getDireccionc().setCodPostal(codPostal);
-	}
-	public Integer getCodPostal() {
-		return getDireccionc().getCodPostal();
-	}
-	public void setDireccion(String direccion) {
-		getDireccionc().setDireccion(direccion);
-	}
-	public String getDireccion() {
-		return getDireccionc().getDireccion();
-	}
+	
 	
 	public String[] atributos() {
-	return new String[] {LEGAJO,Licencia.REGISTRO,Licencia.LIBRETA_SANITARIA,Licencia.CNRT,Licencia.CATEGORIA, REGISTRO, APELLIDO, CUIL, NOMBRE, DNI, Direccion.DIRECCION,Direccion.LOCALIDAD,Direccion.TELEFONO,Direccion.CODPOSTAL, PROPIO};
+	return new String[] {LEGAJO, REGISTRO, APELLIDO, CUIL, NOMBRE, DNI, PROPIO};
 	}
 	
 	@Override

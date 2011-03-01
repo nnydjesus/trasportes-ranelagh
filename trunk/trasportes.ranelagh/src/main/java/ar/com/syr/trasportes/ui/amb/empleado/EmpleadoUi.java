@@ -14,8 +14,15 @@ import javax.swing.JList;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
+import org.eclipse.jdt.internal.compiler.lookup.Binding;
 
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.beans.BeanAdapter;
+
+
+import ar.com.syr.trasportes.bean.Direccion;
 import ar.com.syr.trasportes.bean.Empleado;
+import ar.com.syr.trasportes.bean.Licencia;
 import ar.com.syr.trasportes.common.Item;
 import ar.com.syr.trasportes.dao.GenericDao;
 import ar.com.syr.trasportes.ui.GeneralFrame;
@@ -30,6 +37,8 @@ import ar.com.syr.trasportes.utils.Observable;
 public class EmpleadoUi extends GeneralFrame<Empleado> {
 
 	private MyJComboBox comboBox;
+	protected PanelEdicion<Observable> direccion;
+	protected PanelEdicion<Observable> licencia;
 
 
 	public EmpleadoUi() {
@@ -39,8 +48,24 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 	}
 	
 	@Override
+	protected void addPanels() {
+		JTabbedPane panelEmpleado = new JTabbedPane();
+		panelEmpleado.addTab("Empleado", edicion);
+		panelEmpleado.addTab("Direccion", direccion);
+		panelEmpleado.addTab("Licencia", licencia);
+		panel.addTab("General", panelEmpleado);
+		panel.addTab("Tabla", table);
+	}
+	
+	@Override
 	protected void createForm() {
+		direccion = new PanelEdicion<Observable>("Direccion", new Direccion());
+		licencia = new PanelEdicion<Observable>("Licencia", new Licencia());
 		this.comboBox = new MyJComboBox(tablaList);
+		BeanAdapter beanDireccion = new BeanAdapter(edicion.getModel());
+		Bindings.bind(direccion, "model", beanDireccion.getValueModel("direccion"));
+		BeanAdapter beanLicencia = new BeanAdapter(edicion.getModel());
+		Bindings.bind(licencia, "model", beanDireccion.getValueModel("licencia"));
 		edicion.addComponent("Seleccione El Legajo", comboBox);
 		edicion.addBindingTextField(Empleado.NOMBRE, "Nombre");
 		edicion.addBindingTextField(Empleado.APELLIDO, "Apellido");
@@ -49,14 +74,14 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 		edicion.addBindingTextField(Empleado.CUIL,"Cuil");
 		edicion.addBindingCheckBox(Empleado.PROPIO, "Propio");
 		edicion.addBindingIntegerField(Empleado.REGISTRO, "Registro");
-		licencia.addBindingDateField(Empleado.getLicencia().CATEGORIA, "Categoria");
-		licencia.addBindingDateField(Empleado.getLicencia().CNRT, "Cnrt");
-		licencia.addBindingDateField(Empleado.getLicencia().LIBRETA_SANITARIA, "LibretaSanitaria");
-	    licencia.addBindingDateField(Empleado.getLicencia().REGISTRO, "Registro");
-		direccion.addBindingTextField(Empleado.getDireccionc().DIRECCION, "Direccion");
-		direccion.addBindingTextField(Empleado.getDireccionc().LOCALIDAD, "Localidad");
-		direccion.addBindingIntegerField(Empleado.getDireccionc().TELEFONO, "Telefono");
-		direccion.addBindingIntegerField(Empleado.getDireccionc().CODPOSTAL, "CodPostal");
+		licencia.addBindingDateField(Licencia.CATEGORIA, "Categoria");
+		licencia.addBindingDateField(Licencia.CNRT, "Cnrt");
+		licencia.addBindingDateField(Licencia.LIBRETA_SANITARIA, "LibretaSanitaria");
+	    licencia.addBindingDateField(Licencia.REGISTRO, "Registro");
+		direccion.addBindingTextField(Direccion.DIRECCION, "Direccion");
+		direccion.addBindingTextField(Direccion.LOCALIDAD, "Localidad");
+//		direccion.addBindingIntegerField(Direccion.TELEFONO, "Telefono");
+//		direccion.addBindingIntegerField(Direccion.CODPOSTAL, "CodPostal");
 		
 		edicion.getBotonAgregar().addActionListener(new ActionListener() {
 		
@@ -96,11 +121,12 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount() ==2){
-					edicion.setModel(table.getSelected());
+					Empleado empleado = (Empleado) table.getSelected();
+					edicion.setModel(empleado);
 					edicion.getBotonModificar().setEnabled(true);
-					direccion.setModel(table.getSelected());
+					direccion.setModel(empleado.getDireccion());
 					direccion.getBotonModificar().setEnabled(true);
-					licencia.setModel(table.getSelected());
+					licencia.setModel(empleado.getLicencia());
 					licencia.getBotonModificar().setEnabled(true);
 				}
 			}
@@ -112,77 +138,77 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 			public void actionPerformed(ActionEvent e) {
 				edicion.setModel(comboBox.getSelectedItem());
 				edicion.getBotonModificar().setEnabled(true);				
-				direccion.setModel(comboBox.getSelectedItem());
+				direccion.setModel(((Empleado)comboBox.getSelectedItem()).getDireccion());
 				direccion.getBotonModificar().setEnabled(true);
-				licencia.setModel(table.getSelected());
+				licencia.setModel(((Empleado)table.getSelected()).getLicencia());
 				licencia.getBotonModificar().setEnabled(true);
 			
 			}
 		});
-		direccion.getBotonAgregar().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				tablaList.add(direccion.getModel());
-				dao.save(direccion.getModel());
-				direccion.setModel(new Empleado());
-				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
-			}	
-		});
-	
-		direccion.getBotonModificar().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Empleado model = direccion.getModel();
-				tablaList.remove(model);
-				tablaList.add(model);
-				dao.update(model);
-				direccion.setModel(new Empleado());
-				direccion.getBotonModificar().setEnabled(false);
-				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
-			}
-		});
-		direccion.getBotonCancelar().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				direccion.setModel(new Empleado());
-				direccion.getBotonModificar().setEnabled(false);
-			}
-		});
-		licencia.getBotonAgregar().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				tablaList.add(licencia.getModel());
-				dao.save(licencia.getModel());
-				licencia.setModel(new Empleado());
-				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
-			}	
-		});
-	
-		licencia.getBotonModificar().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Empleado model = licencia.getModel();
-				tablaList.remove(model);
-				tablaList.add(model);
-				dao.update(model);
-				licencia.setModel(new Empleado());
-				licencia.getBotonModificar().setEnabled(false);
-				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
-			}
-		});
-		licencia.getBotonCancelar().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				licencia.setModel(new Empleado());
-				licencia.getBotonModificar().setEnabled(false);
-			}
-		});
+//		direccion.getBotonAgregar().addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				tablaList.add(direccion.getModel());
+//				dao.save(direccion.getModel());
+//				direccion.setModel(new Empleado());
+//				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
+//			}	
+//		});
+//	
+//		direccion.getBotonModificar().addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				Observable model = direccion.getModel();
+//				tablaList.remove(model);
+//				tablaList.add(model);
+//				dao.update(model);
+//				direccion.setModel(new Empleado());
+//				direccion.getBotonModificar().setEnabled(false);
+//				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
+//			}
+//		});
+//		direccion.getBotonCancelar().addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				direccion.setModel(new Empleado());
+//				direccion.getBotonModificar().setEnabled(false);
+//			}
+//		});
+//		licencia.getBotonAgregar().addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				tablaList.add(licencia.getModel());
+//				dao.save(licencia.getModel());
+//				licencia.setModel(new Empleado());
+//				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
+//			}	
+//		});
+//	
+//		licencia.getBotonModificar().addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				Observable model = licencia.getModel();
+//				tablaList.remove(model);
+//				tablaList.add(model);
+//				dao.update(model);
+//				licencia.setModel(new Empleado());
+//				licencia.getBotonModificar().setEnabled(false);
+//				SwingUtilities.updateComponentTreeUI(EmpleadoUi.this);
+//			}
+//		});
+//		licencia.getBotonCancelar().addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				licencia.setModel(new Empleado());
+//				licencia.getBotonModificar().setEnabled(false);
+//			}
+//		});
 
 	}
 

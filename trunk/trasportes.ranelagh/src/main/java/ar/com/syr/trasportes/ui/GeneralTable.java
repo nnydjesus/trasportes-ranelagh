@@ -1,12 +1,20 @@
 package ar.com.syr.trasportes.ui;
 
 
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractCellEditor;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
 import ar.com.syr.trasportes.utils.MouseClicked;
@@ -78,8 +86,10 @@ public class GeneralTable extends GeneralPanel
          
          scroll.setOpaque(false);
          tabla.setModel((TableModel) modelo);
+         tabla.setDefaultRenderer(Object.class,new MyRenderer());
          scroll.setViewportView(tabla);
          scroll.setColumnHeaderView (tabla.getTableHeader());
+         
          
          // ... y se a�ade todo al panel
          this.add(scroll, restricciones);         
@@ -110,8 +120,21 @@ public class GeneralTable extends GeneralPanel
 		this.tabla.addMouseListener(actionListener);
 	}
 	
-
-     
+	
+	static class MyRenderer extends DefaultTableCellRenderer{
+		
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column){
+//			if(value instanceof Boolean){
+//				return new Button("asdf sf"+ (Boolean) value);
+//			}else{
+				return new JLabel(String.valueOf(value));
+//			}
+		}
+	}
+	
+	
      
 }
 

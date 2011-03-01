@@ -14,18 +14,17 @@ import ar.com.syr.trasportes.common.Item;
 import ar.com.syr.trasportes.dao.GenericDao;
 import ar.com.syr.trasportes.ui.amb.PanelEdicion;
 import ar.com.syr.trasportes.utils.Generator;
+import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
 import ar.com.syr.trasportes.utils.Observable;
 
-public abstract class GeneralFrame<T extends Beans> extends JFrame implements Item{
+public abstract class GeneralFrame<T extends IdentificablePersistentObject> extends JFrame implements Item{
 	
 	private TopPanel topPanel;
 	protected GeneralTable table;
 	protected JTabbedPane panel = new JTabbedPane();
 	protected PanelEdicion<T> edicion;
-	protected PanelEdicion<T> direccion;
-	protected PanelEdicion<T> licencia;
-	protected GenericDao<Observable> dao;
-	protected List<Observable> tablaList;
+	protected GenericDao<IdentificablePersistentObject> dao;
+	protected List<IdentificablePersistentObject> tablaList;
 	private String nombre;
 
 
@@ -37,12 +36,10 @@ public abstract class GeneralFrame<T extends Beans> extends JFrame implements It
 		try {
 			newInstance = (T) clase.newInstance();
 			edicion = new PanelEdicion<T>(name, newInstance);
-			//licencia = new PanelEdicion<T>(name,newInstance);
-			//direccion = new PanelEdicion<T>(name,newInstance);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		dao = new GenericDao<Observable>(clase, name);
+		dao = new GenericDao<IdentificablePersistentObject>(clase, name);
 		tablaList = dao.getAll();
 		this.topPanel = new TopPanel();
 		this.table = Generator.GENERATE_TABLE(tablaList, newInstance.atributos());
@@ -56,8 +53,6 @@ public abstract class GeneralFrame<T extends Beans> extends JFrame implements It
 	
 	protected void addPanels(){
 		panel.addTab("General", edicion);
-//		panel.addTab("Direccion",direccion); No estoy segura de que esto valla aca, 
-//		panel.addTab("Licencia",licencia); Porque esta es una clase generica. 
 		panel.addTab("Tabla", table);
 	}
 	
@@ -67,7 +62,7 @@ public abstract class GeneralFrame<T extends Beans> extends JFrame implements It
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				PrintUtilities.printComponent(table.getTabla());
+				PrintUtilities.printComponent(table.getScroll());
 				
 			}
 		});		

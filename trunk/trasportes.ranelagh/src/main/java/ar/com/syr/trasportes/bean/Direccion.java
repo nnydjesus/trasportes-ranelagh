@@ -9,7 +9,7 @@ import ar.com.syr.trasportes.utils.Observable;
 
 
 @Embeddable
-public class Direccion  implements Serializable{
+public class Direccion extends Observable implements Serializable{
 
 	public static final String LOCALIDAD = "localidad";
 	public static final String DIRECCION = "direccion";
@@ -50,7 +50,7 @@ public class Direccion  implements Serializable{
 		this.codPostal = codPostal;
 	}
 	
-	public static String[] atributos() {
+	public  String[] atributos() {
 		return new String[] {CODPOSTAL, LOCALIDAD, TELEFONO, DIRECCION};
 	}
 	

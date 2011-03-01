@@ -13,7 +13,7 @@ import javax.persistence.Version;
  * @author Claudio
  */
 @MappedSuperclass
-public abstract class PersistentObject {
+public abstract class PersistentObject extends Observable {
 
     @Version
 //    @SerializationStrategy(access = Through.READ_ONLY_FIELD)

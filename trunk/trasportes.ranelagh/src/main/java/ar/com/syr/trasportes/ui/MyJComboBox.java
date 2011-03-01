@@ -10,7 +10,6 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
 import ar.com.syr.trasportes.utils.Observable;
 
@@ -53,5 +52,7 @@ public class MyJComboBox extends JComboBox {
 			return jLabel;
 		}
 	}
+	
+
 
 }

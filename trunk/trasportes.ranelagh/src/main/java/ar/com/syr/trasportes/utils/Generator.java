@@ -13,8 +13,8 @@ import com.jgoodies.binding.list.SelectionInList;
 
 public class Generator {
 	
-	public static ar.com.syr.trasportes.ui.GeneralTable GENERATE_TABLE(List<Observable> tablaList, String[] fields) {
-		SelectionInList<Observable> selectionInList = new SelectionInList<Observable>(tablaList);		
+	public static ar.com.syr.trasportes.ui.GeneralTable GENERATE_TABLE(List<IdentificablePersistentObject> tablaList, String[] fields) {
+		SelectionInList<IdentificablePersistentObject> selectionInList = new SelectionInList<IdentificablePersistentObject>(tablaList);		
 		ModelBinding tablaModel = new ModelBinding(selectionInList, fields);		
 		JTable tableTeachers = new JTable();
 		tableTeachers.setSelectionModel(new SingleListSelectionAdapter(

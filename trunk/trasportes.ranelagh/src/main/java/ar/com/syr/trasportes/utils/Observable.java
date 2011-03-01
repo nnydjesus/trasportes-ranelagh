@@ -13,7 +13,7 @@ import ar.com.syr.trasportes.bean.Beans;
  * @author Ronny
  *
  */
-public abstract class Observable extends IdentificablePersistentObject implements Beans{
+public abstract class Observable implements Beans{
 	private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
 	public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
@@ -109,6 +109,6 @@ public abstract class Observable extends IdentificablePersistentObject implement
 		return "";
 	}
 	
-	public  abstract String[] atributos();
+	public abstract String[] atributos();
 
 }

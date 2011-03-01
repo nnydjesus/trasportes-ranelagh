@@ -12,7 +12,7 @@ import ar.com.syr.trasportes.utils.Observable;
 
 
 @Embeddable
-public class Licencia  implements Serializable{
+public class Licencia extends Observable implements Serializable{
 	
 	public static final String REGISTRO = "registro"; 
 	public static final String CNRT = "cnrt";
@@ -52,7 +52,7 @@ public class Licencia  implements Serializable{
 	public void setCategoria(Date categoria) {
 		this.categoria = categoria;
 	}
-	public static String[] atributos() {
+	public  String[] atributos() {
 		return new String[] {CATEGORIA, CNRT, REGISTRO, LIBRETA_SANITARIA };
 	}
 	
