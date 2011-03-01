@@ -57,7 +57,6 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 		direccion.addBindingTextField(Empleado.getDireccionc().LOCALIDAD, "Localidad");
 		direccion.addBindingIntegerField(Empleado.getDireccionc().TELEFONO, "Telefono");
 		direccion.addBindingIntegerField(Empleado.getDireccionc().CODPOSTAL, "CodPostal");
-//		ACA ES EN DONDE ME TIRA ERROR CUANDO DIGO Empleado.this ... :(
 		
 		edicion.getBotonAgregar().addActionListener(new ActionListener() {
 		
