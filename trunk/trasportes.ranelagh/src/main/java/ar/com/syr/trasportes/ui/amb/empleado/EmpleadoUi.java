@@ -1,60 +1,59 @@
 package ar.com.syr.trasportes.ui.amb.empleado;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
-
-import org.eclipse.jdt.internal.compiler.lookup.Binding;
-
-import com.jgoodies.binding.adapter.Bindings;
-import com.jgoodies.binding.beans.BeanAdapter;
-
 
 import ar.com.syr.trasportes.bean.Direccion;
 import ar.com.syr.trasportes.bean.Empleado;
 import ar.com.syr.trasportes.bean.Licencia;
-import ar.com.syr.trasportes.common.Item;
-import ar.com.syr.trasportes.dao.GenericDao;
 import ar.com.syr.trasportes.ui.GeneralFrame;
-import ar.com.syr.trasportes.ui.GeneralTable;
 import ar.com.syr.trasportes.ui.MyJComboBox;
 import ar.com.syr.trasportes.ui.amb.PanelEdicion;
 import ar.com.syr.trasportes.utils.Generator;
 import ar.com.syr.trasportes.utils.MouseClicked;
 import ar.com.syr.trasportes.utils.Observable;
 
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.beans.BeanAdapter;
+
 
 public class EmpleadoUi extends GeneralFrame<Empleado> {
 
-	private MyJComboBox comboBox;
 	protected PanelEdicion<Observable> direccion;
 	protected PanelEdicion<Observable> licencia;
+	private List<Observable> listLicencias; 
+	private List<Observable> listDireccion ;
 
 
 	public EmpleadoUi() {
 		super("Empleado", Empleado.class);
-		tablaList = dao.getAll();
 		super.addActions();
 	}
 	
 	@Override
 	protected void addPanels() {
+		listLicencias = new ArrayList<Observable>();
+		listDireccion = new ArrayList<Observable>();
+		for (Observable empleado : tablaList) {
+			listLicencias.add(((Empleado) empleado).getLicencia());
+			listDireccion.add(((Empleado) empleado).getDireccion());
+		}
 		JTabbedPane panelEmpleado = new JTabbedPane();
+		JTabbedPane panelTablas = new JTabbedPane();
 		panelEmpleado.addTab("Empleado", edicion);
 		panelEmpleado.addTab("Direccion", direccion);
 		panelEmpleado.addTab("Licencia", licencia);
+		panelTablas.addTab("Empleado", table);
+		panelTablas.addTab("Direccion", Generator.GENERATE_TABLE(listDireccion, new Direccion().atributos()));
+		panelTablas.addTab("Licencias", Generator.GENERATE_TABLE(listLicencias, new Licencia().atributos()));
 		panel.addTab("General", panelEmpleado);
-		panel.addTab("Tabla", table);
+		panel.addTab("Tabla", panelTablas);
 	}
 	
 	@Override
@@ -82,6 +81,12 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 		direccion.addBindingTextField(Direccion.LOCALIDAD, "Localidad");
 //		direccion.addBindingIntegerField(Direccion.TELEFONO, "Telefono");
 //		direccion.addBindingIntegerField(Direccion.CODPOSTAL, "CodPostal");
+		direccion.getBotonAgregar().setVisible(false);
+		direccion.getBotonCancelar().setVisible(false);
+		direccion.getBotonModificar().setVisible(false);
+		licencia.getBotonAgregar().setVisible(false);
+		licencia.getBotonModificar().setVisible(false);
+		licencia.getBotonCancelar().setVisible(false);
 		
 		edicion.getBotonAgregar().addActionListener(new ActionListener() {
 		
@@ -140,7 +145,7 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
 				edicion.getBotonModificar().setEnabled(true);				
 				direccion.setModel(((Empleado)comboBox.getSelectedItem()).getDireccion());
 				direccion.getBotonModificar().setEnabled(true);
-				licencia.setModel(((Empleado)table.getSelected()).getLicencia());
+				licencia.setModel(((Empleado)comboBox.getSelectedItem()).getLicencia());
 				licencia.getBotonModificar().setEnabled(true);
 			
 			}

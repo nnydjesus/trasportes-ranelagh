@@ -3,35 +3,41 @@ package ar.com.syr.trasportes.bean;
 import java.io.Serializable;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
-import ar.com.syr.trasportes.utils.Observable;
 
 @Entity
+@Table(name = "costo_empleado")
 public class CostoEmpleado extends IdentificablePersistentObject implements Serializable{
 		
-		public static final String LEGAJO = "legajo";
+//		public static final String EMPLEADO = "empleado";
 		public static final String COSTO_TOTAL = "costoTotal";
 		
-		@Id
-		@GeneratedValue
-		private String id;
+		 @Id
+		private String  id;
+		
+//		@OneToOne(cascade = CascadeType.ALL)
+//		@PrimaryKeyJoinColumn
+//		private Empleado empleado;
 		
 		@Basic
-		private String legajo;
+		private Double costoTotal = 0.0;
 		
-		@Basic
-		private Double costoTotal;
-		
-		public void setLegajo(String legajo) {
-			this.legajo = legajo;
-		}
-		public String getLegajo() {
-			return legajo;
-		}
+//		public void setEmpleado(Empleado legajo) {
+//			this.empleado = legajo;
+//		}
+//		public Empleado getEmpleado() {
+//			return empleado;
+//		}
 		public void setCostoTotal(Double costoTotal) {
 			this.costoTotal = costoTotal;
 		}
@@ -47,7 +53,7 @@ public class CostoEmpleado extends IdentificablePersistentObject implements Seri
 		
 		@Override
 		public String[] atributos(){
-			return new String[]{LEGAJO,COSTO_TOTAL};
+			return new String[]{COSTO_TOTAL};
 		}
 
 }

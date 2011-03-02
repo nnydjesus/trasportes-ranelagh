@@ -9,6 +9,7 @@ import org.hibernate.Session;
 
 import ar.com.syr.trasportes.utils.HibernateUtil;
 import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
+import ar.com.syr.trasportes.utils.Observable;
 
 
 
@@ -21,7 +22,7 @@ public class GenericDao<T extends IdentificablePersistentObject> extends Generic
         BasicConfigurator.configure();
         Logger.getAnonymousLogger().setLevel(Level.INFO);
 		this.t = t;
-		this.className =className;
+		this.setClassName(className);
 	}
 
 	public void save(T object) {
@@ -50,6 +51,14 @@ public class GenericDao<T extends IdentificablePersistentObject> extends Generic
 	@Override
 	public Class<T> getPersistentClass() {
 		return t;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	public String getClassName() {
+		return className;
 	}
 
 //	@Override

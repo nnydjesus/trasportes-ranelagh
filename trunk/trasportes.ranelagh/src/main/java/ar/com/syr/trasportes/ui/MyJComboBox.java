@@ -44,7 +44,11 @@ public class MyJComboBox extends JComboBox {
 		@Override
 		public Component getListCellRendererComponent(JList list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
-			JLabel jLabel = new JLabel(((Observable) value).getId());
+			JLabel jLabel;
+			if(value instanceof Observable)
+				jLabel = new JLabel(((Observable) value).getId());
+			else 
+				jLabel = new JLabel(value.toString());
 			if (isSelected) {
 				jLabel.setBackground(Color.BLACK);
 				jLabel.setForeground(Color.RED);

@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
+import ar.com.mindset.flexy.annotations.flex.serializer.SerializationStrategy;
+import ar.com.mindset.flexy.annotations.flex.serializer.Through;
 import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
-import ar.com.syr.trasportes.utils.Observable;
 
 @Entity
 @Table(name = "empleado")
@@ -52,7 +57,10 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	
 	@Embedded
 	private  Direccion direccion = new Direccion();
-
+	
+	@OneToOne
+    @SerializationStrategy(access = Through.TRANSIENT)
+	private CostoEmpleado costoEmpleado;
 	
 	public String getLegajo() {
 		return legajo;
@@ -109,7 +117,63 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 		licencia = licenciac;
 	}
 	
+	public Date getRegistroL() {
+		return licencia.getRegistro();
+	}
+	public void setRegistroL(Date registro) {
+		licencia.setRegistro(registro);
+	}
+	public Date getCnrt() {
+		return licencia.getCnrt();
+	}
+	public void setCnrt(Date cnrt) {
+		licencia.setCnrt(cnrt);
+	}
+	public Date getLibretaSanitaria() {
+		return licencia.getLibretaSanitaria();
+	}
+	public void setLibretaSanitaria(Date libretaSanitaria) {
+		licencia.setLibretaSanitaria(libretaSanitaria);
+	}
+	public Date getCategoria() {
+		return licencia.getCategoria();
+	}
+	public void setCategoria(Date categoria) {
+		licencia.setCategoria(categoria);
+	}
 	
+	
+	public String getLocalidad() {
+		return direccion.getLocalidad();
+	}
+	public void setLocalidad(String localidad) {
+		direccion.setLocalidad(localidad);
+	}
+	public String getDireccionD() {
+		return direccion.getDireccion();
+	}
+	public void setDireccionD(String direccion) {
+		this.direccion.setDireccion(direccion);
+	}
+	public int getTelefono() {
+		return direccion.getTelefono();
+	}
+	public void setTelefono(int telefono) {
+		direccion.setTelefono(telefono);
+	}
+	public int getCodPostal() {
+		return direccion.getCodPostal();
+	}
+	public void setCodPostal(int codPostal) {
+		direccion.setCodPostal(codPostal);
+	}
+	
+	public void setCostoEmpleado(CostoEmpleado costoEmpleado) {
+		this.costoEmpleado = costoEmpleado;
+	}
+	public CostoEmpleado getCostoEmpleado() {
+		return costoEmpleado;
+	}
 	public String[] atributos() {
 	return new String[] {LEGAJO, REGISTRO, APELLIDO, CUIL, NOMBRE, DNI, PROPIO};
 	}

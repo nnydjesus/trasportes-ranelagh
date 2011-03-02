@@ -26,10 +26,14 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 	protected GenericDao<IdentificablePersistentObject> dao;
 	protected List<IdentificablePersistentObject> tablaList;
 	private String nombre;
+	protected MyJComboBox comboBox;
+	private Class clase;
+
 
 
 
 	public GeneralFrame(String name, Class clase) {
+		this.clase = clase;
 		this.nombre = name;
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		T newInstance;
@@ -39,8 +43,9 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		dao = new GenericDao<IdentificablePersistentObject>(clase, name);
+		createDao();
 		tablaList = dao.getAll();
+		this.comboBox = new MyJComboBox(tablaList);
 		this.topPanel = new TopPanel();
 		this.table = Generator.GENERATE_TABLE(tablaList, newInstance.atributos());
 		this.createForm();
@@ -51,6 +56,10 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 		this.setVisible(false);
 	}
 	
+	protected void createDao() {
+		dao = new GenericDao<IdentificablePersistentObject>(clase, nombre);		
+	}
+
 	protected void addPanels(){
 		panel.addTab("General", edicion);
 		panel.addTab("Tabla", table);

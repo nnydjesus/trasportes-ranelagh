@@ -2,18 +2,30 @@ package ar.com.syr.trasportes.initialData;
 
 import java.util.Date;
 
+import org.apache.commons.lang.RandomStringUtils;
+
+import ar.com.mindset.flexy.util.RandomUtils;
+import ar.com.syr.trasportes.bean.CostoEmpleado;
 import ar.com.syr.trasportes.bean.Direccion;
 import ar.com.syr.trasportes.bean.Empleado;
 import ar.com.syr.trasportes.bean.Licencia;
+import ar.com.syr.trasportes.dao.CostoEmpleadoDao;
 import ar.com.syr.trasportes.dao.EmpleadoDao;
+import ar.com.syr.trasportes.dao.GenericDao;
 
 
 public class DataGeneratorEmpleado {
 private EmpleadoDao dao = new EmpleadoDao();
+private CostoEmpleadoDao daoCosto = new CostoEmpleadoDao();
 	
 	void generateEmpleados(){
 		for (int i = 0; i < 10; i++) {
 			Empleado newEmpleado = this.newEmpleado(i);
+			CostoEmpleado costo= new CostoEmpleado();
+			newEmpleado.setCostoEmpleado(costo);
+//			costo.setEmpleado(newEmpleado);
+			costo.setId(RandomStringUtils.randomAlphanumeric(4));
+			daoCosto.save(costo);
 			dao.save(newEmpleado);
 		}
 	}

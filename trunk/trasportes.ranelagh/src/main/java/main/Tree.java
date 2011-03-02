@@ -12,6 +12,7 @@ import javax.swing.event.TreeSelectionListener;
 
 import ar.com.syr.trasportes.common.Item;
 import ar.com.syr.trasportes.common.Tablas;
+import ar.com.syr.trasportes.ui.PreInicio;
 import ar.com.syr.trasportes.utils.HibernateUtil;
 
 
@@ -23,6 +24,14 @@ public class Tree extends JFrame{
 	public Tree() {
 		Vector<Item> vector =  new Vector<Item>();
 //		Item remito = new RemitoUI();
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				new PreInicio(Tree.this);
+				
+			}
+		}).start(); 
 		vector.add(new Tablas());
 		tree = new JTree(vector);
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
@@ -40,7 +49,7 @@ public class Tree extends JFrame{
 		//this.add(tree);
 		this.add(tree);
 		this.pack();
-		this.setVisible(true);
+		//this.setVisible(true);
 		this.setSize(600, 600);
 	}
 	

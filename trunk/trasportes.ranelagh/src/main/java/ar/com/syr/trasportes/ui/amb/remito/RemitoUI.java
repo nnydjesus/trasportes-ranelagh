@@ -26,7 +26,6 @@ import ar.com.syr.trasportes.utils.Observable;
 public class RemitoUI extends GeneralFrame<Remito> implements Item{
 	private static final long serialVersionUID = -4654971392742688838L;
 	
-	private MyJComboBox comboBox;
 
 
 	public RemitoUI() {
@@ -36,7 +35,6 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item{
 	
 	@Override
 	protected void createForm() {
-		this.comboBox = new MyJComboBox(tablaList);
 		edicion.addComponent("Seleccione El Remito", comboBox);
 		edicion.addBindingDateField(Remito.FECHA, "Fecha");
 		edicion.addBindingTextField(Remito.ORIGEN, "Origen");
