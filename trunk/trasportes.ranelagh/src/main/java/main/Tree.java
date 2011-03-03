@@ -28,7 +28,7 @@ public class Tree extends JFrame{
 			
 			@Override
 			public void run() {
-				new PreInicio(Tree.this);
+				//new PreInicio(Tree.this);
 				
 			}
 		}).start(); 
