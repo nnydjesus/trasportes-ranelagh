@@ -23,7 +23,6 @@ import ar.com.mindset.flexy.exception.NonBusinessException;
 import ar.com.mindset.flexy.util.ASObjectUtils;
 import ar.com.mindset.flexy.util.TypedClass;
 import ar.com.mindset.flexy.util.predicate.SuperclassPredicate;
-import flex.messaging.io.amf.ASObject;
  
 /**
  * @author Ronny
@@ -97,30 +96,6 @@ public class ReflectionUtils {
     public static Class getRealClass(final Object object) {
         return HibernateProxyHelper.getClassWithoutInitializingProxy(object);
     }
-
-    /**
-     * Uff... es medio feo, pero este método me retorna el typedClass de un Objeto
-     *
-     * @param _object Object del que quiero saber el TypedClass
-     * @param _typedClass TypedClass default
-     * @return
-     */
-    public static TypedClass getTypedClass(final Object _object, final TypedClass _typedClass) {
-        if(ASObjectUtils.isASObject(_object)) {
-
-            try {
-                final Class _class = Class.forName(((ASObject) _object).getType());
-                return new TypedClass(_class);
-            } catch (final Exception ex) {
-                return _typedClass;
-            }
-
-        } else {
-            return _typedClass;
-        }
-    }
-
-
     /**
      * Returns every declared field on the specified class.
      */
