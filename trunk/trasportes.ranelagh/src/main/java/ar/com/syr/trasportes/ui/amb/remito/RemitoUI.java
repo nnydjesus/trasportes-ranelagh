@@ -99,15 +99,18 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item{
 	@Override
 	protected void edicionAgregar() {
 		Remito model = edicion.getModel();
-		Empleado empleado = (Empleado) cbEmpleados.getSelectedItem();
-		empleado.getCostoEmpleado().setCostoTotal(empleado.getCostoEmpleado().getCostoTotal()+model.getChofer());
-		tablaList.add(model);
-		dao.save(model);
-		empleado.addRemito(model);
-		dao.update(empleado);
-		edicion.setModel(getDefaultModel());
-		SwingUtilities.updateComponentTreeUI(RemitoUI.this);
-		
+		if(tengo && model.getId() != null ){
+			Empleado empleado = (Empleado) cbEmpleados.getSelectedItem();
+			empleado.getCostoEmpleado().setCostoTotal(empleado.getCostoEmpleado().getCostoTotal()+model.getChofer());
+//			System.out.println(empleado.getCostoEmpleado().getCostoTotal());
+			tablaList.add(model);
+			dao.save(model);
+			dao.update(empleado.getCostoEmpleado());
+//			dao.update(empleado);
+			//empleado.addRemito(model);
+			edicion.setModel(getDefaultModel());
+			SwingUtilities.updateComponentTreeUI(RemitoUI.this);
+		}
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class TransportesRanelagh extends FrameLook{
 	public TransportesRanelagh(Preloader loader) {
 		this();
 		loader.setJframe(this);
-		super.setLoader(loader);
+//		super.setLoader(loader);
 	}
 	
 	public TransportesRanelagh() {
@@ -76,7 +76,7 @@ public class TransportesRanelagh extends FrameLook{
 		this.addChilds();
 		this.addActions();
 		this.setSize(1024,780);
-		this.setVisible(true);
+		this.setVisible(false);
 
 	}
 

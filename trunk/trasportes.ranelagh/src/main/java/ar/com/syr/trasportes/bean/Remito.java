@@ -37,40 +37,40 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 	private Date fecha;
 	
     @Basic
-	private String origen;
+	private String origen="";
     
     @Basic
-	private String destino;
+	private String destino="";
     
 	@Id
 	private String id;
 	
     @Basic
-	private String nroRemito2;
+	private String nroRemito2="";
     
     @Basic
-	private Double costo;
+	private Double costo=0.0;
     
     @Basic
-	private Double chofer;
+	private Double chofer=0.0;
     
     @Basic
-	private Double combustible;
+	private Double combustible=0.0;
     
     @Basic
-	private Double litros;
+	private Double litros=0.0;
     
     @Basic
-	private String lugar;
+	private String lugar="";
     
     @Basic
-	private Integer km;
+	private Integer km=0;
     
     @Basic
-	private Double peaje;
+	private Double peaje=0.0;
     
     @Basic
-	private String patente;
+	private String patente="";
 	
 	
 	
