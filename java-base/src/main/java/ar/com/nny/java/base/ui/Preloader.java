@@ -42,6 +42,7 @@ public class Preloader extends JFrame implements Runnable {
 		this.setSize(ANCHO, ALTO);
 		super.setIconImage(icono);
 		this.setVisible(true);
+		this.start();
 	}
 	
 	public Preloader(String title) {
@@ -108,6 +109,6 @@ public class Preloader extends JFrame implements Runnable {
 	}
 	
 	public static void main(String[] args) {
-		new Preloader(null, "Sample");
+		new Preloader(null, "Sample").start();
 	}
 }

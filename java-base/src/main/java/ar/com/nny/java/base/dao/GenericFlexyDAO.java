@@ -204,7 +204,7 @@ public abstract class GenericFlexyDAO<T extends PersistentObject> {
 		try {
 			final T object = (T) this.session().get(this.getPersistentClass(), id);
 			if ( object == null ) {
-				throw new RuntimeException("No object was found of class " + this.getPersistentClass().getName() + " with identifier " + id);
+				throw new NonBusinessException("No object was found of class " + this.getPersistentClass().getName() + " with identifier " + id);
 			}
 			return object;
 		}
