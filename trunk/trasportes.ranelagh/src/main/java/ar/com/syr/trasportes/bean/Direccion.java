@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Embeddable;
 
-import ar.com.syr.trasportes.utils.Observable;
+import ar.com.nny.java.base.utils.Observable;
 
 
 @Embeddable

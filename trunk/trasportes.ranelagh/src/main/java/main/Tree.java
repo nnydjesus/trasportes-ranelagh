@@ -1,39 +1,36 @@
 package main;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.GridLayout;
 import java.util.Vector;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.JTree.DynamicUtilTreeNode;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
-import ar.com.syr.trasportes.common.Item;
-import ar.com.syr.trasportes.common.Tablas;
-import ar.com.syr.trasportes.ui.PreInicio;
-import ar.com.syr.trasportes.utils.HibernateUtil;
+import ar.com.nny.java.base.common.Item;
 
 
-public class Tree extends JFrame{
+public class Tree extends JPanel{
 	
 	
-	private JTree tree;
+	private Vector<Item> vector= new Vector<Item>();
+	private JTree tree =  new JTree(vector);
+	
 	
 	public Tree() {
-		Vector<Item> vector =  new Vector<Item>();
 //		Item remito = new RemitoUI();
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				//new PreInicio(Tree.this);
-				
-			}
-		}).start(); 
-		vector.add(new Tablas());
-		tree = new JTree(vector);
+//		vector.add(new Tablas());
+		this.setLayout(new GridLayout(1, 1));
+		addListener();
+		//this.add(tree);
+		this.add(tree);
+		//this.setVisible(true);
+		this.setSize(300, 300);
+	}
+
+	private void addListener() {
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			
 			@Override
@@ -45,27 +42,38 @@ public class Tree extends JFrame{
 				}
 			}
 		});
-		this.addActions();
-		//this.add(tree);
+	}
+	
+	public void updateTree(Item tablasTree) {
+		vector.removeAll(vector);
+		vector.add(tablasTree);
+		this.remove(tree);
+		tree =  new JTree(vector);
+		this.addListener();
 		this.add(tree);
-		this.pack();
-		//this.setVisible(true);
-		this.setSize(600, 600);
 	}
 	
-	private void addActions() {
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent arg0) {
-				HibernateUtil.getSession().close();
-				System.exit(0);
-			}
-		});
-	}
 	
+
+	public void setVector(Vector<Item> vector) {
+		this.vector = vector;
+	}
+
+	public Vector<Item> getVector() {
+		return vector;
+	}
+	public JTree getTree() {
+		return tree;
+	}
+	public void setTree(JTree tree) {
+		this.tree = tree;
+	}
 
 	public static void main(String[] args) {
 		new Tree();
 	}
+
+
 	
 	
 

@@ -1,5 +1,6 @@
 package ar.com.syr.trasportes.dao;
 
+import ar.com.nny.java.base.dao.GenericDao;
 import ar.com.syr.trasportes.bean.Remito;
 
 public class RemitoDao extends GenericDao {
@@ -7,6 +8,4 @@ public class RemitoDao extends GenericDao {
 	public RemitoDao() {
 		super(Remito.class, "Remito");
 	}
-	
-
 }

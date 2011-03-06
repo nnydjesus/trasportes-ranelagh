@@ -1,17 +1,18 @@
 package ar.com.syr.trasportes.initialData;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.RandomStringUtils;
 
-import ar.com.mindset.flexy.util.RandomUtils;
 import ar.com.syr.trasportes.bean.CostoEmpleado;
 import ar.com.syr.trasportes.bean.Direccion;
 import ar.com.syr.trasportes.bean.Empleado;
 import ar.com.syr.trasportes.bean.Licencia;
+import ar.com.syr.trasportes.bean.Remito;
 import ar.com.syr.trasportes.dao.CostoEmpleadoDao;
 import ar.com.syr.trasportes.dao.EmpleadoDao;
-import ar.com.syr.trasportes.dao.GenericDao;
+import ar.com.syr.trasportes.dao.RemitoDao;
 
 
 public class DataGeneratorEmpleado {
@@ -19,14 +20,18 @@ private EmpleadoDao dao = new EmpleadoDao();
 private CostoEmpleadoDao daoCosto = new CostoEmpleadoDao();
 	
 	void generateEmpleados(){
+		List<Remito> remitos = new RemitoDao().getAll();
 		for (int i = 0; i < 10; i++) {
 			Empleado newEmpleado = this.newEmpleado(i);
 			CostoEmpleado costo= new CostoEmpleado();
-			newEmpleado.setCostoEmpleado(costo);
-//			costo.setEmpleado(newEmpleado);
+//			newEmpleado.setCostoEmpleado(costo);
+			newEmpleado.addRemito(remitos.get(i));
 			costo.setId(RandomStringUtils.randomAlphanumeric(4));
+			newEmpleado.setCostoEmpleado(costo);
 			daoCosto.save(costo);
+			costo.setEmpleado(newEmpleado);
 			dao.save(newEmpleado);
+			daoCosto.update(costo);
 		}
 	}
 

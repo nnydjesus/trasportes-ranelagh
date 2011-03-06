@@ -1,22 +1,27 @@
 package ar.com.syr.trasportes.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-import ar.com.mindset.flexy.annotations.flex.serializer.SerializationStrategy;
-import ar.com.mindset.flexy.annotations.flex.serializer.Through;
-import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
+import ar.com.nny.java.base.dao.SerializationStrategy;
+import ar.com.nny.java.base.dao.Through;
+import ar.com.nny.java.base.utils.IdentificablePersistentObject;
 
 @Entity
 @Table(name = "empleado")
@@ -58,8 +63,15 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	@Embedded
 	private  Direccion direccion = new Direccion();
 	
-	@OneToOne
-    @SerializationStrategy(access = Through.TRANSIENT)
+	@OneToMany()
+	@Cascade({CascadeType.ALL, CascadeType.DELETE_ORPHAN})
+	@JoinColumn(name="empleado_id")
+	private List<Remito> remitos = new ArrayList<Remito>();
+	
+	
+	@OneToOne(fetch = FetchType.LAZY)
+//	@org.hibernate.annotations.LazyToOne (org.hibernate.annotations.LazyToOneOption.NO_PROXY))
+	@SerializationStrategy(access = Through.TRANSIENT)
 	private CostoEmpleado costoEmpleado;
 	
 	public String getLegajo() {
@@ -167,13 +179,26 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	public void setCodPostal(int codPostal) {
 		direccion.setCodPostal(codPostal);
 	}
+
+	public List<Remito> getRemitos() {
+		return remitos;
+	}
+	public void setRemitos(List<Remito> remitos) {
+		this.remitos = remitos;
+	}
+	public void addRemito(Remito remito) {
+		this.remitos.add(remito);		
+	}
+	public void removeRemito(Remito remito) {
+		this.remitos.remove(remito);		
+	}
 	
-	public void setCostoEmpleado(CostoEmpleado costoEmpleado) {
-		this.costoEmpleado = costoEmpleado;
-	}
-	public CostoEmpleado getCostoEmpleado() {
-		return costoEmpleado;
-	}
+//	public void setCostoEmpleado(CostoEmpleado costoEmpleado) {
+//		this.costoEmpleado = costoEmpleado;
+//	}
+//	public CostoEmpleado getCostoEmpleado() {
+//		return costoEmpleado;
+//	}
 	public String[] atributos() {
 	return new String[] {LEGAJO, REGISTRO, APELLIDO, CUIL, NOMBRE, DNI, PROPIO};
 	}
@@ -181,6 +206,12 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	@Override
 	public String getId() {
 		return legajo;
+	}
+	public void setCostoEmpleado(CostoEmpleado costoEmpleado) {
+		this.costoEmpleado = costoEmpleado;
+	}
+	public CostoEmpleado getCostoEmpleado() {
+		return costoEmpleado;
 	}
 	
 

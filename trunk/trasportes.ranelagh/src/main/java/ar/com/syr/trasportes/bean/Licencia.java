@@ -1,14 +1,13 @@
 package ar.com.syr.trasportes.bean;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import ar.com.syr.trasportes.utils.Observable;
+import ar.com.nny.java.base.utils.Observable;
 
 
 @Embeddable

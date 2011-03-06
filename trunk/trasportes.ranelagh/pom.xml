@@ -6,6 +6,13 @@
 	<artifactId>trasportes-ranelagh</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Example</name>
+	
+<!--	 <parent>-->
+<!--		<groupId>ar.com.nny.java-base</groupId>-->
+<!--		<artifactId>java-base</artifactId>-->
+<!--		<version>>0.0.1-SNAPSHOT</version>-->
+<!--	</parent>-->
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -31,7 +38,7 @@
 			<version>3.4.GA</version>
 			<scope>compile</scope>
 		</dependency>
-<!--		-->
+		
 <!--		<dependency>-->
 <!--		   <groupId>com.jgoodies</groupId>-->
 <!--		   <artifactId>forms</artifactId>-->
@@ -55,12 +62,19 @@
 		   <artifactId>jcalendar-tz</artifactId>
 		   <version>1.3.3-4</version>
 		</dependency>
+<!--		<dependency>-->
+<!--		  <groupId>ar.com.mindset</groupId>-->
+<!--		  <artifactId>flexy</artifactId>-->
+<!--		  <version>7.0.6-SNAPSHOT</version>-->
+<!--		  <scope>compile</scope>-->
+<!--  		</dependency>-->
 		<dependency>
-		  <groupId>ar.com.mindset</groupId>
-		  <artifactId>flexy</artifactId>
-		  <version>7.0.6-SNAPSHOT</version>
-		  <scope>compile</scope>
-  		</dependency>
+			<groupId>ar.com.nny.java-base</groupId>
+			<artifactId>java-base</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -77,3 +91,4 @@
 
 
 </project>
+

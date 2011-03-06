@@ -11,8 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
-import ar.com.syr.trasportes.utils.Observable;
+import ar.com.nny.java.base.utils.IdentificablePersistentObject;
 
 
 @Entity

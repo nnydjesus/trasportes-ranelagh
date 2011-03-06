@@ -1,11 +1,12 @@
 package ar.com.syr.trasportes.ui;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
+import ar.com.nny.java.base.ui.GeneralPanel;
 
 public class TopPanel extends GeneralPanel{
 	private static final long serialVersionUID = 1L;

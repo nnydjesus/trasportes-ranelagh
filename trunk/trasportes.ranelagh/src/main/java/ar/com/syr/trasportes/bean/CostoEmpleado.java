@@ -3,17 +3,15 @@ package ar.com.syr.trasportes.bean;
 import java.io.Serializable;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 
-import ar.com.syr.trasportes.utils.IdentificablePersistentObject;
+import ar.com.nny.java.base.dao.SerializationStrategy;
+import ar.com.nny.java.base.dao.Through;
+import ar.com.nny.java.base.utils.IdentificablePersistentObject;
 
 @Entity
 @Table(name = "costo_empleado")
@@ -25,19 +23,20 @@ public class CostoEmpleado extends IdentificablePersistentObject implements Seri
 		 @Id
 		private String  id;
 		
-//		@OneToOne(cascade = CascadeType.ALL)
-//		@PrimaryKeyJoinColumn
-//		private Empleado empleado;
+		@OneToOne(fetch = FetchType.LAZY)
+//		@org.hibernate.annotations.LazyToOne (org.hibernate.annotations.LazyToOneOption.NO_PROXY))
+		@SerializationStrategy(access = Through.TRANSIENT)
+		private Empleado empleado;
 		
 		@Basic
 		private Double costoTotal = 0.0;
 		
-//		public void setEmpleado(Empleado legajo) {
-//			this.empleado = legajo;
-//		}
-//		public Empleado getEmpleado() {
-//			return empleado;
-//		}
+		public void setEmpleado(Empleado legajo) {
+			this.empleado = legajo;
+		}
+		public Empleado getEmpleado() {
+			return empleado;
+		}
 		public void setCostoTotal(Double costoTotal) {
 			this.costoTotal = costoTotal;
 		}
@@ -49,6 +48,11 @@ public class CostoEmpleado extends IdentificablePersistentObject implements Seri
 		}
 		public String getId() {
 			return id;
+		}
+		
+		@Override
+		public String mostrar() {
+			return empleado.getLegajo();
 		}
 		
 		@Override
