@@ -11,7 +11,7 @@ public class DataGeneratorUser   extends InitialDataGenerator<Usuario> {
 	
 	@DataGeneratorMethod
 	public void generateEmpleados(){
-		dao.save(new Usuario("user", HashUtils.hash("1234")));
+		dao.save(new Usuario(" ", HashUtils.hash(" ")));
 		
 	}
 
