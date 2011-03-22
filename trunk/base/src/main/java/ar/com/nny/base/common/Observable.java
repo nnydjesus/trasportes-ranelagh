@@ -3,7 +3,6 @@ package ar.com.nny.base.common;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import ar.com.nny.base.bean.Beans;
@@ -35,17 +34,7 @@ public abstract class Observable implements Beans{
 			field.setAccessible(true);
 			field.set(this, value);
 			this.firePropertyChange(property, originalValue, value);
-		}
-		catch (IllegalArgumentException e) {
-			throw new RuntimeException(e);
-		}
-		catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		}
-		catch (SecurityException e) {
-			throw new RuntimeException(e);
-		}
-		catch (NoSuchFieldException e) {
+		}catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -53,14 +42,7 @@ public abstract class Observable implements Beans{
 	public Object getProperty(String property) {
 		try {
 			return this.getGetter(property).invoke(this, new Object[] {});
-		}
-		catch (IllegalArgumentException e) {
-			throw new RuntimeException(e);
-		}
-		catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		}
-		catch (InvocationTargetException e) {
+		}catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -68,11 +50,7 @@ public abstract class Observable implements Beans{
 	protected Method getGetter(String property) {
 		try {
 			return this.getClass().getMethod("get" + this.capitalize(property), new Class[] {});
-		}
-		catch (SecurityException e) {
-			throw new RuntimeException(e);
-		}
-		catch (NoSuchMethodException e) {
+		}catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}

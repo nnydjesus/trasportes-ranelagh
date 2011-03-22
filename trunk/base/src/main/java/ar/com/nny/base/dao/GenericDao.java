@@ -24,8 +24,6 @@ public class GenericDao<T extends PersistentObject> extends GenericFlexyDAO<T>{
 		this(t,"");
 	}
 	public GenericDao(Class t, String className) {
-        BasicConfigurator.configure();
-        Logger.getAnonymousLogger().setLevel(Level.INFO);
 		this.t = t;
 		this.setClassName(className);
 	}
@@ -39,11 +37,11 @@ public class GenericDao<T extends PersistentObject> extends GenericFlexyDAO<T>{
 	}
 
 	public void update(T object) {
-		Session s = session();
-		s.beginTransaction();
-		s.update(object);
-		s.getTransaction().commit();
-		//super.update(object);
+//		Session s = session();
+//		s.beginTransaction();
+//		s.update(object);
+//		s.getTransaction().commit();
+		super.update(object);
 	}
 
 	public List<T> getAll() {
