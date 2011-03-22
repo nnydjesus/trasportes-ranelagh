@@ -152,7 +152,10 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				tableListener(e);
+				if(e.getClickCount() ==2){
+					tableListener(e);
+				}
+					
 			}
 		});
 		
@@ -167,25 +170,28 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 	}	
 	
 	public void comboboxListener() {
-		edicion.setModel(comboBox.getSelectedItem());
-		edicion.getBotonModificar().setEnabled(true);
+		setModel((T) comboBox.getSelectedItem());
 	}
 	protected void tableListener(MouseEvent e) {
-		if(e.getClickCount() ==2){
-			Observable observable = (Observable) table.getSelected();
-			edicion.setModel(observable);
-			edicion.getBotonModificar().setEnabled(true);
-		}
+		setModel((T) table.getSelected());
+	}
+
+
+	public void setModel(T observable) {
+		edicion.setModel(observable);
+		edicion.getBotonModificar().setEnabled(true);
 	}
 	
 	protected void edicionModificar() {
 		IdentificablePersistentObject model = edicion.getModel();
-		tablaList.remove(model);
-		tablaList.add(model);
-		dao.update(model);
-		edicion.setModel(getDefaultModel());
-		edicion.getBotonModificar().setEnabled(false);
-		SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
+		if(model.getId() != null){
+    		tablaList.remove(model);
+    		tablaList.add(model);
+    		dao.update(model);
+    		edicion.setModel(getDefaultModel());
+    		edicion.getBotonModificar().setEnabled(false);
+    		SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
+		}
 	}
 	
 	protected void edicionCancelar() {
@@ -197,6 +203,10 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 	@Override
 	public void mostrar() {
 		this.setVisible(true);	
+	}
+	
+	public List<T> getObjects(){
+		return (List<T>) tablaList;
 	}
 	
 	@Override
