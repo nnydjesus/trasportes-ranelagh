@@ -27,7 +27,9 @@ import ar.com.nny.base.ui.swing.components.GeneralPanel;
 import ar.com.nny.base.ui.swing.components.Preloader;
 import ar.com.nny.base.ui.swing.components.Registrar;
 import ar.com.nny.base.utils.Path;
-import ar.com.syr.transportes.common.Tablas;
+import ar.com.syr.transportes.categoria.Nomina;
+import ar.com.syr.transportes.categoria.Operaciones;
+import ar.com.syr.transportes.ui.Tree;
 
 import com.jgoodies.forms.builder.ButtonStackBuilder;
 
@@ -36,9 +38,9 @@ public class TransportesRanelagh extends FrameLook{
 	
 	private ButtonStackBuilder panelBotones;
 	private JPanel panelTree;
-	private JButton tablas;
+	private JButton Operaciones;
 	private JButton administracion;
-	private JButton operaciones;
+	private JButton Personal;
 	private JButton controlDeUnidades;
 	private JButton viajes;
 	private JButton bultos;
@@ -47,7 +49,8 @@ public class TransportesRanelagh extends FrameLook{
 	private Tree tree = new Tree();
 	private Registrar registro = new Registrar();
 	
-	private Tablas tablasTree= new Tablas();
+	private Operaciones tablasTree= new Operaciones();
+	private Nomina personalTree = new Nomina();
 	
 	public TransportesRanelagh(Preloader loader) {
 		this();
@@ -65,18 +68,18 @@ public class TransportesRanelagh extends FrameLook{
 		this.setTitle("Transportes Ranelagh");
 		this.panelBotones = new ButtonStackBuilder();
 		this.panelTree = new JPanel();
-		this.tablas = new JButton(new ImageIcon(Path.path()+"Images/resources.jpg"));
-		this.tablas.setText("Tablas");
+		this.Operaciones = new JButton(new ImageIcon(Path.path()+"Images/resources.jpg"));
+		this.Operaciones.setText("Operaciones");
 		this.administracion = new JButton("Administracion");
-		this.operaciones = new JButton("Operaciones");
+		this.Personal = new JButton("Personal");
 		this.controlDeUnidades = new JButton("ControlDeUnidades");
-		panelBotones.addGridded(tablas);
+		panelBotones.addGridded(Operaciones);
 		panelBotones.addRelatedGap();
 		panelBotones.addRelatedGap();
 		panelBotones.addGridded(administracion);
 		panelBotones.addRelatedGap();
 		panelBotones.addRelatedGap();
-		panelBotones.addGridded(operaciones);
+		panelBotones.addGridded(Personal);
 		panelBotones.addRelatedGap();
 		panelBotones.addRelatedGap();
 		panelBotones.addGridded(controlDeUnidades);	
@@ -103,9 +106,9 @@ public class TransportesRanelagh extends FrameLook{
 
 	public void addActions(){
 		
-		tablas.addActionListener(new ListenerButtonPanel(tablasTree));
+		Personal.addActionListener(new ListenerButtonPanel(personalTree));
+		Operaciones.addActionListener(new ListenerButtonPanel(tablasTree));
 		administracion.addActionListener(new ListenerButtonPanel(null));
-		operaciones.addActionListener(new ListenerButtonPanel(null));
 		controlDeUnidades.addActionListener(new ListenerButtonPanel(null));
 	
 		this.addWindowListener(new WindowAdapter() {
@@ -143,8 +146,8 @@ public class TransportesRanelagh extends FrameLook{
 		UIManager.setLookAndFeel(this.look);
 		SwingUtilities.updateComponentTreeUI(TransportesRanelagh.this);
 		SwingUtilities.updateComponentTreeUI(registro);
-		for (Component component : tablasTree) {
-			SwingUtilities.updateComponentTreeUI(component);						
+		for (Object component : tablasTree) {
+			SwingUtilities.updateComponentTreeUI((Component) component);						
 		}
 	}
 	

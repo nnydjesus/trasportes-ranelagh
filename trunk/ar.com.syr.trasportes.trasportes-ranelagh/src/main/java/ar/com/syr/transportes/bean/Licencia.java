@@ -21,10 +21,13 @@ public class Licencia extends Observable implements Serializable{
 	
 	@Temporal(TemporalType.DATE) 
 	private Date registro;
+	
 	@Temporal(TemporalType.DATE) 
 	private Date cnrt;
+	
 	@Temporal(TemporalType.DATE) 
 	private Date libretaSanitaria;
+	
 	@Temporal(TemporalType.DATE) 
 	private Date categoria;
 	

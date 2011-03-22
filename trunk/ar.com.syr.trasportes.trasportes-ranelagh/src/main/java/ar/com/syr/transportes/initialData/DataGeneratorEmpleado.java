@@ -45,10 +45,10 @@ public class DataGeneratorEmpleado  extends InitialDataGenerator<Empleado> {
 		empleado.setLegajo("Legajo "+i);
 		empleado.setNombre("Nombre "+i);
 		empleado.setPropio(true);
-		empleado.setRegistro(2542*i);
+		empleado.setRegistroConducir(2542*i);
 		Direccion direccion = new Direccion();
 		direccion.setCodPostal(i*55);
-		direccion.setDireccion("Calle "+i);
+		direccion.setCalle("Calle "+i);
 		direccion.setLocalidad("Localidad "+i);
 		direccion.setTelefono(i*60);
 		empleado.setDireccion(direccion);

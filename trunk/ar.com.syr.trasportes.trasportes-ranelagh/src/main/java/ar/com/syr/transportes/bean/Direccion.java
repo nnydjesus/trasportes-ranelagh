@@ -13,14 +13,14 @@ public class Direccion extends Observable implements Serializable{
 	private static final long serialVersionUID = -6168575220905354635L;
 
 	public static final String LOCALIDAD = "localidad";
-	public static final String DIRECCION = "direccion";
+	public static final String CALLE = "calle";
 	public static final String TELEFONO = "telefono";
 	public static final String CODPOSTAL = "codPostal";
 	
 	@Basic
 	private String localidad;
 	@Basic
-	private String direccion;
+	private String calle;
 	@Basic
 	private Integer telefono;
 	@Basic
@@ -32,11 +32,11 @@ public class Direccion extends Observable implements Serializable{
 	public void setLocalidad(String localidad) {
 		this.localidad = localidad;
 	}
-	public String getDireccion() {
-		return direccion;
+	public String getCalle() {
+		return calle;
 	}
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setCalle(String direccion) {
+		this.calle = direccion;
 	}
 	public int getTelefono() {
 		return telefono;
@@ -52,7 +52,7 @@ public class Direccion extends Observable implements Serializable{
 	}
 	
 	public  String[] atributos() {
-		return new String[] {CODPOSTAL, LOCALIDAD, TELEFONO, DIRECCION};
+		return new String[] {CODPOSTAL, LOCALIDAD, TELEFONO, CALLE};
 	}
 	
 

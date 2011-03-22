@@ -1,9 +1,12 @@
 package main;
 
 import java.awt.EventQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
+import org.apache.log4j.BasicConfigurator;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
 
 import ar.com.nny.base.generator.DDLGenerator;
@@ -25,9 +28,11 @@ public class Main implements Runnable {
 	}
 
 	public static void main(String[] args) {
+        BasicConfigurator.configure();
+        Logger.getAnonymousLogger().setLevel(Level.INFO);
 //		JFrame.setDefaultLookAndFeelDecorated(true);
 //		TransportesRanelagh reproductor = new TransportesRanelagh(new PreInicio());
-		new DDLGenerator().main(null);
+//		new DDLGenerator().main(null);
 		Main main = new Main();
 		EventQueue.invokeLater(main);
 //		new Login();
