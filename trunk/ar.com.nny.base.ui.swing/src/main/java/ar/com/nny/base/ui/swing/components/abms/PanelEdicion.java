@@ -1,16 +1,22 @@
 package ar.com.nny.base.ui.swing.components.abms;
 
 import java.awt.Component;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+import javax.swing.text.NumberFormatter;
 
+import ar.com.nny.base.ui.swing.components.JFormattedDecimalTextField;
 import ar.com.nny.base.utils.Path;
 
 import com.jgoodies.binding.adapter.BasicComponentFactory;
@@ -78,36 +84,58 @@ public class PanelEdicion<T > extends JPanel {
 	 * @param field
 	 * @return 
 	 */
-	public JLabel addBindingTextField(String property, String label){		
+	public JTextField addBindingTextField(String property, String label){		
 		ValueModel nameModel = beanAdapter.getValueModel(property);
-		return panelDeAtributos.append(label , BasicComponentFactory.createTextField(nameModel));
+		JTextField createTextField = BasicComponentFactory.createTextField(nameModel);
+        panelDeAtributos.append(label , createTextField);
+        return createTextField;
 	}
 	
-	public JLabel addBindingIntegerField(String property, String label){		
+	public JFormattedTextField addBindingIntegerField(String property, String label){		
 		ValueModel nameModel = beanAdapter.getValueModel(property);
-		return panelDeAtributos.append(label , BasicComponentFactory.createIntegerField(nameModel, NumberFormat.getNumberInstance()));
+		JFormattedTextField createIntegerField = BasicComponentFactory.createIntegerField(nameModel, NumberFormat.getNumberInstance());
+        panelDeAtributos.append(label , createIntegerField);
+        return createIntegerField;
 	}
-	public JLabel addBindingDoubleField(String property, String label){		
-		ValueModel nameModel = beanAdapter.getValueModel(property);
-		return panelDeAtributos.append(label ,BasicComponentFactory.createFormattedTextField(nameModel, DecimalFormat.getNumberInstance()));
+	public JFormattedTextField addBindingDoubleField(String property, String label){		
+		ValueModel valueModel = beanAdapter.getValueModel(property);
+//		DecimalFormat decimalFormat = new DecimalFormat("#.##");
+		 NumberFormatter decimalFormat = new NumberFormatter();
+		 decimalFormat.setValueClass(Double.class);
+//		decimalFormat.setDecimalSeparatorAlwaysShown(true);
+		JFormattedTextField textField = new JFormattedTextField(decimalFormat);
+		 Bindings.bind(textField, valueModel);
+		panelDeAtributos.append(label, textField);
+		return textField;
 	}
-	public JLabel addBindingDateField(String property, String label){		
+	
+	public JDateChooser addBindingDateField(String property, String label){		
 		JDateChooser date = new JDateChooser();
 		ValueModel nameModel = beanAdapter.getValueModel(property);
 		Bindings.bind(date, "date", nameModel);
-		return panelDeAtributos.append(label,date);
+		panelDeAtributos.append(label,date);
+		return date;
 	}
-	public JLabel addBindingCombobox(String label, SelectionInList<?> selectionInList, ListCellRenderer cellRenderer){		
-		return panelDeAtributos.append(label , BasicComponentFactory.createComboBox(selectionInList, cellRenderer));
+	public JComboBox addBindingCombobox(String label, SelectionInList<?> selectionInList, ListCellRenderer cellRenderer){		
+		JComboBox createComboBox = BasicComponentFactory.createComboBox(selectionInList, cellRenderer);
+        panelDeAtributos.append(label , createComboBox);
+		return createComboBox;
 	}
 	
-	public JLabel addBindingCheckBox(String property, String label) {
+	public JCheckBox addBindingCheckBox(String property, String label) {
 		ValueModel nameModel = beanAdapter.getValueModel(property);
-		return panelDeAtributos.append(label , BasicComponentFactory.createCheckBox(nameModel, label));
+		JCheckBox createCheckBox = BasicComponentFactory.createCheckBox(nameModel, label);
+        panelDeAtributos.append(label , createCheckBox);
+        return createCheckBox;
 	}
 	
 	public void addComponent(String label,Component component){
 		panelDeAtributos.append(label, component);
+	}
+	
+	public void bind(JComponent component, String propertyName , String property){
+		ValueModel valueModel = beanAdapter.getValueModel(property);
+		Bindings.bind(component, propertyName , valueModel);
 	}
 	
 	
@@ -120,8 +148,8 @@ public class PanelEdicion<T > extends JPanel {
 	public void setTituloEdicion(JLabel tituloEdicion) {
 		this.tituloEdicion = tituloEdicion;
 	}
-	public JPanel getPanelDeAtributos() {
-		return panelDeAtributos.getPanel();
+	public DefaultFormBuilder getPanelDeAtributos() {
+		return panelDeAtributos;
 	}
 	
 	public ButtonStackBuilder getPanelDeBotones() {
@@ -161,6 +189,10 @@ public class PanelEdicion<T > extends JPanel {
 		this.model = (T) object;
 		beanAdapter.setBean(object);
 		
+	}
+
+	public BeanAdapter getBeandAdapter() {
+		return beanAdapter;
 	}
 
 	

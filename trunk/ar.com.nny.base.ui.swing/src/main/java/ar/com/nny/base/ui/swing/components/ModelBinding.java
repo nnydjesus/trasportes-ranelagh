@@ -6,7 +6,7 @@ import ar.com.nny.base.common.Observable;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
-@SuppressWarnings({ "unchecked", "serial" })
+@SuppressWarnings({ "serial", "rawtypes" })
 public class ModelBinding extends AbstractTableAdapter implements Model{
 
 	public ModelBinding(ListModel listModel, String[] columnNames) {
