@@ -1,34 +1,37 @@
-package ar.com.syr.transportes.common;
+package ar.com.syr.transportes.categoria;
 
+import ar.com.nny.base.common.Item;
 import ar.com.nny.base.common.ItemComposite;
 import ar.com.syr.transportes.costos.CostoEmpleadoUi;
-import ar.com.syr.transportes.ui.amb.empleado.EmpleadoUi;
 import ar.com.syr.transportes.ui.amb.remito.RemitoUI;
 
 
 
 
-public class Tablas extends ItemComposite {
+public class Operaciones extends ItemComposite {
 	private static final long serialVersionUID = -6130962545676299492L;
 
-	public Tablas() {
+	public Operaciones() {
 		this.add(new RemitoUI());
-		this.add(new EmpleadoUi());
 		this.add(new CostoEmpleadoUi());
 	}
 
 	@Override
 	public String toString() {
-		return "Tablas";
+		return "Operaciones";
 	}
 
+	
 	@Override
-	public void mostrar() {
+	public void mostrar(Object item) {
+		((Item)item).mostrar();		
 	}
 	
+	
 	public static void main(String[] args) {
-		new Tablas();
+		new Operaciones();
 	}
+
 	
 
 }

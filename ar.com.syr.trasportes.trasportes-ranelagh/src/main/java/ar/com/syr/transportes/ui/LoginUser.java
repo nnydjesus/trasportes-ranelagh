@@ -10,7 +10,8 @@ public class LoginUser extends Login{
 	protected void onSubmit(String nombreIngresado) {
 		setVisible(false);
 		dispose();
-		new TransportesRanelagh(new PreInicio());
+//		new TransportesRanelagh(new PreInicio());
+		new TransportesRanelagh().setVisible(true);
 	}
 	
 	@Override

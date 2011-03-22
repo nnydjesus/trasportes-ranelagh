@@ -35,7 +35,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	public static final String APELLIDO = "apellido";
 	public static final String NOMBRE = "nombre";
 	public static final String DNI ="dni";
-	public static final String REGISTRO  ="registro";
+	public static final String REGISTRO  ="registroConducir";
 	public static final String CUIL = "cuil";
 	public static final String DIRECCION ="direccion";
 	public static final String PROPIO = "propio";
@@ -56,7 +56,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	
 	@Basic
 	@Column(name="registro_conducir")
-	private Integer registro;
+	private Integer registroConducir;
 	
 	@Basic
 	private String cuil;
@@ -88,6 +88,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	@SerializationStrategy(access = Through.TRANSIENT)
 	private CostoEmpleado costoEmpleado;
 	
+	
 	public String getLegajo() {
 		return legajo;
 	}
@@ -118,11 +119,11 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	public void setDni(Integer dni) {
 		this.dni = dni;
 	}
-	public Integer getRegistro() {
-		return registro;
+	public Integer getRegistroConducir() {
+		return registroConducir;
 	}
-	public void setRegistro(Integer registro) {
-		this.registro = registro;
+	public void setRegistroConducir(Integer registro) {
+		this.registroConducir = registro;
 	}
 	public String getCuil() {
 		return cuil;
@@ -143,10 +144,10 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 		licencia = licenciac;
 	}
 	
-	public Date getRegistroL() {
+	public Date getRegistro() {
 		return licencia.getRegistro();
 	}
-	public void setRegistroL(Date registro) {
+	public void setRegistro(Date registro) {
 		licencia.setRegistro(registro);
 	}
 	public Date getCnrt() {
@@ -175,11 +176,11 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	public void setLocalidad(String localidad) {
 		direccion.setLocalidad(localidad);
 	}
-	public String getDireccionD() {
-		return direccion.getDireccion();
+	public String getCalle() {
+		return direccion.getCalle();
 	}
-	public void setDireccionD(String direccion) {
-		this.direccion.setDireccion(direccion);
+	public void setCalle(String direccion) {
+		this.direccion.setCalle(direccion);
 	}
 	public int getTelefono() {
 		return direccion.getTelefono();
@@ -201,21 +202,11 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 		this.remitos = remitos;
 	}
 	public void addRemito(Remito remito) {
-		costoEmpleado.setCostoTotal(costoEmpleado.getCostoTotal()+remito.getChofer());
+		costoEmpleado.setCostoTotal(costoEmpleado.getCostoTotal()+remito.getCostoChofer());
 		this.remitos.add(remito);		
 	}
 	public void removeRemito(Remito remito) {
 		this.remitos.remove(remito);		
-	}
-	
-//	public void setCostoEmpleado(CostoEmpleado costoEmpleado) {
-//		this.costoEmpleado = costoEmpleado;
-//	}
-//	public CostoEmpleado getCostoEmpleado() {
-//		return costoEmpleado;
-//	}
-	public String[] atributos() {
-	return new String[] {LEGAJO, REGISTRO, APELLIDO, CUIL, NOMBRE, DNI, PROPIO};
 	}
 	
 	@Override
@@ -230,4 +221,10 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	}
 	
 
+	public String[] atributos() {
+		return new String[] {LEGAJO, REGISTRO, APELLIDO, CUIL, NOMBRE, DNI, PROPIO, 
+				Direccion.CALLE, Direccion.LOCALIDAD, Direccion.TELEFONO, Direccion.TELEFONO,
+				Licencia.CATEGORIA, Licencia.CNRT, Licencia.LIBRETA_SANITARIA, Licencia.REGISTRO};
+	}
+	
 }

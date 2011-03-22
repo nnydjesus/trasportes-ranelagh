@@ -1,4 +1,4 @@
-package main;
+package ar.com.syr.transportes.ui;
 
 import java.awt.GridLayout;
 import java.util.Vector;
@@ -12,9 +12,9 @@ import javax.swing.event.TreeSelectionListener;
 import ar.com.nny.base.common.Item;
 
 
-@SuppressWarnings("serial")
 public class Tree extends JPanel{
-	
+
+	private static final long serialVersionUID = 3686547751000945641L;
 	
 	private Vector<Item> vector= new Vector<Item>();
 	private JTree tree =  new JTree(vector);

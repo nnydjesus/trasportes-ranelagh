@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import ar.com.nny.base.generator.annotations.DataGenerator;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
@@ -27,15 +28,15 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 	public static final String ORIGEN ="origen";
 	public static final String DESTINO  ="destino";
 	public static final String ID = "id";
-	public static final String NRO_REMITO_2 ="nroRemito2";
 	public static final String COSTO ="costo";
-	public static final String CHOFER = "chofer";
+	public static final String COSTO_CHOFER ="costoChofer";
+	public static final String PORCENTAGE = "porcentage";
 	public static final String COMBUSTIBLE ="combustible";
 	public static final String LITROS= "litros";
-	public static final String LUGAR =  "lugar";
 	public static final String KM = "km";
 	public static final String PEAJE = "peaje";
 	public static final String PATENTE = "patente";
+	public static final String PAGO = "pago";
 	
     @Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
@@ -49,33 +50,33 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 	@Id
 	private String id;
 	
-    @Basic
-	private String nroRemito2="";
     
     @Basic
-	private Double costo=0.0;
+	private Double costo;
     
     @Basic
-	private Double chofer=0.0;
+	private Integer porcentage=0;
     
     @Basic
-	private Double combustible=0.0;
+	private Double combustible;
     
     @Basic
-	private Double litros=0.0;
+	private Double litros;
+    
     
     @Basic
-	private String lugar="";
+	private Integer km;
     
     @Basic
-	private Integer km=0;
-    
-    @Basic
-	private Double peaje=0.0;
+	private Double peaje;
     
     @Basic
 	private String patente="";
 	
+    @Basic
+    private Boolean pago = false;
+    @Transient
+	private Double costoChofer;
 	
 	
 	public Date getFecha() {
@@ -105,23 +106,15 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 	public void setId(String nroRemito1) {
 		this.id = nroRemito1;
 	}
-	public String getNroRemito2() {
-		return nroRemito2;
-	}
-	public void setNroRemito2(String nroRemito2) {
-		this.nroRemito2 = nroRemito2;
-	}
 	public Double getCosto() {
 		return costo;
 	}
 	public void setCosto(Double costo) {
 		this.costo = costo;
+		setCostoChofer(this.porcentage*getCosto()/100);
 	}
-	public Double getChofer() {
-		return chofer;
-	}
-	public void setChofer(Double chofer) {
-		this.chofer = chofer;
+	public void setCosto(Long costo) {
+		this.setCosto((double)costo);
 	}
 	public Double getCombustible() {
 		return combustible;
@@ -134,12 +127,6 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 	}
 	public void setLitros(Double litors) {
 		this.litros = litors;
-	}
-	public String getLugar() {
-		return lugar;
-	}
-	public void setLugar(String lugar) {
-		this.lugar = lugar;
 	}
 	public Integer getKm() {
 		return km;
@@ -160,9 +147,34 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 		this.patente = patente;
 	}
 	
+	public void setPago(Boolean pago) {
+		this.pago = pago;
+	}
+	public Boolean getPago() {
+		return pago;
+	}
+	public void setPorcentage(Object porcentage) {
+		this.porcentage = (Integer) porcentage;
+		if(costo!= null)
+		    setCostoChofer(this.porcentage*getCosto()/100);
+	}
+	public Object getPorcentage() {
+		return porcentage;
+	}
+	
+	public void setCostoChofer(Double costo) {
+		costoChofer = costo;
+		porcentage = (int) (costoChofer*100/getCosto());
+	}
+	
+	public Double getCostoChofer(){
+		if(costoChofer == null && porcentage != null && costo != null)
+			costoChofer = porcentage*getCosto()/100;
+		return this.costoChofer;
+	}
 	@Override
 	public  String[] atributos() {
-		return new String[] {FECHA, ORIGEN, DESTINO, ID, COSTO, CHOFER, COMBUSTIBLE, LITROS, NRO_REMITO_2, LUGAR, KM, PEAJE, PATENTE};
+		return new String[] {FECHA, ORIGEN, DESTINO, ID, COSTO, COSTO_CHOFER, PAGO, PORCENTAGE, COMBUSTIBLE, LITROS, KM, PEAJE, PATENTE};
 	}
 	
 	
