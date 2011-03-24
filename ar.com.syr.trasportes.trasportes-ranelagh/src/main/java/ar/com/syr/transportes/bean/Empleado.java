@@ -31,7 +31,7 @@ import ar.com.syr.transportes.initialData.DataGeneratorEmpleado;
 public class Empleado extends IdentificablePersistentObject implements Serializable{
 	private static final long serialVersionUID = 15580157969060161L;
 	
-	public static final String LEGAJO = "legajo"; 
+	public static final String LEGAJO = "id"; 
 	public static final String APELLIDO = "apellido";
 	public static final String NOMBRE = "nombre";
 	public static final String DNI ="dni";
@@ -42,11 +42,11 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	public static final String LICENCIA ="licencia";
 	
 	@Id
-	private String legajo;
+	private String id="";
 	@Basic
-	private String apellido;
+	private String apellido ="";
 	@Basic
-	private String nombre;
+	private String nombre="";
 	
 	@Basic
 	private boolean propio;
@@ -89,11 +89,11 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	private CostoEmpleado costoEmpleado;
 	
 	
-	public String getLegajo() {
-		return legajo;
+	public String getId() {
+		return this.id;
 	}
-	public void setLegajo(String legajo) {
-		this.legajo = legajo;
+	public void setId(String legajo) {
+		this.id = legajo;
 	}
 	public String getApellido() {
 		return apellido;
@@ -209,10 +209,6 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 		this.remitos.remove(remito);		
 	}
 	
-	@Override
-	public String getId() {
-		return legajo;
-	}
 	public void setCostoEmpleado(CostoEmpleado costoEmpleado) {
 		this.costoEmpleado = costoEmpleado;
 	}

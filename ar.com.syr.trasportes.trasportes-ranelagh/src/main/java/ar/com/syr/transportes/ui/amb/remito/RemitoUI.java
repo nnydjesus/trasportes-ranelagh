@@ -15,15 +15,17 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.NumberFormatter;
 
 import ar.com.nny.base.common.Item;
-import ar.com.nny.base.dao.GenericDao;
 import ar.com.nny.base.ui.swing.components.ActionMethodListener;
 import ar.com.nny.base.ui.swing.components.GeneralFrame;
 import ar.com.nny.base.ui.swing.components.GeneralTable;
 import ar.com.nny.base.ui.swing.components.Generator;
 import ar.com.nny.base.ui.swing.components.MyJComboBox;
-import ar.com.nny.base.utils.IdentificablePersistentObject;
+import ar.com.nny.base.ui.swing.components.abms.PanelEdicion;
+import ar.com.nny.base.ui.swing.components.search.SearchPanel;
 import ar.com.syr.transportes.bean.Empleado;
 import ar.com.syr.transportes.bean.Remito;
+import ar.com.syr.transportes.serach.HomeEmpleado;
+import ar.com.syr.transportes.serach.HomeRemito;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -50,7 +52,7 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item{
 	}
 	
 	@Override
-	protected void createForm() {
+	protected void createForm(PanelEdicion<Remito> edicion) {
 		 NumberFormatter decimalFormat = new NumberFormatter();
 		 decimalFormat.setValueClass(Double.class);
 		 decimalFormat.setFormat(new DecimalFormat("#.##"));
@@ -62,7 +64,7 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item{
 		defBuilder.append("Porcentage", porcentageSpinner);
 		panelCostoChofer.add(costoChofer);
 		panelCostoChofer.add(defBuilder.getPanel());
-		cbEmpleados= new MyJComboBox(tablaList);
+		cbEmpleados= new MyJComboBox(home.buscarTodos());
 		cbEmpleados.addDefaultValue(new Empleado());
 		edicion.addComponent("Seleccione El Empleado", cbEmpleados);
 		edicion.addComponent("Seleccione El Remito", comboBox);
@@ -106,8 +108,8 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item{
 	
 
 	@Override
-	protected void createDao() {
-		dao = new GenericDao<IdentificablePersistentObject>(Empleado.class, "Empleado");
+	protected void createHome() {
+		home = new HomeEmpleado();
 	}
 	@Override
 	public void comboboxListener() {
@@ -128,11 +130,7 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item{
 	protected void edicionAgregar() {
 		Remito model = edicion.getModel();
 		if(tengo && model.getId() != null ){
-			Empleado empleado = (Empleado) cbEmpleados.getSelectedItem();
-			tablaList.add(model);
-			dao.save(model);
-			empleado.addRemito(model);
-			dao.update(empleado);
+			home.agregar(model);
 			edicion.setModel(getDefaultModel());
 			updateCombo();
 		}
@@ -161,6 +159,12 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item{
     public void updateCostoChofer() {
         edicion.getModel().setCosto((Double)costoTextField.getValue());
         costoChofer.setValue(edicion.getModel().getCostoChofer());
+    }
+    
+    @Override
+    protected void createSearchForm(SearchPanel<Remito> search) {
+        search.addBindingTextField(Remito.ID, "Numero de Remito");
+        search.addBindingDateField(Remito.FECHA, "fecha");
     }
 
 	
