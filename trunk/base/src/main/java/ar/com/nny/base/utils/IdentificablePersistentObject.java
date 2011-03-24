@@ -1,24 +1,27 @@
 package ar.com.nny.base.utils;
 
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+
 
 import ar.com.nny.base.persistence.PersistentObject;
+import ar.com.nny.base.persistence.SerializationStrategy;
+import ar.com.nny.base.persistence.Through;
 
 
 /**
  * Persistent objects are BusinessObjects that persist in the data store.
  * They add the state version, used for optimistic locking.
  *
- * @author Claudio
  */
 @MappedSuperclass
 public abstract class IdentificablePersistentObject extends PersistentObject {
 
-//    @EmbeddedId
-//    @SerializationStrategy(access = Through.READ_ONLY_ACCESSOR)
+    @SerializationStrategy(access = Through.READ_ONLY_ACCESSOR)
 //    @DocumentId
-//    @FieldBridge(impl = UUIDBridge.class)
-//    private String id;
+    @Deprecated
+    @Transient
+    private String id;
 
 
     public IdentificablePersistentObject() {
@@ -27,8 +30,11 @@ public abstract class IdentificablePersistentObject extends PersistentObject {
 
 
     public String getId() {
-        return null;
+        return id;
+    }
+    public void setId(String id) {
     }
     
 
 }
+
