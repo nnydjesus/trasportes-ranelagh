@@ -22,7 +22,7 @@ public class CostoEmpleado extends IdentificablePersistentObject implements Seri
 		
 	private static final long serialVersionUID = -7880912781384257512L;
 
-//		public static final String EMPLEADO = "empleado";
+		public static final String EMPLEADO = "empleado";
 		public static final String COSTO_TOTAL = "costoTotal";
 		
 		 @Id

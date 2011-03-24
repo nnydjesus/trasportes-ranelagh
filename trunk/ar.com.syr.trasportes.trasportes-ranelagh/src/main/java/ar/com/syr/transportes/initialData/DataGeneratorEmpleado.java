@@ -42,7 +42,7 @@ public class DataGeneratorEmpleado  extends InitialDataGenerator<Empleado> {
 		empleado.setApellido("Apellido "+i);
 		empleado.setCuil(i*20+"");
 		empleado.setDni(i*3522);
-		empleado.setLegajo("Legajo "+i);
+		empleado.setId("Legajo "+i);
 		empleado.setNombre("Nombre "+i);
 		empleado.setPropio(true);
 		empleado.setRegistroConducir(2542*i);
