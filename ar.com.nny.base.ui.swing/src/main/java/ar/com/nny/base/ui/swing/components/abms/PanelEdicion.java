@@ -2,6 +2,7 @@ package ar.com.nny.base.ui.swing.components.abms;
 
 import java.awt.Component;
 import java.text.NumberFormat;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -131,6 +132,13 @@ public class PanelEdicion<T > extends JPanel {
 	
 	public void addComponent(String label,Component component){
 		panelDeAtributos.append(label, component);
+	}
+	public JComboBox addBindingComboBox(String property,List<?> list){
+	    ValueModel nameModel = beanAdapter.getValueModel(property);
+        SelectionInList<?> selectionInList = new SelectionInList(list);
+        JComboBox createCheckBox = BasicComponentFactory.createComboBox(selectionInList );
+        panelDeAtributos.append(property , createCheckBox);
+        return createCheckBox;
 	}
 	
 	public void bind(JComponent component, String propertyName , String property){

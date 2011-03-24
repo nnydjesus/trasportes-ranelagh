@@ -1,5 +1,6 @@
 package ar.com.nny.base.ui.swing.components;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,64 +9,61 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
-import javax.swing.GroupLayout.Alignment;
 
 import ar.com.nny.base.common.Item;
-import ar.com.nny.base.common.Observable;
-import ar.com.nny.base.dao.GenericDao;
+import ar.com.nny.base.search.Home;
 import ar.com.nny.base.ui.swing.components.abms.PanelEdicion;
+import ar.com.nny.base.ui.swing.components.search.SearchPanel;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 import ar.com.nny.base.utils.PrintUtilities;
+import ar.com.nny.base.utils.ReflectionUtils;
 
-@SuppressWarnings({ "unchecked", "serial" })
+@SuppressWarnings({ "unchecked", "serial" , "rawtypes"})
 public abstract class GeneralFrame<T extends IdentificablePersistentObject> extends JFrame implements Item{
 	
 	private TopPanel topPanel;
 	protected GeneralTable table;
 	protected JTabbedPane panel = new JTabbedPane();
 	protected PanelEdicion<T> edicion;
-	protected GenericDao<IdentificablePersistentObject> dao;
-	protected List<IdentificablePersistentObject> tablaList;
+    protected Home home;
 	private String nombre;
 	protected MyJComboBox comboBox;
-	private Class clase;
 	protected Boolean tengo;
+    private SearchPanel<T> search;
 
 
 
 
 	public GeneralFrame(String name, Class clase) {
-		this.clase = clase;
 		this.nombre = name;
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		T newInstance;
-		try {
-			newInstance = (T) clase.newInstance();
-			edicion = new PanelEdicion<T>(name, newInstance);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		createDao();
-		tablaList = dao.getAll();
-		createComboBox();
+		createHome();
+
+		newInstance = (T) ReflectionUtils.instanciate(clase);
+		edicion = new PanelEdicion<T>(name, newInstance);
+   		search = new SearchPanel<T>(name, newInstance, home);        
+		
+   		createComboBox();
 		comboBox.addDefaultValue(getDefaultModel());
 		this.topPanel = new TopPanel();
 		this.table = createTable(newInstance);
-		this.createForm();
+		this.createForm(edicion);
+		this.createSearchForm(search);
 		this.addPanels();
 		this.addActions();
 		this.add(topPanel);
 		this.add(panel);
-//		setLayout();
 		this.setSize(1024, 780);
 		this.setVisible(false);
 	}
 	
-	
-	protected void setLayout(){
+
+    protected void setLayout(){
 		GroupLayout layout = new GroupLayout(this.getContentPane());
 		layout
 		.setHorizontalGroup(layout.
@@ -86,22 +84,23 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
 
 	protected GeneralTable createTable(T newInstance) {
-		return Generator.GENERATE_TABLE(tablaList, newInstance.atributos());
+		return Generator.GENERATE_TABLE(home.buscarTodos(), newInstance.atributos());
 	}
 
 
 	protected void createComboBox() {
-		this.comboBox = new MyJComboBox(tablaList);
+		this.comboBox = new MyJComboBox(home.buscarTodos());
 	}
 	
 
-	protected void createDao() {
-		dao = new GenericDao<IdentificablePersistentObject>(clase, nombre);		
+	protected void createHome() {
+//		home = new GenericDao<IdentificablePersistentObject>(clase, nombre);		
 	}
 
 	protected void addPanels(){
 		panel.addTab("General",null, edicion, "Edicion");
 		panel.addTab("Tabla",null, table, "tabla");
+		panel.addTab("Filtro",null, search, "Filtro");
 	}
 	
 
@@ -163,8 +162,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 	}
 	
 	protected void edicionAgregar() {
-		tablaList.add(edicion.getModel());
-		dao.save(edicion.getModel());
+		home.agregar(edicion.getModel());
 		edicion.setModel(getDefaultModel());
 		SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
 	}	
@@ -183,11 +181,9 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 	}
 	
 	protected void edicionModificar() {
-		IdentificablePersistentObject model = edicion.getModel();
+		T model = edicion.getModel();
 		if(model.getId() != null){
-    		tablaList.remove(model);
-    		tablaList.add(model);
-    		dao.update(model);
+    		home.actualizar(model);
     		edicion.setModel(getDefaultModel());
     		edicion.getBotonModificar().setEnabled(false);
     		SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
@@ -205,16 +201,20 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 		this.setVisible(true);	
 	}
 	
-	public List<T> getObjects(){
-		return (List<T>) tablaList;
-	}
-	
 	@Override
 	public String toString() {
 		return nombre;
 	}
 	
-	protected abstract void createForm();
-
+	protected abstract void createForm(PanelEdicion<T> edicion2);
+	
+	protected  void createSearchForm(SearchPanel<T> panel){
+	    this.createForm(search);
+	}
+	
+	public List<T> getObjects(){
+	    return home.buscarTodos();
+	}
+ 
 }
 
