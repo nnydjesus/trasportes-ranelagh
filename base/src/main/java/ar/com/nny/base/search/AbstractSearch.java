@@ -6,17 +6,21 @@ import java.util.List;
 import ar.com.nny.base.common.Observable;
 
 public abstract class AbstractSearch<T extends Observable> extends Observable implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     public static final String LIST = "list";
+
     public static final String SELECTED = "selected";
 
     private T selected;
+
     private List<T> list;
 
     public AbstractSearch() {
         this.search();
     }
 
-//    public abstract Class<T> getSearchType();
+    // public abstract Class<T> getSearchType();
 
     // ***********************************************************
     // ** Actions
@@ -45,7 +49,7 @@ public abstract class AbstractSearch<T extends Observable> extends Observable im
         return this.selected;
     }
 
-    public void setSelected(T selected) {
+    public void setSelected(final T selected) {
         T oldSelected = this.selected;
         this.selected = selected;
         this.firePropertyChange(SELECTED, oldSelected, this.selected);

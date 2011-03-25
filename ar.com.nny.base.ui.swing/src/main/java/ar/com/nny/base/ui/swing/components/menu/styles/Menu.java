@@ -20,102 +20,115 @@ import org.jvnet.substance.skin.SubstanceTwilightLookAndFeel;
 
 import ar.com.nny.base.ui.swing.components.FrameLook;
 
-@SuppressWarnings("serial")
 public class Menu extends JMenuBar {
+    private static final long serialVersionUID = 1L;
 
-	private JMenu menuArchivo;
-	private JMenu menuconfiguracion;
-	private JMenu aparienciaItem;
-	private JMenuItem lookTwilight;
-	private JMenuItem lookLegacy;
-	private JMenuItem lookBusinessBlackSteel;
-	private JMenuItem lookEmeraldDus;
-	private JMenuItem lookRavenGraphiteGlass;
-	private FrameLook parent;
-	
-	private SubstanceLookAndFeel substanceTwilightLookAndFeel;
-	private SubstanceLookAndFeel substanceLegacyDefaultLookAndFeel;
-	private SubstanceLookAndFeel substanceRavenGraphiteGlassLookAndFeel;
-	private SubstanceLookAndFeel substanceBusinessBlackSteelLookAndFeel;
-	private SubstanceLookAndFeel substanceEmeraldDuskLookAndFeel;
-	private JMenuItem lookMagellan;
-	private SubstanceLookAndFeel substanceSaharaLokAndFeel;
-	private SubstanceMagellanLookAndFeel substanceMagellanLokAndFeel;
-	private SubstanceMagmaLookAndFeel substanceMagmaLokAndFeel;
-	private JMenuItem lookMagma;
-	private JMenuItem lookSahara;
+    private JMenu menuArchivo;
 
-	public Menu(FrameLook reproductor) {
-		this.parent = reproductor;
-		this.menuArchivo = new JMenu("Archivo");
-		this.menuconfiguracion = new JMenu("Configuracion");
-		this.aparienciaItem = new JMenu("Apariencia");
-		this.lookBusinessBlackSteel= new JMenuItem("BusinessBlackSteel");
-		this.lookEmeraldDus = new JMenuItem("EsmeraldDus");
-		this.lookLegacy = new JMenuItem("Legacy");
-		this.lookRavenGraphiteGlass = new JMenuItem("RavenGraphiteGlass");
-		this.lookTwilight = new JMenuItem("Twilight");
-		this.lookMagellan = new JMenuItem("Magellan");
-		this.lookMagma = new JMenuItem("Magma");
-		this.lookSahara = new JMenuItem("Sahara");
-		this.substanceBusinessBlackSteelLookAndFeel = new SubstanceBusinessBlackSteelLookAndFeel();
-		this.substanceEmeraldDuskLookAndFeel = new SubstanceEmeraldDuskLookAndFeel();
-		this.substanceLegacyDefaultLookAndFeel = new SubstanceLegacyDefaultLookAndFeel();
-		this.substanceRavenGraphiteGlassLookAndFeel = new SubstanceRavenGraphiteGlassLookAndFeel();
-		this.substanceTwilightLookAndFeel = new SubstanceTwilightLookAndFeel();
-		this.substanceMagmaLokAndFeel = new SubstanceMagmaLookAndFeel();
-		this.substanceMagellanLokAndFeel = new SubstanceMagellanLookAndFeel();
-		this.substanceSaharaLokAndFeel = new SubstanceSaharaLookAndFeel();
-		
-		this.init();
-		this.addActions();
-		//lookBusinessBlackSteel.doClick();
+    private JMenu menuconfiguracion;
 
-	}
+    private JMenu aparienciaItem;
 
-	private void init() {
-		this.menuconfiguracion.add(this.aparienciaItem);
-		this.aparienciaItem.add(lookBusinessBlackSteel);
-		this.aparienciaItem.add(lookEmeraldDus);
-		this.aparienciaItem.add(lookLegacy);
-		this.aparienciaItem.add(lookRavenGraphiteGlass);
-		this.aparienciaItem.add(lookTwilight);
-		this.aparienciaItem.add(lookMagellan);
-		this.aparienciaItem.add(lookMagma);
-		this.aparienciaItem.add(lookSahara);
-		this.add(this.menuArchivo);
-		this.add(this.menuconfiguracion);		
-	}
-	
-	public void addActions(){
-		this.lookBusinessBlackSteel.addActionListener(new AparienciaListener(substanceBusinessBlackSteelLookAndFeel));
-		this.lookEmeraldDus.addActionListener(new AparienciaListener(substanceEmeraldDuskLookAndFeel));
-		this.lookLegacy.addActionListener(new AparienciaListener(substanceLegacyDefaultLookAndFeel));
-		this.lookRavenGraphiteGlass.addActionListener(new AparienciaListener(substanceRavenGraphiteGlassLookAndFeel));
-		this.lookTwilight.addActionListener(new AparienciaListener(substanceTwilightLookAndFeel));
-		this.lookSahara.addActionListener(new AparienciaListener(substanceSaharaLokAndFeel));
-		this.lookMagellan.addActionListener(new AparienciaListener(substanceMagellanLokAndFeel));
-		this.lookMagma.addActionListener(new AparienciaListener(substanceMagmaLokAndFeel));
+    private JMenuItem lookTwilight;
 
-	}
-	
-	
+    private JMenuItem lookLegacy;
 
+    private JMenuItem lookBusinessBlackSteel;
 
-	
-	class AparienciaListener implements ActionListener{
-		
-		private LookAndFeel look;
+    private JMenuItem lookEmeraldDus;
 
-		public AparienciaListener(LookAndFeel look) {
-			this.look = look;
-		}
+    private JMenuItem lookRavenGraphiteGlass;
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			parent.setLook(look);
-		}
-	}
+    private FrameLook parent;
 
+    private SubstanceLookAndFeel substanceTwilightLookAndFeel;
+
+    private SubstanceLookAndFeel substanceLegacyDefaultLookAndFeel;
+
+    private SubstanceLookAndFeel substanceRavenGraphiteGlassLookAndFeel;
+
+    private SubstanceLookAndFeel substanceBusinessBlackSteelLookAndFeel;
+
+    private SubstanceLookAndFeel substanceEmeraldDuskLookAndFeel;
+
+    private JMenuItem lookMagellan;
+
+    private SubstanceLookAndFeel substanceSaharaLokAndFeel;
+
+    private SubstanceMagellanLookAndFeel substanceMagellanLokAndFeel;
+
+    private SubstanceMagmaLookAndFeel substanceMagmaLokAndFeel;
+
+    private JMenuItem lookMagma;
+
+    private JMenuItem lookSahara;
+
+    public Menu(final FrameLook reproductor) {
+        parent = reproductor;
+        menuArchivo = new JMenu("Archivo");
+        menuconfiguracion = new JMenu("Configuracion");
+        aparienciaItem = new JMenu("Apariencia");
+        lookBusinessBlackSteel = new JMenuItem("BusinessBlackSteel");
+        lookEmeraldDus = new JMenuItem("EsmeraldDus");
+        lookLegacy = new JMenuItem("Legacy");
+        lookRavenGraphiteGlass = new JMenuItem("RavenGraphiteGlass");
+        lookTwilight = new JMenuItem("Twilight");
+        lookMagellan = new JMenuItem("Magellan");
+        lookMagma = new JMenuItem("Magma");
+        lookSahara = new JMenuItem("Sahara");
+        substanceBusinessBlackSteelLookAndFeel = new SubstanceBusinessBlackSteelLookAndFeel();
+        substanceEmeraldDuskLookAndFeel = new SubstanceEmeraldDuskLookAndFeel();
+        substanceLegacyDefaultLookAndFeel = new SubstanceLegacyDefaultLookAndFeel();
+        substanceRavenGraphiteGlassLookAndFeel = new SubstanceRavenGraphiteGlassLookAndFeel();
+        substanceTwilightLookAndFeel = new SubstanceTwilightLookAndFeel();
+        substanceMagmaLokAndFeel = new SubstanceMagmaLookAndFeel();
+        substanceMagellanLokAndFeel = new SubstanceMagellanLookAndFeel();
+        substanceSaharaLokAndFeel = new SubstanceSaharaLookAndFeel();
+
+        this.init();
+        this.addActions();
+        // lookBusinessBlackSteel.doClick();
+
+    }
+
+    private void init() {
+        menuconfiguracion.add(aparienciaItem);
+        aparienciaItem.add(lookBusinessBlackSteel);
+        aparienciaItem.add(lookEmeraldDus);
+        aparienciaItem.add(lookLegacy);
+        aparienciaItem.add(lookRavenGraphiteGlass);
+        aparienciaItem.add(lookTwilight);
+        aparienciaItem.add(lookMagellan);
+        aparienciaItem.add(lookMagma);
+        aparienciaItem.add(lookSahara);
+        this.add(menuArchivo);
+        this.add(menuconfiguracion);
+    }
+
+    public void addActions() {
+        lookBusinessBlackSteel.addActionListener(new AparienciaListener(substanceBusinessBlackSteelLookAndFeel));
+        lookEmeraldDus.addActionListener(new AparienciaListener(substanceEmeraldDuskLookAndFeel));
+        lookLegacy.addActionListener(new AparienciaListener(substanceLegacyDefaultLookAndFeel));
+        lookRavenGraphiteGlass.addActionListener(new AparienciaListener(substanceRavenGraphiteGlassLookAndFeel));
+        lookTwilight.addActionListener(new AparienciaListener(substanceTwilightLookAndFeel));
+        lookSahara.addActionListener(new AparienciaListener(substanceSaharaLokAndFeel));
+        lookMagellan.addActionListener(new AparienciaListener(substanceMagellanLokAndFeel));
+        lookMagma.addActionListener(new AparienciaListener(substanceMagmaLokAndFeel));
+
+    }
+
+    class AparienciaListener implements ActionListener {
+
+        private LookAndFeel look;
+
+        public AparienciaListener(final LookAndFeel look) {
+            this.look = look;
+        }
+
+        @Override
+        public void actionPerformed(final ActionEvent e) {
+            parent.setLook(look);
+        }
+    }
 
 }
