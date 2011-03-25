@@ -23,11 +23,11 @@ public class SearchPanel<T extends IdentificablePersistentObject> extends Abstra
 
     private JButton clear;
 
-    private Home<T> home;
+    protected Home<T> home;
 
     private GeneralTable table;
 
-    private List<T> result = new ArrayList<T>();
+    protected List<T> result = new ArrayList<T>();
 
     public SearchPanel(final String claseAEditar, final T model, final Home<T> home) {
         super(claseAEditar, model);

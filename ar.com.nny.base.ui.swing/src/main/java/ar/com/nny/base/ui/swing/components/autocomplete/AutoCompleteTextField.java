@@ -28,24 +28,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.text.Document;
 
-/**
- * 
- * @author Matt Welsh (matt@matt-welsh.com)
- * 
- * @modified Sam Berlin .. to not implement AutoComplete, not take the
- *           dictionary in the constructor, allow the Dictionary and listeners
- *           to be lazily created, and update the dictionary at will. .. update
- *           to use Popup/PopupFactory.
- * 
- * @modified David Soh (yunharla00@hotmail.com) Added enhancements/fixes: 1.
- *           Fixed messing up of "Chinese (Simplified) Microsoft Pinyin IME 3.0"
- *           input for bilingual users of Windows XP (Eng). 2. Popup to show and
- *           allow selection of a. all autocomplete matches for current text, or
- *           b. all available entries Notes: Using JComboBox for popup messes up
- *           IME input even more! JPopupMenu item selection (GUI) is not
- *           properly updated with some L&F.
- * 
- */
 public class AutoCompleteTextField extends KeyProcessingTextField {
 
     private static final long serialVersionUID = 1L;
@@ -154,6 +136,7 @@ public class AutoCompleteTextField extends KeyProcessingTextField {
             }
         }
     }
+    
 
     /**
      * Ensures the popup gets hidden if this text-box is hidden and that the
@@ -464,9 +447,9 @@ public class AutoCompleteTextField extends KeyProcessingTextField {
         }
 
         @Override
-        protected void processKeyEvent(final KeyEvent e) {
-            super.processKeyEvent(e);
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+        protected void processMouseEvent(final MouseEvent me) {
+            super.processMouseEvent(me);
+            if (me.getID() == MouseEvent.MOUSE_CLICKED) {
                 this.selectText();
             }
         }

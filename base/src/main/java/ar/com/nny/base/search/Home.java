@@ -16,7 +16,7 @@ public abstract class Home<T extends IdentificablePersistentObject> {
 
     private List<T> objects = new ArrayList<T>();
 
-    private GenericDao<T> dao;
+    protected GenericDao<T> dao;
 
     public Home(final Class<T> clazz) {
         this(new GenericDao<T>(clazz));
