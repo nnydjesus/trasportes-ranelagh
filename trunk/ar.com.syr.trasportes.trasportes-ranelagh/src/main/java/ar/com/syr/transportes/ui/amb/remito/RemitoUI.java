@@ -28,6 +28,7 @@ import ar.com.syr.transportes.bean.Remito;
 import ar.com.syr.transportes.search.HomeCostoempleado;
 import ar.com.syr.transportes.search.HomeEmpleado;
 import ar.com.syr.transportes.search.HomeRemito;
+import ar.com.syr.transportes.search.RemitoSearchPanel;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -174,9 +175,14 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item {
     }
 
     @Override
+    protected SearchPanel<Remito> createSearchPanel(final String name, final Remito newInstance) {
+        return new RemitoSearchPanel(newInstance);
+    }
+
+    @Override
     protected void createSearchForm(final SearchPanel<Remito> search) {
-        search.addBindingTextField(Remito.ID, "Numero de Remito");
-        search.addBindingDateField(Remito.FECHA, "fecha");
+        search.addAutocompletetextField(Remito.ID, "Numero de Remito");
+        ((RemitoSearchPanel) search).addFields();
     }
 
 }

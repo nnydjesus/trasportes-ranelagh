@@ -52,7 +52,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
         newInstance = (T) ReflectionUtils.instanciate(clase);
         edicion = new PanelEdicion<T>(name, newInstance);
-        search = new SearchPanel<T>(name, newInstance, home);
+        search = createSearchPanel(name, newInstance);
 
         this.createComboBox();
         comboBox.addDefaultValue(home.createExample());
@@ -66,6 +66,10 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
         this.add(panel);
         this.setSize(1024, 780);
         this.setVisible(false);
+    }
+
+    protected SearchPanel<T> createSearchPanel(final String name, T newInstance) {
+        return new SearchPanel<T>(name, newInstance, home);
     }
 
     protected void setLayout() {
