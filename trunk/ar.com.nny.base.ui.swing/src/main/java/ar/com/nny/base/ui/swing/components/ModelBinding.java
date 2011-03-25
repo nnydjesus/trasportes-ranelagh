@@ -6,38 +6,34 @@ import ar.com.nny.base.common.Observable;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
-@SuppressWarnings({ "serial", "rawtypes" })
-public class ModelBinding extends AbstractTableAdapter implements Model{
+@SuppressWarnings({ "rawtypes" })
+public class ModelBinding extends AbstractTableAdapter implements Model {
 
-	public ModelBinding(ListModel listModel, String[] columnNames) {
-		super(listModel, columnNames);		
-	}
-	
-	
-	 public Object getSelected(int i){
-	   	return this.getRow(i);
-	}
-	 
-	 @Override
-	 public Object getValueAt(int rowIndex, int columnIndex) {
-		    Observable observable = (Observable)getRow(rowIndex);
-			String colum = this.getColumnName(columnIndex);
-			Object property = observable.getProperty(colum);
-			return property;          
-		         
-		}
-	 
-	 @Override
-	public Class<?> getColumnClass(int columnIndex) {
-		 if(getRowCount()>0)
-			 return getValueAt(0, columnIndex).getClass();
-		 else
-			 return Object.class;
-	}
+    private static final long serialVersionUID = 1L;
 
-	
-	
+    public ModelBinding(final ListModel listModel, final String[] columnNames) {
+        super(listModel, columnNames);
+    }
+
+    public Object getSelected(final int i) {
+        return this.getRow(i);
+    }
+
+    @Override
+    public Object getValueAt(final int rowIndex, final int columnIndex) {
+        Observable observable = (Observable) this.getRow(rowIndex);
+        String colum = this.getColumnName(columnIndex);
+        Object property = observable.getProperty(colum);
+        return property;
+
+    }
+
+    @Override
+    public Class<?> getColumnClass(final int columnIndex) {
+        if (this.getRowCount() > 0)
+            return this.getValueAt(0, columnIndex).getClass();
+        else
+            return Object.class;
+    }
 
 }
-
-

@@ -3,53 +3,87 @@ package ar.com.nny.base.ui.swing.components.search;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
 import ar.com.nny.base.search.Home;
+import ar.com.nny.base.ui.swing.components.AbstractBindingPanel;
 import ar.com.nny.base.ui.swing.components.ActionMethodListener;
 import ar.com.nny.base.ui.swing.components.GeneralTable;
 import ar.com.nny.base.ui.swing.components.Generator;
-import ar.com.nny.base.ui.swing.components.abms.PanelEdicion;
+import ar.com.nny.base.ui.swing.components.autocomplete.AutoCompleteTextField;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 
-public class SearchPanel<T extends IdentificablePersistentObject> extends PanelEdicion<T>{
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.value.ValueModel;
+
+public class SearchPanel<T extends IdentificablePersistentObject> extends AbstractBindingPanel<T> {
+
+    private JButton search;
+
+    private JButton clear;
 
     private Home<T> home;
+
     private GeneralTable table;
+
     private List<T> result = new ArrayList<T>();
 
-    public SearchPanel(String claseAEditar, T model, Home<T> home) {
+    public SearchPanel(final String claseAEditar, final T model, final Home<T> home) {
         super(claseAEditar, model);
         this.home = home;
-        table = createTable(home.createExample());
+        table = this.createTable(home.createExample());
         this.addActions();
         this.add(table);
-        this.getBotonAgregar().setText("Buscar");
-        this.getBotonModificar().setVisible(false);
-        this.getBotonCancelar().setText("Limpiar");
     }
 
     private static final long serialVersionUID = 1L;
-    
-    protected GeneralTable createTable(T newInstance) {
+
+    protected GeneralTable createTable(final T newInstance) {
         return Generator.GENERATE_TABLE(result, newInstance.atributos());
     }
-    
-    private void addActions() {
-        this.getBotonAgregar().addActionListener(new ActionMethodListener(this, "buscar"));
-        this.getBotonCancelar().addActionListener(new ActionMethodListener(this, "clear"));
+
+    @Override
+    protected void addButtons() {
+        this.search = new JButton();
+        this.search.setText("Buscar");
+        this.clear = new JButton();
+        this.clear.setText("Limpiar");
+
+        this.getPanelDeBotones().addGridded(search);
+        this.getPanelDeBotones().addGridded(clear);
+
     }
-    
-    public void clear(){
+
+    private void addActions() {
+        this.search.addActionListener(new ActionMethodListener(this, "search"));
+        this.clear.addActionListener(new ActionMethodListener(this, "clear"));
+    }
+
+    public void clear() {
         result.removeAll(result);
         SwingUtilities.updateComponentTreeUI(this);
     }
-    
-    public void buscar() {
-       result.removeAll(result);
-       result.addAll(home.searchByExample(getModel()));
-       SwingUtilities.updateComponentTreeUI(this);
+
+    public void search() {
+        result.removeAll(result);
+        result.addAll(home.searchByExample(this.getModel()));
+        SwingUtilities.updateComponentTreeUI(this);
     }
-    
+
+    public AutoCompleteTextField addAutocompletetextField(final String property, final String label) {
+        ValueModel valueModel = beanAdapter.getValueModel(property);
+        AutoCompleteTextField createTextField = new AutoCompleteTextField();
+        Bindings.bind(createTextField, valueModel);
+        this.addListDataAutoComplete(createTextField, property);
+        this.getPanelDeAtributos().append(label, createTextField);
+        return createTextField;
+    }
+
+    protected void addListDataAutoComplete(final AutoCompleteTextField text, final String property) {
+        for (T object : home.buscarTodos()) {
+            text.addToDictionary(object.getProperty(property).toString());
+        }
+    }
 
 }

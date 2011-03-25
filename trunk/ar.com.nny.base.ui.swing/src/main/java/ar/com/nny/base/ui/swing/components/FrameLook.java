@@ -8,36 +8,38 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import ar.com.nny.base.ui.swing.components.menu.styles.Menu;
 
+public class FrameLook extends JFrame {
 
-public class FrameLook extends JFrame{
-	
-	protected LookAndFeel look;
-	
-	public FrameLook() {
-		this.setJMenuBar(new Menu(this));
-	}
-	
-	protected void setLoader(Preloader loader){
-		loader.start();
-	}
+    private static final long serialVersionUID = 1L;
 
-	public void setLook(LookAndFeel look2) {
-		this.look = look2;
-		Runnable runnable = new Runnable() {
-			public void run() {
-				try {						
-						updateUI();
-					} catch (UnsupportedLookAndFeelException ex) {
-						new RuntimeException(ex);
-				}
-			}
+    protected LookAndFeel look;
 
-		};
-		SwingUtilities.invokeLater(runnable);
-	}
-	protected void updateUI() throws UnsupportedLookAndFeelException {
-		UIManager.setLookAndFeel(FrameLook.this.look);
-		SwingUtilities.updateComponentTreeUI(FrameLook.this.getParent());
-	}
+    public FrameLook() {
+        this.setJMenuBar(new Menu(this));
+    }
+
+    protected void setLoader(final Preloader loader) {
+        loader.start();
+    }
+
+    public void setLook(final LookAndFeel look2) {
+        look = look2;
+        Runnable runnable = new Runnable() {
+            public void run() {
+                try {
+                    FrameLook.this.updateUI();
+                } catch (UnsupportedLookAndFeelException ex) {
+                    new RuntimeException(ex);
+                }
+            }
+
+        };
+        SwingUtilities.invokeLater(runnable);
+    }
+
+    protected void updateUI() throws UnsupportedLookAndFeelException {
+        UIManager.setLookAndFeel(look);
+        SwingUtilities.updateComponentTreeUI(FrameLook.this.getParent());
+    }
 
 }

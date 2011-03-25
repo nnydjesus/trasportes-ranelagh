@@ -11,32 +11,35 @@ import javax.swing.JTextField;
 
 /**
  * @author Ronny
- *
+ * 
  */
-@SuppressWarnings("serial")
 public class GeneralPanel extends JPanel {
-	
-	public GeneralPanel(LayoutManager layout) {
-		super(layout);
-	}
-	public GeneralPanel() {
-		super();
-	}
 
-	public void addBoton( String nombre, ActionListener listener) {
-		JButton button = new JButton(nombre);
-		button.addActionListener(listener);
-		this.add(button);
-	}
+    private static final long serialVersionUID = 1L;
 
-	public void addLabel(String labelText, int center) {
-		this.add(new JLabel(labelText, center));
-	}
-	protected void addTextField(String name, String style){
-		this.add(new JTextField(name), style);
-	}
-	
-	protected void addComponent(Component component, String style){
-		this.add(component, style);
-	}
+    public GeneralPanel(final LayoutManager layout) {
+        super(layout);
+    }
+
+    public GeneralPanel() {
+        super();
+    }
+
+    public void addBoton(final String nombre, final ActionListener listener) {
+        JButton button = new JButton(nombre);
+        button.addActionListener(listener);
+        this.add(button);
+    }
+
+    public void addLabel(final String labelText, final int center) {
+        this.add(new JLabel(labelText, center));
+    }
+
+    protected void addTextField(final String name, final String style) {
+        this.add(new JTextField(name), style);
+    }
+
+    protected void addComponent(final Component component, final String style) {
+        this.add(component, style);
+    }
 }

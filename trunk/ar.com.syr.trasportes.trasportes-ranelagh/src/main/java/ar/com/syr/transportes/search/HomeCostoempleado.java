@@ -1,4 +1,4 @@
-package ar.com.syr.transportes.serach;
+package ar.com.syr.transportes.search;
 
 import org.apache.commons.collections.Predicate;
 
@@ -7,13 +7,19 @@ import ar.com.syr.transportes.bean.CostoEmpleado;
 
 public class HomeCostoempleado extends Home<CostoEmpleado> {
 
-    public HomeCostoempleado() {
+    private final static HomeCostoempleado INSTANCE = new HomeCostoempleado();
+
+    public static HomeCostoempleado getInstance() {
+        return INSTANCE;
+    }
+
+    private HomeCostoempleado() {
         super(CostoEmpleado.class);
     }
 
     @Override
-    protected Predicate getCriterio(CostoEmpleado example) {
-        return getCriterioTodas();
+    protected Predicate getCriterio(final CostoEmpleado example) {
+        return this.getCriterioTodas();
     }
 
     @Override

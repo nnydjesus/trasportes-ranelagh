@@ -7,74 +7,79 @@ import ar.com.nny.base.bean.Usuario;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-@SuppressWarnings("serial")
 public class Login extends GeneralLogin {
-	private Usuario user;
+    private static final long serialVersionUID = 1L;
 
-	public Login() {
-		super();
-		this.setSize(250, 150);	
-		this.setVisible(true);
-	}
+    private Usuario user;
 
-	public void init() {
-		this.setTitle("Login");
-		super.init();
-		super.agregarComponentes();
-		this.getPanel().append(this.getAceptar(), this.getCancelar());
-		this.addActions();
-		DefaultFormBuilder defaultFormBuilder = new DefaultFormBuilder(new FormLayout("pref, pref"));
-		defaultFormBuilder.append(this.getPanel().getPanel());
-		defaultFormBuilder.append(this.getNotifyError());
-		this.add(defaultFormBuilder.getPanel());
+    public Login() {
+        super();
+        this.setSize(250, 150);
+        this.setVisible(true);
+    }
 
-	}
+    @Override
+    public void init() {
+        this.setTitle("Login");
+        super.init();
+        super.agregarComponentes();
+        this.getPanel().append(this.getAceptar(), this.getCancelar());
+        this.addActions();
+        DefaultFormBuilder defaultFormBuilder = new DefaultFormBuilder(new FormLayout("pref, pref"));
+        defaultFormBuilder.append(this.getPanel().getPanel());
+        defaultFormBuilder.append(this.getNotifyError());
+        this.add(defaultFormBuilder.getPanel());
 
-	public void addActions() {
-		super.addActions();
+    }
 
-	}
-	
-	@Override
-	public void onClickAceptar() {
-		if (verificarCamposVacios()) 
-			JOptionPane.showMessageDialog(getAceptar(),"Debe completar todos los campos.");
-		else {
-			String nombreIngresado = getNombret().getText();
-			String passwordIngresado = getPass().getText();
-			user = buscarUsuario(nombreIngresado);
-			if (user != null) {
-				if (inOn()) {
-					getNotifyError().setText("Ya estas logeado.");
-				} else {
-					if (user.checkPassword(passwordIngresado)) {
-						onSubmit(nombreIngresado);
-						limpiar();
-					} else 
-						getNotifyError().setText("Contrase�a incorrecta.");
-				}
+    @Override
+    public void addActions() {
+        super.addActions();
 
-			} else 
-				getNotifyError().setText("Usuario Incorrecto.");
-		}
-		
-	}
-	
-	@Override
-	public void onCancel() {
-		super.onCancel();
-		dispose();
-	}
+    }
 
-	protected void onSubmit(String nombreIngresado) {
-		Login.this.getNotifyError().setText("Bienvenido  "+ nombreIngresado);
-	}
+    @Override
+    public void onClickAceptar() {
+        if (this.verificarCamposVacios()) {
+            JOptionPane.showMessageDialog(this.getAceptar(), "Debe completar todos los campos.");
+        } else {
+            String nombreIngresado = this.getNombret().getText();
+            String passwordIngresado = this.getPass().getText();
+            user = this.buscarUsuario(nombreIngresado);
+            if (user != null) {
+                if (this.inOn()) {
+                    this.getNotifyError().setText("Ya estas logeado.");
+                } else {
+                    if (user.checkPassword(passwordIngresado)) {
+                        this.onSubmit(nombreIngresado);
+                        this.limpiar();
+                    } else {
+                        this.getNotifyError().setText("Contrase�a incorrecta.");
+                    }
+                }
 
-	public boolean inOn() {
-		return user.isConectado();
-	}
+            } else {
+                this.getNotifyError().setText("Usuario Incorrecto.");
+            }
+        }
 
-	public static void main(String[] args) {
-		new Login();
-	}
+    }
+
+    @Override
+    public void onCancel() {
+        super.onCancel();
+        this.dispose();
+    }
+
+    protected void onSubmit(final String nombreIngresado) {
+        Login.this.getNotifyError().setText("Bienvenido  " + nombreIngresado);
+    }
+
+    public boolean inOn() {
+        return user.isConectado();
+    }
+
+    public static void main(final String[] args) {
+        new Login();
+    }
 }

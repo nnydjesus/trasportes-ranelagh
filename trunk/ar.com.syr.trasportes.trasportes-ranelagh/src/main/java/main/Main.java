@@ -9,34 +9,31 @@ import javax.swing.UIManager;
 import org.apache.log4j.BasicConfigurator;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
 
-import ar.com.nny.base.generator.DDLGenerator;
 import ar.com.syr.transportes.ui.LoginUser;
 
-
-	
 public class Main implements Runnable {
 
+    @Override
+    public void run() {
+        try {
+            UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
+            new LoginUser();
+        } catch (Exception e) {
+        }
 
-	@Override
-	public void run() {
-		try {
-			UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-			new LoginUser();
-		} catch (Exception e) {
-		}
+    }
 
-	}
-
-	public static void main(String[] args) {
+    public static void main(final String[] args) {
         BasicConfigurator.configure();
         Logger.getAnonymousLogger().setLevel(Level.INFO);
-//		JFrame.setDefaultLookAndFeelDecorated(true);
-//		TransportesRanelagh reproductor = new TransportesRanelagh(new PreInicio());
-//		new DDLGenerator().main(null);
-		Main main = new Main();
-		EventQueue.invokeLater(main);
-//		new Login();
-//		HibernateUtil.getSession();
-	}
+        // JFrame.setDefaultLookAndFeelDecorated(true);
+        // TransportesRanelagh reproductor = new TransportesRanelagh(new
+        // PreInicio());
+        // new DDLGenerator().main(null);
+        Main main = new Main();
+        EventQueue.invokeLater(main);
+        // new Login();
+        // HibernateUtil.getSession();
+    }
 
 }
