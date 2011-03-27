@@ -6,6 +6,7 @@ import org.apache.commons.lang.RandomStringUtils;
 
 import ar.com.nny.base.generator.InitialDataGenerator;
 import ar.com.nny.base.generator.annotations.DataGeneratorMethod;
+import ar.com.syr.transportes.bean.Categoria;
 import ar.com.syr.transportes.bean.CostoEmpleado;
 import ar.com.syr.transportes.bean.Direccion;
 import ar.com.syr.transportes.bean.Empleado;
@@ -46,6 +47,7 @@ public class DataGeneratorEmpleado  extends InitialDataGenerator<Empleado> {
 		empleado.setNombre("Nombre "+i);
 		empleado.setPropio(true);
 		empleado.setRegistroConducir(2542*i);
+		empleado.setCategoria(Categoria.CHOFER);
 		Direccion direccion = new Direccion();
 		direccion.setCodPostal(i*55);
 		direccion.setCalle("Calle "+i);
@@ -53,7 +55,7 @@ public class DataGeneratorEmpleado  extends InitialDataGenerator<Empleado> {
 		direccion.setTelefono(i*60);
 		empleado.setDireccion(direccion);
 		Licencia licencia = new Licencia();
-		licencia.setCategoria(new Date(22254));
+		licencia.setFechaDeNacimiento(new Date(22254));
 		licencia.setCnrt(new Date());
 		licencia.setLibretaSanitaria(new Date(555454));
 		licencia.setRegistro(new Date(999595955));

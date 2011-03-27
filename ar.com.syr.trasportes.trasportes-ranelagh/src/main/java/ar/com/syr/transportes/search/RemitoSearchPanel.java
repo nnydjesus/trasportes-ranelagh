@@ -22,7 +22,7 @@ public class RemitoSearchPanel extends SearchPanel<Remito> {
         desde = new JDateChooser();
         hasta = new JDateChooser();
     }
-    
+
     public void addFields() {
         this.getPanelDeAtributos().append("desde", desde);
         this.getPanelDeAtributos().append("hasta", hasta);
@@ -33,6 +33,13 @@ public class RemitoSearchPanel extends SearchPanel<Remito> {
         result.removeAll(result);
         result.addAll(((HomeRemito) home).searchByExample(this.getModel().getId(), desde.getDate(), hasta.getDate()));
         SwingUtilities.updateComponentTreeUI(this);
+    }
+
+    @Override
+    public void clear() {
+        desde.setDate(null);
+        hasta.setDate(null);
+        super.clear();
     }
 
 }

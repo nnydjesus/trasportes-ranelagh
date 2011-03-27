@@ -3,10 +3,7 @@ package ar.com.syr.transportes.categoria;
 import ar.com.nny.base.common.Item;
 import ar.com.nny.base.common.ItemComposite;
 import ar.com.syr.transportes.costos.CostoEmpleadoUi;
-import ar.com.syr.transportes.ui.amb.remito.RemitoUI;
-
-
-
+import ar.com.syr.transportes.ui.amb.RemitoUI;
 
 public class Operaciones extends ItemComposite {
 	private static final long serialVersionUID = -6130962545676299492L;

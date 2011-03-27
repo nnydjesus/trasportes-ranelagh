@@ -1,5 +1,7 @@
 package ar.com.syr.transportes.costos;
 
+import javax.swing.JTabbedPane;
+
 import ar.com.nny.base.common.Item;
 import ar.com.nny.base.ui.swing.components.AbstractBindingPanel;
 import ar.com.nny.base.ui.swing.components.GeneralFrame;
@@ -14,7 +16,6 @@ public class CostoEmpleadoUi extends GeneralFrame<CostoEmpleado> implements Item
     public CostoEmpleadoUi() {
         super("CostoEmpleado", CostoEmpleado.class);
         super.addActions();
-        panel.setSize(200, 600);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class CostoEmpleadoUi extends GeneralFrame<CostoEmpleado> implements Item
     }
 
     @Override
-    protected void addPanels() {
+    protected void addPanels(final JTabbedPane panel) {
         panel.addTab("General", null, edicion, "Edicion");
         panel.addTab("Tabla", null, table, "tabla");
     }
