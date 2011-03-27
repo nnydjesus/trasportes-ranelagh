@@ -13,10 +13,11 @@ public class Generator {
 	public static GeneralTable GENERATE_TABLE(List<?> tablaList, String[] fields) {
 		SelectionInList<?> selectionInList = new SelectionInList(tablaList);		
 		ModelBinding tablaModel = new ModelBinding(selectionInList, fields);		
-		JTable tableTeachers = new JTable();
-		tableTeachers.setSelectionModel(new SingleListSelectionAdapter(
+		JTable table = new JTable();
+		table.setAutoCreateRowSorter(true);
+		table.setSelectionModel(new SingleListSelectionAdapter(
 				selectionInList.getSelectionIndexHolder()));
-		return new GeneralTable(tablaModel, null, tableTeachers);
+		return new GeneralTable(tablaModel, null, table);
 	}
 
 }

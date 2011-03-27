@@ -232,14 +232,26 @@ public class LimeTextField extends JTextField {
             }
         };
 
-        popup.add(new JMenuItem(UNDO_ACTION));
+        JMenuItem undo = new JMenuItem(UNDO_ACTION);
+        undo.setText("undo");
+        popup.add(undo);
         popup.addSeparator();
-        popup.add(new JMenuItem(CUT_ACTION));
-        popup.add(new JMenuItem(COPY_ACTION));
-        popup.add(new JMenuItem(PASTE_ACTION));
-        popup.add(new JMenuItem(DELETE_ACTION));
+        JMenuItem cut = new JMenuItem(CUT_ACTION);
+        cut.setText("cut");
+        popup.add(cut);
+        JMenuItem copy = new JMenuItem(COPY_ACTION);
+        copy.setText("copy");
+        popup.add(copy);
+        JMenuItem paste = new JMenuItem(PASTE_ACTION);
+        paste.setText("paste");
+        popup.add(paste);
+        JMenuItem delete = new JMenuItem(DELETE_ACTION);
+        delete.setText("delete");
+        popup.add(delete);
         popup.addSeparator();
-        popup.add(new JMenuItem(SELECT_ALL_ACTION));
+        JMenuItem select = new JMenuItem(SELECT_ALL_ACTION);
+        select.setText("select all");
+        popup.add(select);
         return popup;
     }
 

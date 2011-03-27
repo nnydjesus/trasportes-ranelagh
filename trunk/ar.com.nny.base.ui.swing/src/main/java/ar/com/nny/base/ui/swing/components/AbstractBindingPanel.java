@@ -108,13 +108,6 @@ public class AbstractBindingPanel<T> extends JPanel {
         return date;
     }
 
-    public JComboBox addBindingCombobox(final String label, final SelectionInList<?> selectionInList,
-            final ListCellRenderer cellRenderer) {
-        JComboBox createComboBox = BasicComponentFactory.createComboBox(selectionInList, cellRenderer);
-        panelDeAtributos.append(label, createComboBox);
-        return createComboBox;
-    }
-
     public JCheckBox addBindingCheckBox(final String property, final String label) {
         ValueModel nameModel = beanAdapter.getValueModel(property);
         JCheckBox createCheckBox = BasicComponentFactory.createCheckBox(nameModel, label);
@@ -127,15 +120,26 @@ public class AbstractBindingPanel<T> extends JPanel {
     }
 
     public JComboBox addBindingComboBox(final String property, final List<?> list) {
-        ValueModel nameModel = beanAdapter.getValueModel(property);
-        SelectionInList<?> selectionInList = new SelectionInList(list);
-        JComboBox createCheckBox = BasicComponentFactory.createComboBox(selectionInList);
-        panelDeAtributos.append(property, createCheckBox);
-        return createCheckBox;
+        return addBindingComboBox(property,  new SelectionInList(list));
     }
 
+    public JComboBox addBindingComboBox(String property, Object[] values) {
+        return addBindingComboBox(property,  new SelectionInList(values));
+    }
+    public JComboBox addBindingComboBox(String property, SelectionInList<?> selectionInList) {
+        ValueModel valueModel = beanAdapter.getValueModel(property);
+//        JComboBox createCombobox = BasicComponentFactory.createComboBox(selectionInList);
+        JComboBox createCombobox = new JComboBox(selectionInList.getList().toArray());
+        this.bind(createCombobox, "selectedItem", valueModel);
+        panelDeAtributos.append(property, createCombobox);
+        return createCombobox;
+    }
+    
     public void bind(final JComponent component, final String propertyName, final String property) {
         ValueModel valueModel = beanAdapter.getValueModel(property);
+        bind(component, propertyName, valueModel);
+    }
+    public void bind(final JComponent component, final String propertyName, ValueModel valueModel) {
         Bindings.bind(component, propertyName, valueModel);
     }
 
@@ -168,5 +172,6 @@ public class AbstractBindingPanel<T> extends JPanel {
     public BeanAdapter getBeandAdapter() {
         return beanAdapter;
     }
+
 
 }

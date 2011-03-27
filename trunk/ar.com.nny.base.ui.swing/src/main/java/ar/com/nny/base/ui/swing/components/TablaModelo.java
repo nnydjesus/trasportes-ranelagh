@@ -51,4 +51,9 @@ public class TablaModelo<T> extends Modelo<T> {
     public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex) {
         this.getDatos().add(rowIndex, aValue);
     }
+    
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return getColumnClass(columnIndex)==Boolean.class ;
+    }
 }

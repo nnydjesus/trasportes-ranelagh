@@ -30,10 +30,17 @@ public class ModelBinding extends AbstractTableAdapter implements Model {
 
     @Override
     public Class<?> getColumnClass(final int columnIndex) {
-        if (this.getRowCount() > 0)
-            return this.getValueAt(0, columnIndex).getClass();
-        else
+        if (this.getRowCount() > 0) {
+            Object valueAt = this.getValueAt(0, columnIndex);
+            return valueAt == null ? Object.class : valueAt.getClass();
+        } else
             return Object.class;
+    }
+    
+    
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return true ;
     }
 
 }
