@@ -5,7 +5,7 @@ import java.util.Collection;
 import ar.com.nny.base.common.ItemComposite;
 import ar.com.syr.transportes.bean.Empleado;
 import ar.com.syr.transportes.ui.Itemempleado;
-import ar.com.syr.transportes.ui.amb.empleado.EmpleadoUi;
+import ar.com.syr.transportes.ui.amb.EmpleadoUi;
 
 public class Nomina extends ItemComposite {
     private static final long serialVersionUID = 1L;

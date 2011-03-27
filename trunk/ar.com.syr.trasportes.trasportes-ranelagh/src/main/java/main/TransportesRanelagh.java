@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -27,8 +28,8 @@ import ar.com.nny.base.ui.swing.components.GeneralPanel;
 import ar.com.nny.base.ui.swing.components.Preloader;
 import ar.com.nny.base.ui.swing.components.Registrar;
 import ar.com.nny.base.utils.Path;
-import ar.com.syr.transportes.categoria.Nomina;
 import ar.com.syr.transportes.categoria.Operaciones;
+import ar.com.syr.transportes.categoria.PersonalCategoria;
 import ar.com.syr.transportes.ui.Tree;
 
 import com.jgoodies.forms.builder.ButtonStackBuilder;
@@ -39,7 +40,7 @@ public class TransportesRanelagh extends FrameLook {
 
     private ButtonStackBuilder panelBotones;
 
-    private JPanel panelTree;
+    // private JPanel panelTree;
 
     private JButton Operaciones;
 
@@ -49,9 +50,9 @@ public class TransportesRanelagh extends FrameLook {
 
     private JButton controlDeUnidades;
 
-    private JButton viajes;
+    // private JButton viajes;
 
-    private JButton bultos;
+    // private JButton bultos;
 
     private JPanel panelDerecho = new JPanel();
 
@@ -63,7 +64,7 @@ public class TransportesRanelagh extends FrameLook {
 
     private Operaciones tablasTree = new Operaciones();
 
-    private Nomina personalTree = new Nomina();
+    private PersonalCategoria personalTree = new PersonalCategoria();
 
     public TransportesRanelagh(final Preloader loader) {
         this();
@@ -74,25 +75,25 @@ public class TransportesRanelagh extends FrameLook {
     public TransportesRanelagh() {
         super();
         topPanel.add(new JLabel(new ImageIcon(Path.path() + "Images/logo.jpg")), BorderLayout.WEST);
-        JLabel subTitulo = new JLabel("TRASPORTES RANELAGH", JLabel.CENTER);
+        JLabel subTitulo = new JLabel("TRASPORTES RANELAGH", SwingConstants.CENTER);
         Font dejavuFont = new Font("DejaVu Sans", 1, 30);
         subTitulo.setFont(dejavuFont);
         topPanel.add(subTitulo, BorderLayout.CENTER);
         this.setTitle("Transportes Ranelagh");
         panelBotones = new ButtonStackBuilder();
-        panelTree = new JPanel();
+        // panelTree = new JPanel();
         Operaciones = new JButton(new ImageIcon(Path.path() + "Images/resources.jpg"));
         Operaciones.setText("Operaciones");
         administracion = new JButton("Administracion");
         Personal = new JButton("Personal");
         controlDeUnidades = new JButton("ControlDeUnidades");
-        panelBotones.addGridded(Operaciones);
+        panelBotones.addGridded(Personal);
         panelBotones.addRelatedGap();
         panelBotones.addRelatedGap();
         panelBotones.addGridded(administracion);
         panelBotones.addRelatedGap();
         panelBotones.addRelatedGap();
-        panelBotones.addGridded(Personal);
+        panelBotones.addGridded(Operaciones);
         panelBotones.addRelatedGap();
         panelBotones.addRelatedGap();
         panelBotones.addGridded(controlDeUnidades);
@@ -114,7 +115,7 @@ public class TransportesRanelagh extends FrameLook {
     }
 
     public void generateBase() {
-        new DDLGenerator().main(null);
+        DDLGenerator.main();
     }
 
     public void addActions() {

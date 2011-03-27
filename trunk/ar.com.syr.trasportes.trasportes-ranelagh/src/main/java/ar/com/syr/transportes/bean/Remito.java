@@ -133,7 +133,8 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 
     public void setCosto(final Double costo) {
         this.costo = costo;
-        this.setCostoChofer(porcentage * this.getCosto() / 100);
+        if(this.costo != null)
+            this.setCostoChofer(porcentage * this.getCosto() / 100);
     }
 
     public void setCosto(final Long costo) {

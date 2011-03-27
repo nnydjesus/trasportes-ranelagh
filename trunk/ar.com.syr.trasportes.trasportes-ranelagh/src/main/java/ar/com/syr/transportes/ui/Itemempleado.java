@@ -2,7 +2,7 @@ package ar.com.syr.transportes.ui;
 
 import ar.com.nny.base.common.Item;
 import ar.com.syr.transportes.bean.Empleado;
-import ar.com.syr.transportes.ui.amb.empleado.EmpleadoUi;
+import ar.com.syr.transportes.ui.amb.EmpleadoUi;
 
 public class Itemempleado implements Item  {
 	private Empleado empleado;

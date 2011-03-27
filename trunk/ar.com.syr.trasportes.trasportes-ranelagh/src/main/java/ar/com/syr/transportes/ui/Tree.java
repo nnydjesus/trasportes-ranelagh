@@ -32,6 +32,7 @@ public class Tree extends JPanel{
 			
 			@Override
 			public void valueChanged(TreeSelectionEvent e) {
+//			    if(e.)
 				DynamicUtilTreeNode lastSelectedPathComponent = (DynamicUtilTreeNode) tree.getLastSelectedPathComponent();
 				if(lastSelectedPathComponent!= null){
 					Item item = (Item) lastSelectedPathComponent.getUserObject();
