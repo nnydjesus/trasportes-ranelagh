@@ -9,21 +9,24 @@ import org.apache.commons.collections.Predicate;
 import ar.com.nny.base.common.Observable;
 import ar.com.nny.base.dao.GenericDao;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
+import ar.com.nny.base.utils.ReflectionUtils;
 
-public abstract class Home<T extends IdentificablePersistentObject> {
+public class Home<T extends IdentificablePersistentObject> {
 
     private int proximoId = 1;
 
     private List<T> objects = new ArrayList<T>();
 
     protected GenericDao<T> dao;
+    private Class<T> clazz;
 
     public Home(final Class<T> clazz) {
-        this(new GenericDao<T>(clazz));
+        this(new GenericDao<T>(clazz, clazz.getCanonicalName()));
     }
 
     public Home(final GenericDao<T> genreDao) {
         this.dao = genreDao;
+        this.clazz = genreDao.getPersistentClass();
         this.refresh();
     }
 
@@ -37,11 +40,10 @@ public abstract class Home<T extends IdentificablePersistentObject> {
 
     public void agregar(final T object) {
         this.validarCreacion(object);
-        if (object.getId() == null) {
-            object.setId(this.getProximoId());
+        if (!object.getId().equals("")) {
+            this.objects.add(object);
+            dao.save(object);
         }
-        this.objects.add(object);
-        dao.save(object);
     }
 
     protected void validarCreacion(final T object) {
@@ -75,7 +77,9 @@ public abstract class Home<T extends IdentificablePersistentObject> {
         return (List<T>) CollectionUtils.select(this.objects, this.getCriterio(example));
     }
 
-    protected abstract Predicate getCriterio(T example);
+    protected Predicate getCriterio(T example){
+        return getCriterioTodas();
+    }
 
     public T buscarPorId(final int id) {
         for (T candidate : this.buscarTodos()) {
@@ -118,6 +122,8 @@ public abstract class Home<T extends IdentificablePersistentObject> {
         };
     }
 
-    public abstract T createExample();
+    public T createExample(){
+        return ReflectionUtils.instanciate(this.clazz);
+    }
 
 }
