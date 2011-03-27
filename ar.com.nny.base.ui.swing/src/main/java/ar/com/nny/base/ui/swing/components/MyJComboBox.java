@@ -7,25 +7,25 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 @SuppressWarnings({ "unused", "unchecked" })
-public class MyJComboBox extends JComboBox {
+public class MyJComboBox<T> extends JComboBox {
 
     private static final long serialVersionUID = 1L;
 
     private String method;
 
-    private Vector vector = new Vector();
+    private Vector<T> vector = new Vector<T>();
 
     public MyJComboBox() {
     }
 
-    public MyJComboBox(final List<?> list) {
+    public MyJComboBox(final List<T> list) {
         super();
         this.update(list);
         // this.setRenderer(new MyRenderer());
         this.setModel(new DefaultComboBoxModel(vector));
     }
 
-    public void update(final List<?> list) {
+    public void update(final List<T> list) {
         vector.removeAll(vector);
         vector.addAll(list);
     }
@@ -36,11 +36,11 @@ public class MyJComboBox extends JComboBox {
     }
 
     @Override
-    public Object getSelectedItem() {
-        return super.getSelectedItem();
+    public T getSelectedItem() {
+        return (T) super.getSelectedItem();
     }
 
-    public void addDefaultValue(final Object value) {
+    public void addDefaultValue(final T value) {
         vector.add(0, value);
         this.setSelectedIndex(0);
     }

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -11,6 +12,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable.PrintMode;
 import javax.swing.SwingUtilities;
 
 import ar.com.nny.base.common.Item;
@@ -30,29 +32,33 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
     protected GeneralTable table;
 
-    protected JTabbedPane panel = new JTabbedPane();
+    private JTabbedPane panel = new JTabbedPane();
 
     protected PanelEdicion<T> edicion;
 
-    protected Home home;
+    protected Home<T> home;
 
     private String nombre;
 
-    protected MyJComboBox comboBox;
+    protected MyJComboBox<T> comboBox;
 
     protected Boolean tengo;
 
     private SearchPanel<T> search;
 
+    private Class<T> clazz;
+
     public GeneralFrame(final String name, final Class clase) {
+        this.clazz = clase;
         this.nombre = name;
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         T newInstance;
         this.createHome();
+        
 
         newInstance = (T) ReflectionUtils.instanciate(clase);
         edicion = new PanelEdicion<T>(name, newInstance);
-        search = createSearchPanel(name, newInstance);
+        search = this.createSearchPanel(name, newInstance);
 
         this.createComboBox();
         comboBox.addDefaultValue(home.createExample());
@@ -60,7 +66,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
         this.table = this.createTable(newInstance);
         this.createForm(edicion);
         this.createSearchForm(search);
-        this.addPanels();
+        this.addPanels(panel);
         this.addActions();
         this.add(topPanel);
         this.add(panel);
@@ -68,7 +74,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
         this.setVisible(false);
     }
 
-    protected SearchPanel<T> createSearchPanel(final String name, T newInstance) {
+    protected SearchPanel<T> createSearchPanel(final String name, final T newInstance) {
         return new SearchPanel<T>(name, newInstance, home);
     }
 
@@ -95,12 +101,12 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     }
 
     protected void createHome() {
-        // home = new GenericDao<IdentificablePersistentObject>(clase, nombre);
+        home = new Home<T>(clazz);
     }
 
-    protected void addPanels() {
+    protected void addPanels(final JTabbedPane panel) {
         panel.addTab("General", null, edicion, "Edicion");
-        panel.addTab("Tabla", null, table, "tabla");
+        // panel.addTab("Tabla", null, table, "tabla");
         panel.addTab("Filtro", null, search, "Filtro");
     }
 
@@ -109,7 +115,12 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
             @Override
             public void actionPerformed(final ActionEvent arg0) {
-                PrintUtilities.printComponent(table.getScroll());
+                PrintUtilities.printComponent(search.getTable().getScroll());
+//                try {
+//                    table.getTabla().print(PrintMode.NORMAL);
+//                } catch (PrinterException e) {
+//                    e.printStackTrace();
+//                }
 
             }
         });
@@ -137,6 +148,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
             @Override
             public void actionPerformed(final ActionEvent e) {
                 GeneralFrame.this.edicionModificar();
+                setEditionModel(home.createExample());
             }
         });
         edicion.getBotonCancelar().addActionListener(new ActionListener() {
@@ -144,10 +156,11 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
             @Override
             public void actionPerformed(final ActionEvent e) {
                 GeneralFrame.this.edicionCancelar();
+                setEditionModel(home.createExample());
             }
         });
 
-        table.addtableListener(new MouseAdapter() {
+        search.getTable().addtableListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(final MouseEvent e) {
@@ -172,19 +185,23 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     }
 
     protected void tableListener(final MouseEvent e) {
-        this.setModel((T) table.getSelected());
+        this.setModel((T) search.getTable().getSelected());
     }
 
     public void setModel(final T observable) {
-        edicion.setModel(observable);
+        setEditionModel(observable);
         edicion.getBotonModificar().setEnabled(true);
+        SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
+    }
+
+    protected void setEditionModel(final T observable) {
+        edicion.setModel(observable);
     }
 
     protected void edicionModificar() {
         T model = edicion.getModel();
         if (model.getId() != null) {
             home.actualizar(model);
-            edicion.setModel(home.createExample());
             edicion.getBotonModificar().setEnabled(false);
             SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
         }
@@ -192,7 +209,6 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
     protected void edicionCancelar() {
         panel.setSelectedComponent(edicion);
-        edicion.setModel(home.createExample());
         edicion.getBotonModificar().setEnabled(false);
     }
 

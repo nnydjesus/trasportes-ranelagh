@@ -1,12 +1,21 @@
 package ar.com.nny.base.ui.swing.components;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseListener;
 
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.TableModel;
+
+import org.jvnet.substance.api.renderers.SubstanceDefaultTableCellRenderer.BooleanRenderer;
 
 /**
  * Panel con toda la parte visual del ejemplo. Crea un JScrollPane con el JTable
@@ -19,7 +28,7 @@ public class GeneralTable extends GeneralPanel {
     private static final long serialVersionUID = 1L;
 
     /** Modelo de la tabla */
-    private Model modelo = null;
+    private ModelBinding modelo = null;
 
     /** Para modificar el modelo */
     private Control control = null;
@@ -33,14 +42,14 @@ public class GeneralTable extends GeneralPanel {
      * llama al metodo construyeVentana() que se encarga de crear los
      * componentes.
      */
-    public GeneralTable(final Model modelo, final Control control) {
+    public GeneralTable(final ModelBinding modelo, final Control control) {
         this(modelo, control, new JTable());
     }
 
-    public GeneralTable(final Model modelo, final Control control, final JTable tabla) {
+    public GeneralTable(final ModelBinding modelo, final Control control, final JTable tabla) {
         super(new GridBagLayout());
         this.tabla = tabla;
-        this.modelo = modelo;
+        this.setModelo(modelo);
         this.setControl(control);
         this.construyeVentana();
 
@@ -68,8 +77,8 @@ public class GeneralTable extends GeneralPanel {
         // Se crea el JScrollPane, el JTable y se pone la cabecera...
 
         scroll.setOpaque(false);
-        tabla.setModel((TableModel) modelo);
-        // tabla.setDefaultRenderer(Object.class,new MyRenderer());
+        tabla.setModel((TableModel) getModelo());
+//         tabla.setDefaultRenderer(Boolean.class,new MyRenderer());
         scroll.setViewportView(tabla);
         scroll.setColumnHeaderView(tabla.getTableHeader());
 
@@ -94,30 +103,36 @@ public class GeneralTable extends GeneralPanel {
     }
 
     public Object getSelected() {
-        return modelo.getSelected(tabla.getSelectedRow());
+        return getModelo().getSelected(tabla.getSelectedRow());
     }
 
     public void addtableListener(final MouseListener actionListener) {
         tabla.addMouseListener(actionListener);
     }
 
-    // static class MyRenderer extends DefaultTableCellRenderer{
-    //
-    // @Override
-    // public Component getTableCellRendererComponent(JTable table, Object
-    // value,
-    // boolean isSelected, boolean hasFocus, int row, int column){
-    // // if(value instanceof Boolean){
-    // // return new Button("asdf sf"+ (Boolean) value);
-    // // }else{
-    // Component component = new JLabel(String.valueOf(value));
-    // if(isSelected)
-    // component.setBackground(Color.GRAY);
-    // if(hasFocus)
-    // component.setBackground(Color.DARK_GRAY);
-    // return component;
-    // // }
-    // }
-    // }
+    public void setModelo(ModelBinding modelo) {
+        this.modelo = modelo;
+    }
+
+    public ModelBinding getModelo() {
+        return modelo;
+    }
+
+//    static class MyRenderer extends BooleanRenderer {
+//        //
+//        @Override
+//        public Component getTableCellRendererComponent(final JTable table,  final Object value, boolean isSelected,
+//                boolean hasFocus, int row, int column) {
+//            final JCheckBox check = (JCheckBox) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//            check.addChangeListener(new ChangeListener() {
+//                
+//                @Override
+//                public void stateChanged(ChangeEvent e) {
+//                   table.getAlignmentX();       
+//                }
+//            });
+//            return check;
+//        }
+//    }
 
 }
