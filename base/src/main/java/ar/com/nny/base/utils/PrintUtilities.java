@@ -18,8 +18,6 @@ import java.awt.print.*;
  *  difference, so in most cases just do the simpler
  *  PrintUtilities.printComponent(componentToBePrinted).
  *
- *  7/99 Marty Hall, http://www.apl.jhu.edu/~hall/java/
- *  May be freely used or adapted.
  */
 
 public class PrintUtilities implements Printable {

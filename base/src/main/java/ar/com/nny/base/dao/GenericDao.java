@@ -33,7 +33,7 @@ public class GenericDao<T extends PersistentObject> extends GenericFlexyDAO<T>{
 //		s.beginTransaction();
 //		s.save(object);
 //		s.getTransaction().commit();
-		super.save(object);
+	    super.save(object);
 	}
 
 	public void update(T object) {

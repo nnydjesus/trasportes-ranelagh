@@ -16,58 +16,55 @@ import ar.com.nny.base.utils.IdentificablePersistentObject;
 @Table(name = "usuario")
 @DataGenerator(DataGeneratorUser.class)
 public class Usuario extends IdentificablePersistentObject implements Serializable {
-	private static final long serialVersionUID = 5332067114052738292L;
+    private static final long serialVersionUID = 5332067114052738292L;
 
-	@Id
-	private String nombre;
-	
-	@Basic
-	private String pass;
-	
-	@Basic
-	private boolean conectado;
-	
-	public Usuario() {
-	}
-	
-	public Usuario(String nombre, String pass){
-		this.nombre = nombre;
-		this.pass = pass;
-	}
-	
-	public String getNombre() {
-		return nombre;
-	}
+    @Id
+    private String id;
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    @Basic
+    private String pass;
 
-	public String getPass() {
-		return pass;
-	}
+    @Basic
+    private boolean conectado;
 
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
+    public Usuario() {
+    }
 
-	public void setConectado(boolean conectado) {
-		this.conectado = conectado;
-	}
+    public Usuario(final String nombre, final String pass) {
+        this.id = nombre;
+        this.pass = pass;
+    }
 
-	public boolean isConectado() {
-		return conectado;
-	}
-	
-	public boolean checkPassword(String pass){
-		return this.pass.equals(HashUtils.hash(pass));
-	}
+    public String getId() {
+        return id;
+    }
 
-	@Override
-	public String[] atributos() {
-		return null;
-	}
+    public void setId(final String nombre) {
+        this.id = nombre;
+    }
 
-	
-	
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(final String pass) {
+        this.pass = pass;
+    }
+
+    public void setConectado(final boolean conectado) {
+        this.conectado = conectado;
+    }
+
+    public boolean isConectado() {
+        return conectado;
+    }
+
+    public boolean checkPassword(final String pass) {
+        return this.pass.equals(HashUtils.hash(pass));
+    }
+
+    @Override
+    public String[] atributos() {
+        return null;
+    }
 }
