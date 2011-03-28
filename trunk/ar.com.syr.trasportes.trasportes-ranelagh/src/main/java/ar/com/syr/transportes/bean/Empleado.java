@@ -81,7 +81,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     
     @Enumerated
     private Categoria categoria;
-
+    
     // @JoinTable(
     //
     // name="Realizador",
@@ -105,8 +105,15 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     @OneToMany()
     @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
     private List<Adelanto> adelantos = new ArrayList<Adelanto>();
-
-
+    
+    @OneToMany()    
+    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+    private List<Ausencia> ausencias = new ArrayList<Ausencia>();
+    
+    @OneToMany()    
+    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+    private List<Vacacion> vacaciones = new ArrayList<Vacacion>();
+    
     @Override
     public String getId() {
         return id;
@@ -114,6 +121,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 
     @Override
     public void setId(final String legajo) {
+    	firePropertyChange(LEGAJO, this.id, legajo);
         id = legajo;
     }
 
@@ -122,6 +130,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public void setApellido(final String apellido) {
+    	firePropertyChange(APELLIDO, this.apellido, apellido);
         this.apellido = apellido;
     }
 
@@ -130,6 +139,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public void setNombre(final String nombre) {
+    	firePropertyChange(NOMBRE, this.nombre, nombre);
         this.nombre = nombre;
     }
 
@@ -290,6 +300,13 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     public String mostrar() {
         return this.nombre;
     }
+    public void setAusencias(List<Ausencia> ausencias) {
+    	this.ausencias = ausencias;
+    }
+    
+    public List<Ausencia> getAusencias() {
+    	return ausencias;
+    }
 
     @Override
     public String[] atributos() {
@@ -297,6 +314,15 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
                 Direccion.LOCALIDAD, Direccion.TELEFONO, Direccion.TELEFONO, Licencia.FECHA_DE_NACIMIENTO, Licencia.CNRT,
                 Licencia.LIBRETA_SANITARIA, Licencia.REGISTRO };
     }
+
+	public void setVacaciones(List<Vacacion> vacaciones) {
+		this.vacaciones = vacaciones;
+	}
+
+	public List<Vacacion> getVacaciones() {
+		return vacaciones;
+	}
+
 
 
 }
