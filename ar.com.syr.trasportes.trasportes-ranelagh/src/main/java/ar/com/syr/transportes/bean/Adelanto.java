@@ -25,7 +25,7 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     public static final String COMENTARIO = "comentario";
     public static final String MONTO = "monto";
     public static final String NUMERO_DE_ORDEN = "id";
-    public static final String FORMA_DE_PAGO = "fornaDePago";
+    public static final String FORMA_DE_PAGO = "formaDePago";
 
     @Basic
     private Date fecha;
@@ -41,7 +41,7 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     @Id
     private String id;
     @Enumerated
-    private FormaDePago fornaDePago;
+    private FormaDePago formaDePago;
 
 
     public Empleado getEmpleado() {
@@ -77,11 +77,11 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     }
 
     public FormaDePago getFornaDePago() {
-        return fornaDePago;
+        return formaDePago;
     }
 
     public void setFornaDePago(FormaDePago fornaDePago) {
-        this.fornaDePago = fornaDePago;
+        this.formaDePago = fornaDePago;
     }
 
 
