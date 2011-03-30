@@ -114,6 +114,8 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
     private List<Vacacion> vacaciones = new ArrayList<Vacacion>();
     
+    private List<Sancion> sanciones = new ArrayList<Sancion>();
+    
     @Override
     public String getId() {
         return id;
@@ -321,6 +323,14 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 
 	public List<Vacacion> getVacaciones() {
 		return vacaciones;
+	}
+
+	public void setSanciones(List<Sancion> sanciones) {
+		this.sanciones = sanciones;
+	}
+
+	public List<Sancion> getSanciones() {
+		return sanciones;
 	}
 
 
