@@ -11,7 +11,6 @@ import javax.persistence.TemporalType;
 
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 
-@Entity
 public class Sancion extends IdentificablePersistentObject {
 	
 	public static final String FECHA = "fecha";

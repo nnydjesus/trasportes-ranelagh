@@ -24,6 +24,7 @@ import ar.com.nny.base.generator.annotations.DataGenerator;
 import ar.com.nny.base.persistence.SerializationStrategy;
 import ar.com.nny.base.persistence.Through;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
+import ar.com.syr.transportes.bean.enums.Categoria;
 import ar.com.syr.transportes.initialData.DataGeneratorEmpleado;
 
 @Entity
@@ -82,23 +83,12 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     @Enumerated
     private Categoria categoria;
     
-    // @JoinTable(
-    //
-    // name="Realizador",
-    //
-    // joinColumns = @JoinColumn( name="empleado_id"),
-    //
-    // inverseJoinColumns = @JoinColumn( name="remito_id")
-    //
-    // )
     @OneToMany()
     @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
     @JoinColumn(name = "empleado_id")
     private List<Remito> remitos = new ArrayList<Remito>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    // @org.hibernate.annotations.LazyToOne
-    // (org.hibernate.annotations.LazyToOneOption.NO_PROXY))
     @SerializationStrategy(access = Through.TRANSIENT)
     private CostoEmpleado costoEmpleado;
     

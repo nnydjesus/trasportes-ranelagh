@@ -26,7 +26,7 @@ public class HomeEmpleado extends Home<Empleado> {
     }
 
     @Override
-    protected Predicate getCriterio(final Empleado example) {
+    protected Predicate getCriteria(final Empleado example) {
         return this.getCriterioTodas();
     }
 

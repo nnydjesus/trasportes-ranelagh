@@ -22,7 +22,7 @@ public class Licencia extends Observable implements Serializable {
     public static final String FECHA_DE_NACIMIENTO = "fechaDeNacimiento";
 
     @Temporal(TemporalType.DATE)
-    private Date registro;
+    private Date registro; 
 
     @Temporal(TemporalType.DATE)
     private Date cnrt;

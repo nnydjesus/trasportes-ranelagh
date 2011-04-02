@@ -18,7 +18,7 @@ public class HomeCostoempleado extends Home<CostoEmpleado> {
     }
 
     @Override
-    protected Predicate getCriterio(final CostoEmpleado example) {
+    protected Predicate getCriteria(final CostoEmpleado example) {
         return this.getCriterioTodas();
     }
 

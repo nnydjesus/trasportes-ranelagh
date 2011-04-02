@@ -23,7 +23,7 @@ public class LoginUser extends Login {
                 DDLGenerator.main();
             }
         });
-        this.add(comp);
+        defaultFormBuilder.append(comp);
     }
 
     @Override

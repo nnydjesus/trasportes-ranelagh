@@ -24,10 +24,9 @@ public class DataGeneratorRemito extends InitialDataGenerator<Remito>{
 
 		for (int i = 0; i < 10; i++) {
 			Remito newRemito = this.newRemito(i);
+			newRemito.setEmpleado(empleado);
 			dao.save(newRemito);
-			empleado.addRemito(newRemito);
 		}
-		empleadoDao.update(empleado);
 	}
 
 	private Remito newRemito(int i) {

@@ -8,7 +8,7 @@ import ar.com.nny.base.ui.swing.components.GeneralFrame;
 import ar.com.nny.base.ui.swing.components.search.SearchPanel;
 import ar.com.syr.transportes.bean.Adelanto;
 import ar.com.syr.transportes.bean.Empleado;
-import ar.com.syr.transportes.bean.FormaDePago;
+import ar.com.syr.transportes.bean.enums.FormaDePagoType;
 import ar.com.syr.transportes.search.HomeEmpleado;
 
 public class AdelantosUI extends GeneralFrame<Adelanto> {
@@ -24,11 +24,11 @@ public class AdelantosUI extends GeneralFrame<Adelanto> {
     @Override
     protected void createForm(final AbstractBindingPanel<Adelanto> edicion) {
         edicion.addBindingDateField(Adelanto.FECHA, "Fecha");
-        comboEmpleados = edicion.addBindingComboBox(Adelanto.EMPLEADO, HomeEmpleado.getInstance().buscarTodos());
+        comboEmpleados = edicion.addBindingComboBox(Adelanto.EMPLEADO, HomeEmpleado.getInstance().getAll());
         edicion.addBindingTextField(Adelanto.COMENTARIO, "Comentario");
         edicion.addBindingDoubleField(Adelanto.MONTO, "Monto");
-        edicion.addBindingTextField(Adelanto.NUMERO_DE_ORDEN, "Numero de Orden");
-        comboFormaDePago = edicion.addBindingComboBox(Adelanto.FORMA_DE_PAGO, FormaDePago.values());       
+//        edicion.addBindingTextField(Adelanto.NUMERO_DE_ORDEN, "Numero de Orden");
+        comboFormaDePago = edicion.addBindingComboBox(Adelanto.FORMA_DE_PAGO, FormaDePagoType.values());       
 
     }
 
@@ -38,12 +38,28 @@ public class AdelantosUI extends GeneralFrame<Adelanto> {
     }
     
     @Override
+    protected void edicionAgregar() {
+        addCopleteDatos();
+        super.edicionAgregar();
+    }
+    
+    @Override
     protected void edicionModificar() {
-        edicion.getModel().setEmpleado((Empleado) comboEmpleados.getSelectedItem());
-        edicion.getModel().setFornaDePago((FormaDePago) comboFormaDePago.getSelectedItem());
+        addCopleteDatos();
         super.edicionModificar();
     }
 
+    protected void addCopleteDatos() {
+        edicion.getModel().setEmpleado((Empleado) comboEmpleados.getSelectedItem());
+        comboEmpleados.setSelectedItem(null);
+        edicion.getModel().setFornaDePago((FormaDePagoType) comboFormaDePago.getSelectedItem());
+        comboFormaDePago.setSelectedItem(null);
+    }
+
+    @Override
+    protected void addActions() {
+        super.addActions();
+    }
 
     @Override
     protected void createSearchForm(final SearchPanel<Adelanto> search) {
