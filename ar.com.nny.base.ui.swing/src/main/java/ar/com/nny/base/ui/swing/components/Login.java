@@ -12,6 +12,8 @@ public class Login extends GeneralLogin {
 
     private Usuario user;
 
+    protected DefaultFormBuilder defaultFormBuilder;
+
     public Login() {
         super();
         this.setSize(250, 150);
@@ -25,7 +27,7 @@ public class Login extends GeneralLogin {
         super.agregarComponentes();
         this.getPanel().append(this.getAceptar(), this.getCancelar());
         this.addActions();
-        DefaultFormBuilder defaultFormBuilder = new DefaultFormBuilder(new FormLayout("pref, pref"));
+        defaultFormBuilder = new DefaultFormBuilder(new FormLayout("pref, pref"));
         defaultFormBuilder.append(this.getPanel().getPanel());
         defaultFormBuilder.append(this.getNotifyError());
         this.add(defaultFormBuilder.getPanel());

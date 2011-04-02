@@ -11,16 +11,12 @@ import javax.persistence.TemporalType;
 
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 
+@Entity
 public class Sancion extends IdentificablePersistentObject {
 	
 	public static final String FECHA = "fecha";
-	public static final String CANTDEDIAS = "cantDeDias";
+	public static final String CANT_DE_DIAS = "cantDeDias";
 	
-	@GeneratedValue
-	@Id
-	private String id;
-	
-
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	
@@ -29,7 +25,7 @@ public class Sancion extends IdentificablePersistentObject {
 	
 	@Override
 	public String[] atributos() {
-		return new String[] {FECHA, CANTDEDIAS} ;
+		return new String[] {FECHA, CANT_DE_DIAS} ;
 	}
 
 	public void setFecha(Date fecha) {
@@ -48,11 +44,4 @@ public class Sancion extends IdentificablePersistentObject {
 		return cantDeDias;
 	}
 
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
 }

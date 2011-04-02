@@ -204,7 +204,7 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item {
     }
 
     @Override
-    protected SearchPanel<Remito> createSearchPanel(final String name, final Remito newInstance) {
+    protected SearchPanel<Remito> createSearchPanel(final Remito newInstance) {
         return new RemitoSearchPanel(newInstance);
     }
 

@@ -16,7 +16,7 @@ public class PanelEdicion<T> extends AbstractBindingPanel<T> {
     private JButton botonCancelar;
 
     public PanelEdicion(final String claseAEditar, final T model) {
-        super(claseAEditar, model);
+        super(model);
         this.setTitulo("Editar " + claseAEditar);
 
     }

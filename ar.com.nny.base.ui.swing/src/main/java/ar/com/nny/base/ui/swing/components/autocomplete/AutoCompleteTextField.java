@@ -28,6 +28,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.text.Document;
 
+import ar.com.nny.base.common.Observable;
+
 public class AutoCompleteTextField extends KeyProcessingTextField {
 
     private static final long serialVersionUID = 1L;
@@ -77,7 +79,7 @@ public class AutoCompleteTextField extends KeyProcessingTextField {
     @Override
     protected void fireActionPerformed() {
         if (popup != null) {
-            String selection = (String) entryList.getSelectedValue();
+            String selection = (String) entryList.getSelectedStringValue();
             this.hidePopup();
             if (selection != null) {
                 this.setText(selection);
@@ -229,26 +231,24 @@ public class AutoCompleteTextField extends KeyProcessingTextField {
      * Adds the current value of the field underlying dictionary
      */
     public void addToDictionary() {
-        if (!this.getAutoComplete())
-            return;
-
-        if (dict == null) {
-            dict = this.createDefaultDictionary();
-        }
         dict.addEntry(this.getText().trim());
     }
 
     /**
      * Adds the specified string to the underlying dictionary
      */
-    public void addToDictionary(final String s) {
-        if (!this.getAutoComplete())
-            return;
-
+    public void addToDictionary(final Object s) {
         if (dict == null) {
             dict = this.createDefaultDictionary();
         }
-        dict.addEntry(s.trim());
+        dict.addEntry(s);
+        
+    }
+    public void addToDictionary(Object key,final Observable s) {
+        if (dict == null) {
+            dict = this.createDefaultDictionary();
+        }
+        dict.addEntry(key.toString(), s);
     }
 
     // ----------------------------------------------------------------------------
@@ -441,7 +441,7 @@ public class AutoCompleteTextField extends KeyProcessingTextField {
          */
 
         protected void selectText() {
-            String selection = (String) this.getSelectedValue();
+            String selection = (String) this.getSelectedStringValue();
             AutoCompleteTextField.this.setText(selection);
             AutoCompleteTextField.this.hidePopup();
         }
@@ -472,7 +472,7 @@ public class AutoCompleteTextField extends KeyProcessingTextField {
                 int selectedIndex = this.getSelectedIndex() + 1;
                 this.setSelectedIndex(selectedIndex);
                 this.ensureIndexIsVisible(selectedIndex);
-                AutoCompleteTextField.this.setText((String) this.getSelectedValue());
+                AutoCompleteTextField.this.setText(this.getSelectedStringValue());
             }
         }
 
@@ -492,7 +492,7 @@ public class AutoCompleteTextField extends KeyProcessingTextField {
                 }
                 this.setSelectedIndex(selectedIndex);
                 this.ensureIndexIsVisible(selectedIndex);
-                AutoCompleteTextField.this.setText((String) this.getSelectedValue());
+                AutoCompleteTextField.this.setText(this.getSelectedStringValue());
             }
         }
 
@@ -505,6 +505,13 @@ public class AutoCompleteTextField extends KeyProcessingTextField {
             int rows = Math.min(this.getModel().getSize(), 8);
             int height = rows * this.getCellBounds(0, 0).height;
             return new Dimension(width, height);
+        }
+        
+        public String getSelectedStringValue() {
+            if(super.getSelectedValue()!=null)
+                return super.getSelectedValue().toString();
+            else
+                return "";
         }
     }
 

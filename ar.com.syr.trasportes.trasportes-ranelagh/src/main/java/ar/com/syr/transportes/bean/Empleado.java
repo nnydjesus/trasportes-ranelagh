@@ -88,8 +88,8 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     @JoinColumn(name = "empleado_id")
     private List<Remito> remitos = new ArrayList<Remito>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @SerializationStrategy(access = Through.TRANSIENT)
+    @OneToOne(fetch = FetchType.EAGER)
+    @SerializationStrategy(access = Through.ACCESSOR)
     private CostoEmpleado costoEmpleado;
     
     @OneToMany()
@@ -104,6 +104,8 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
     private List<Vacacion> vacaciones = new ArrayList<Vacacion>();
     
+    @OneToMany()    
+    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
     private List<Sancion> sanciones = new ArrayList<Sancion>();
     
     @Override

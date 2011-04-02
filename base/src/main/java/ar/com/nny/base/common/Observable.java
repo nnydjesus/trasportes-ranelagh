@@ -1,38 +1,23 @@
 package ar.com.nny.base.common;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import ar.com.nny.base.bean.Beans;
 
+import com.jgoodies.binding.beans.Model;
+
 /**
  * @author Ronny
  * 
  */
-public abstract class Observable implements Beans {
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
-
-    public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(propertyName, listener);
-    }
-
-    public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(propertyName, listener);
-    }
-
-    protected <T> void firePropertyChange(final String propertyName, final T oldValue, final T newValue) {
-        changeSupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
+public abstract class Observable extends Model implements Beans {
 
     public void setProperty(final String property, final Object value) {
         try {
-            Object originalValue = this.getProperty(property);
             Field field = this.getSetter(property).getDeclaringClass().getDeclaredField(property);
             field.setAccessible(true);
             field.set(this, value);
-            this.firePropertyChange(property, originalValue, value);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

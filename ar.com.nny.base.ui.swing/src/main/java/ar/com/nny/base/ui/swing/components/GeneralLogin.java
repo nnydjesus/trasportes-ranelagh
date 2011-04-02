@@ -12,8 +12,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import ar.com.nny.base.bean.Usuario;
-import ar.com.nny.base.dao.GenericDao;
 import ar.com.nny.base.exception.NonBusinessException;
+import ar.com.nny.base.search.Home;
 import ar.com.nny.base.utils.Path;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -41,7 +41,7 @@ public abstract class GeneralLogin extends JFrame {
 
     private JPasswordField confirmacon = new JPasswordField();
 
-    protected GenericDao<Usuario> dao = new GenericDao<Usuario>(Usuario.class, "Usuario");
+    protected Home<Usuario> home = new Home<Usuario>(Usuario.class, false);
 
     public GeneralLogin() {
         this.init();
@@ -92,8 +92,9 @@ public abstract class GeneralLogin extends JFrame {
     public Usuario buscarUsuario(final String nombre) {
         Usuario byId = null;
         try {
-            byId = dao.getById(nombre);
+            byId = home.getById(nombre);
         } catch (NonBusinessException e) {
+            notifyError.setText(e.getMessage());
         }
         return byId;
     }

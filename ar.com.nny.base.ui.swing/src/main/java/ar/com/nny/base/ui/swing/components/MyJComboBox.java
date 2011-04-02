@@ -44,6 +44,10 @@ public class MyJComboBox<T> extends JComboBox {
         vector.add(0, value);
         this.setSelectedIndex(0);
     }
+    
+    public void setDefaultValue(){
+        this.setSelectedIndex(0);
+    }
 
     public void selectedDefault() {
         this.setSelectedIndex(0);

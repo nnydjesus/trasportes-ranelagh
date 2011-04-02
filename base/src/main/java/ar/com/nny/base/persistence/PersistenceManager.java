@@ -29,13 +29,13 @@ import ar.com.nny.base.utils.HibernateUtil;
  * Also, all transaction handling is done here
  *
  */
-@SuppressWarnings("unchecked")
 public class PersistenceManager {
 
-//    private static UnitOfWork DUMMY_UOW = new DummyUnitOfWork();
     private static Log LOGGER = LogFactory.getLog(PersistenceManager.class);
     private static PersistenceManager INSTANCE;
     private static org.hibernate.classic.Session session;
+    private static AnnotationConfiguration cfg = new AnnotationConfiguration().configure("hibernate.cfg.xml");
+    private SessionFactory sessionFactory;
 
 
     public static PersistenceManager getInstance() {
@@ -46,11 +46,9 @@ public class PersistenceManager {
     }
 
 
-    private static AnnotationConfiguration cfg = new AnnotationConfiguration().configure(new File("hibernate.cfg.xml"));
-    private SessionFactory sessionFactory;
 
-	private Map<String, AnnotationConfiguration> alternateConfigurations = new HashMap();
-    private Map<String, SessionFactory> alternateFactories = new HashMap();
+//	private Map<String, AnnotationConfiguration> alternateConfigurations = new HashMap();
+//    private Map<String, SessionFactory> alternateFactories = new HashMap();
 
 
     private PersistenceManager() {

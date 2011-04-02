@@ -20,14 +20,22 @@ public class Home<T extends IdentificablePersistentObject> {
     protected GenericDao<T> dao;
     private Class<T> clazz;
 
+    public Home(final Class<T> clazz, boolean refresh ) {
+        this(new GenericDao<T>(clazz, clazz.getCanonicalName()), refresh);
+    }
+    
     public Home(final Class<T> clazz) {
-        this(new GenericDao<T>(clazz, clazz.getCanonicalName()));
+        this(clazz, true);
     }
 
-    public Home(final GenericDao<T> genreDao) {
+    public Home(final GenericDao<T> genreDao, Boolean refresh) {
         this.dao = genreDao;
         this.clazz = genreDao.getPersistentClass();
-        this.refresh();
+        if(refresh)
+            this.refresh();
+    }
+    public Home(final GenericDao<T> genreDao) {
+        this(genreDao, true);
     }
 
     protected String getProximoId() {
@@ -38,19 +46,19 @@ public class Home<T extends IdentificablePersistentObject> {
     // ** Altas, bajas y modificaciones.
     // ********************************************************
 
-    public void agregar(final T object) {
-        this.validarCreacion(object);
-        if (!object.getId().equals("")) {
+    public void save(final T object) {
+        this.validatingCreation(object);
+//        if (!object.getId().equals("")) {
             this.objects.add(object);
             dao.save(object);
-        }
+//        }
     }
 
-    protected void validarCreacion(final T object) {
+    protected void validatingCreation(final T object) {
         // Nothing by default
     }
 
-    public void actualizar(final T object) {
+    public void update(final T object) {
         // T replaced = this.buscarPorId(object.getId());
         // this.objects.remove(this.objects.indexOf(replaced));
         this.objects.remove(object);
@@ -58,13 +66,13 @@ public class Home<T extends IdentificablePersistentObject> {
         dao.update(object);
     }
 
-    public void eliminar(final T object) {
-        this.validarEliminacion(object);
+    public void delete(final T object) {
+        this.validatingDeleting(object);
         this.objects.remove(object);
         dao.undelete(object);
     }
 
-    protected void validarEliminacion(final T object) {
+    protected void validatingDeleting(final T object) {
         // Nothing by default
     }
 
@@ -74,21 +82,17 @@ public class Home<T extends IdentificablePersistentObject> {
 
     @SuppressWarnings("unchecked")
     public List<T> searchByExample(final T example) {
-        return (List<T>) CollectionUtils.select(this.objects, this.getCriterio(example));
+        return (List<T>) CollectionUtils.select(this.objects, this.getCriteria(example));
     }
 
-    protected Predicate getCriterio(T example){
+    protected Predicate getCriteria(T example){
         return getCriterioTodas();
     }
 
-    public T buscarPorId(final int id) {
-        for (T candidate : this.buscarTodos()) {
-            if (candidate.getId().equals(id))
-                return candidate;
-        }
-
+    public T getById(final String id) {
+        return dao.getById(id);
         // TODO Mejorar el mensaje de error
-        throw new RuntimeException("No se encontro el objeto con el id: " + id);
+//        throw new RuntimeException("No se encontro el objeto con el id: " + id);
     }
 
     public List<T> refresh() {
@@ -97,7 +101,7 @@ public class Home<T extends IdentificablePersistentObject> {
         return this.objects;
     }
 
-    public List<T> buscarTodos() {
+    public List<T> getAll() {
         return this.objects;
     }
 

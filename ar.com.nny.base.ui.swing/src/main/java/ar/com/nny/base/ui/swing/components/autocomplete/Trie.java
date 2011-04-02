@@ -35,8 +35,6 @@ import java.util.NoSuchElementException;
  * See http://www.csse.monash.edu.au/~lloyd/tildeAlgDS/Tree/Trie.html for a
  * discussion of Tries.
  * 
- * @modified David Soh (yunharla00@hotmail.com) added getIterator() for enhanced
- *           AutoCompleteTextField use.
  * 
  */
 public class Trie {
