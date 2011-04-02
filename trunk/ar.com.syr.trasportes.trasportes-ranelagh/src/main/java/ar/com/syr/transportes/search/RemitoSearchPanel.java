@@ -18,7 +18,7 @@ public class RemitoSearchPanel extends SearchPanel<Remito> {
     private JDateChooser hasta;
 
     public RemitoSearchPanel(final Remito newInstance) {
-        super("Remito", newInstance, HomeRemito.getInstance());
+        super(newInstance, HomeRemito.getInstance());
         desde = new JDateChooser();
         hasta = new JDateChooser();
     }

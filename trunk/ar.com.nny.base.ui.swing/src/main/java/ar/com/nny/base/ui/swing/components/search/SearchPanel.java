@@ -29,8 +29,8 @@ public class SearchPanel<T extends IdentificablePersistentObject> extends Abstra
 
     protected List<T> result = new ArrayList<T>();
 
-    public SearchPanel(final String claseAEditar, final T model, final Home<T> home) {
-        super(claseAEditar, model);
+    public SearchPanel(final T model, final Home<T> home) {
+        super(model);
         this.home = home;
         setTable(this.createTable(home.createExample()));
         this.addActions();
@@ -64,14 +64,12 @@ public class SearchPanel<T extends IdentificablePersistentObject> extends Abstra
         result.removeAll(result);
         this.setModel(home.createExample());
         table.getModelo().fireTableDataChanged();
-//        SwingUtilities.updateComponentTreeUI(this);
     }
 
     public void search() {
         result.removeAll(result);
         result.addAll(home.searchByExample(this.getModel()));
         table.getModelo().fireTableDataChanged();
-//        SwingUtilities.updateComponentTreeUI(this);
     }
 
     public AutoCompleteTextField addAutocompletetextField(final String property, final String label) {
@@ -84,8 +82,8 @@ public class SearchPanel<T extends IdentificablePersistentObject> extends Abstra
     }
 
     protected void addListDataAutoComplete(final AutoCompleteTextField text, final String property) {
-        for (T object : home.buscarTodos()) {
-            text.addToDictionary(object.getProperty(property).toString());
+        for (T object : home.getAll()) {
+            text.addToDictionary(property, object);
         }
     }
 

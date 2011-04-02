@@ -41,7 +41,7 @@ public class AbstractBindingPanel<T> extends JPanel {
 
     protected BeanAdapter beanAdapter;
 
-    public AbstractBindingPanel(final String claseAEditar, final T model) {
+    public AbstractBindingPanel(final T model) {
         this.model = model;
         panelDeAtributos = new DefaultFormBuilder(new FormLayout("p, 2dlu, p:g"));
         panelDeAtributos.setDefaultDialogBorder();
@@ -173,5 +173,9 @@ public class AbstractBindingPanel<T> extends JPanel {
         return beanAdapter;
     }
 
+    @Override
+    public String toString() {
+        return model.toString();
+    }
 
 }

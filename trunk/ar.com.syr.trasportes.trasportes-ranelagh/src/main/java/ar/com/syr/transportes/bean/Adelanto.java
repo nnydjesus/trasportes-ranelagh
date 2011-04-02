@@ -5,18 +5,17 @@ import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import ar.com.nny.base.bean.IdGenerator;
+import ar.com.nny.base.persistence.SerializationStrategy;
+import ar.com.nny.base.persistence.Through;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
-import ar.com.syr.transportes.bean.enums.FormaDePagoType;
 
 @Entity
 @Table(name = "adelanto")
@@ -25,7 +24,6 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     public static final String FECHA = "fecha";
     public static final String EMPLEADO = "empleado";
     public static final String COMENTARIO = "comentario";
-    public static final String MONTO = "monto";
     public static final String NUMERO_DE_ORDEN = "id";
     public static final String FORMA_DE_PAGO = "fornaDePago";
 
@@ -33,17 +31,18 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     private Date fecha;
     
     @ManyToOne()
-    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
     @JoinColumn(name = "adelanto_id")
     private Empleado empleado;
+    
     @Basic
     private String comentario;
-    @Basic
-    private Double monto;
+    
     @Id
     private String id = IdGenerator.getInstance().nextId();
-    @Enumerated
-    private FormaDePagoType fornaDePago;
+    
+    @OneToOne(fetch = FetchType.EAGER)
+    @SerializationStrategy(access = Through.ACCESSOR)
+    private FormaDePago fornaDePago;
 
 
     public Empleado getEmpleado() {
@@ -64,14 +63,6 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
         this.comentario = comentario;
     }
 
-    public Double getMonto() {
-        return monto;
-    }
-
-    public void setMonto(Double monto) {
-        this.firePropertyChange(MONTO, this.monto, monto);
-        this.monto = monto;
-    }
 
     public String getId() {
         return id;
@@ -82,11 +73,11 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
         this.id = numeroDeOrden;
     }
 
-    public FormaDePagoType getFornaDePago() {
+    public FormaDePago getFornaDePago() {
         return fornaDePago;
     }
 
-    public void setFornaDePago(FormaDePagoType fornaDePago) {
+    public void setFornaDePago(FormaDePago fornaDePago) {
         this.firePropertyChange(FORMA_DE_PAGO, this.fornaDePago, fornaDePago);
         this.fornaDePago = fornaDePago;
     }
@@ -103,6 +94,6 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
 
     @Override
     public String[] atributos() {
-        return new String[] {NUMERO_DE_ORDEN,FECHA, EMPLEADO, COMENTARIO, MONTO,FORMA_DE_PAGO};
+        return new String[] {NUMERO_DE_ORDEN,FECHA, EMPLEADO, COMENTARIO};
     }
 }

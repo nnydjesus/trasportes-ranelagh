@@ -20,10 +20,6 @@ public class Vacacion extends IdentificablePersistentObject {
 	public static final String NOMBRE = "nombre";
 	public static final String APELLIDO = "apellido";
 	
-	@GeneratedValue
-	@Id
-	private String id;
-	
 	@Temporal(TemporalType.DATE)
 	private Date desde;
 	@Temporal(TemporalType.DATE)
@@ -34,7 +30,6 @@ public class Vacacion extends IdentificablePersistentObject {
 	private String nombre;
 	@Basic
 	private String apellido;
-	
 	
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
@@ -65,12 +60,6 @@ public class Vacacion extends IdentificablePersistentObject {
 	}
 	public Date getDesde() {
 		return desde;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 	@Override
 	public String[] atributos() {

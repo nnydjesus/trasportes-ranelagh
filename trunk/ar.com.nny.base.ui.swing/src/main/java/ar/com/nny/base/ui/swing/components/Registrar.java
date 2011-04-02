@@ -81,7 +81,7 @@ public class Registrar extends GeneralLogin {
 
 	
 	protected void onSubmit(Usuario usuarionew) {
-		dao.save(usuarionew);
+		home.save(usuarionew);
 		this.setVisible(false);
 	}
 	

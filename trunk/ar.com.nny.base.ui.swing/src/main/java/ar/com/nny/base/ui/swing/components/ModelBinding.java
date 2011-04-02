@@ -37,10 +37,4 @@ public class ModelBinding extends AbstractTableAdapter implements Model {
             return Object.class;
     }
     
-    
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true ;
-    }
-
 }

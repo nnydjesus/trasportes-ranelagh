@@ -44,7 +44,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
     protected Boolean tengo;
 
-    private SearchPanel<T> search;
+    protected SearchPanel<T> search;
 
     private Class<T> clazz;
 
@@ -58,7 +58,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
         newInstance = (T) ReflectionUtils.instanciate(clase);
         edicion = new PanelEdicion<T>(name, newInstance);
-        search = this.createSearchPanel(name, newInstance);
+        search = this.createSearchPanel(newInstance);
 
         this.createComboBox();
         comboBox.addDefaultValue(home.createExample());
@@ -74,8 +74,8 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
         this.setVisible(false);
     }
 
-    protected SearchPanel<T> createSearchPanel(final String name, final T newInstance) {
-        return new SearchPanel<T>(name, newInstance, home);
+    protected SearchPanel<T> createSearchPanel(final T newInstance) {
+        return new SearchPanel<T>( newInstance, home);
     }
 
     protected void setLayout() {
@@ -93,11 +93,11 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     }
 
     protected GeneralTable createTable(final T newInstance) {
-        return Generator.GENERATE_TABLE(home.buscarTodos(), newInstance.atributos());
+        return Generator.GENERATE_TABLE(home.getAll(), newInstance.atributos());
     }
 
     protected void createComboBox() {
-        this.comboBox = new MyJComboBox(home.buscarTodos());
+        this.comboBox = new MyJComboBox(home.getAll());
     }
 
     protected void createHome() {
@@ -116,12 +116,6 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
             @Override
             public void actionPerformed(final ActionEvent arg0) {
                 PrintUtilities.printComponent(search.getTable().getScroll());
-//                try {
-//                    table.getTabla().print(PrintMode.NORMAL);
-//                } catch (PrinterException e) {
-//                    e.printStackTrace();
-//                }
-
             }
         });
 
@@ -175,7 +169,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     }
 
     protected void edicionAgregar() {
-        home.agregar(edicion.getModel());
+        home.save(edicion.getModel());
         edicion.setModel(home.createExample());
         SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
     }
@@ -201,7 +195,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     protected void edicionModificar() {
         T model = edicion.getModel();
         if (model.getId() != null) {
-            home.actualizar(model);
+            home.update(model);
             edicion.getBotonModificar().setEnabled(false);
             SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
         }
@@ -229,7 +223,11 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     }
 
     public List<T> getObjects() {
-        return home.buscarTodos();
+        return home.getAll();
+    }
+    
+    public void update(){
+        SwingUtilities.updateComponentTreeUI(this);
     }
 
 }

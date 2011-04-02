@@ -2,6 +2,8 @@ package ar.com.nny.base.ui.swing.components.autocomplete;
 
 import java.util.Iterator;
 
+import ar.com.nny.base.common.Observable;
+
 /**
  * This interface defines the API that dictionaries for autocomplete components
  * must implement. Note that implementations of this interface should perform
@@ -20,7 +22,9 @@ public interface AutoCompleteDictionary {
      * @param s
      *            The string to add to the dictionary.
      */
-    public void addEntry(String s);
+    public void addEntry(String key,Observable s);
+    
+    public void addEntry(Object s);
 
     /**
      * Removes an entry from the dictionary.

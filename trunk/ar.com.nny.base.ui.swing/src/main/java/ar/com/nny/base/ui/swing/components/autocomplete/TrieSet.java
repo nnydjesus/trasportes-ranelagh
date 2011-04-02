@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import ar.com.nny.base.common.Observable;
+
 /**
  * A TrieSet. A set-like interface designed specifically for Strings. Uses a
  * Trie as the backing Map, and provides an implementation specific to Strings.
@@ -12,10 +14,6 @@ import java.util.List;
  * that can branch off a prefix.
  * 
  * Primarily designed as an AutoCompleteDictionary
- * 
- * @modified David Soh (yunharla00@hotmail.com) 1. added getIterator() &
- *           getIterator(String) for enhanced AutoCompleteTextField use. 2.
- *           disallowed adding duplicates
  * 
  */
 public class TrieSet implements AutoCompleteDictionary {
@@ -39,17 +37,22 @@ public class TrieSet implements AutoCompleteDictionary {
      * store two Strings with different case but will update the stored values
      * with the case of the last entry.
      */
-    public void addEntry(final String data) {
+    public void addEntry(final String property, Observable data ) {
         if (!this.contains(data)) {
-            map.add(data, data);
+            map.add(data.getProperty(property).toString(), new ValueNode(data, property));
+        }
+    }
+    public void addEntry(final Object data) {
+        if (!this.contains(data)) {
+            map.add(data.toString(), data);
         }
     }
 
     /**
      * Determines whether or not the Set contains this String.
      */
-    public boolean contains(final String data) {
-        return map.get(data) != null;
+    public boolean contains(final Object data) {
+        return map.get(data.toString()) != null;
     }
 
     /**
