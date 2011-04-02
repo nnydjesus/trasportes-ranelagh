@@ -1,6 +1,8 @@
 package ar.com.syr.transportes.ui;
 
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -28,16 +30,18 @@ public class Tree extends JPanel{
 	}
 
 	private void addListener() {
-		tree.addTreeSelectionListener(new TreeSelectionListener() {
-			
+		tree.addMouseListener(new MouseAdapter() {
+
+		    
 			@Override
-			public void valueChanged(TreeSelectionEvent e) {
-//			    if(e.)
-				DynamicUtilTreeNode lastSelectedPathComponent = (DynamicUtilTreeNode) tree.getLastSelectedPathComponent();
-				if(lastSelectedPathComponent!= null){
-					Item item = (Item) lastSelectedPathComponent.getUserObject();
-					item.mostrar();					
-				}
+			public void mouseClicked(MouseEvent e) {
+			    if(e.getClickCount() >= 2){
+    				DynamicUtilTreeNode lastSelectedPathComponent = (DynamicUtilTreeNode) tree.getLastSelectedPathComponent();
+    				if(lastSelectedPathComponent!= null){
+    					Item item = (Item) lastSelectedPathComponent.getUserObject();
+    					item.mostrar();					
+    				}
+			    }
 			}
 		});
 	}

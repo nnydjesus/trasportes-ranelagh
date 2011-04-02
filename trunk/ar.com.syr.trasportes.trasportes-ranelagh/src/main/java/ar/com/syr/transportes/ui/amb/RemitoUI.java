@@ -3,6 +3,8 @@ package ar.com.syr.transportes.ui.amb;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,6 @@ import ar.com.nny.base.ui.swing.components.search.SearchPanel;
 import ar.com.syr.transportes.bean.CostoEmpleado;
 import ar.com.syr.transportes.bean.Empleado;
 import ar.com.syr.transportes.bean.Remito;
-import ar.com.syr.transportes.search.HomeCostoempleado;
 import ar.com.syr.transportes.search.HomeEmpleado;
 import ar.com.syr.transportes.search.HomeRemito;
 import ar.com.syr.transportes.search.RemitoSearchPanel;
@@ -67,7 +68,7 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item {
         defBuilder.append("Porcentage", porcentageSpinner);
         panelCostoChofer.add(costoChofer);
         panelCostoChofer.add(defBuilder.getPanel());
-        cbEmpleados = new MyJComboBox<Empleado>(HomeEmpleado.getInstance().buscarTodos());
+        cbEmpleados = new MyJComboBox<Empleado>(HomeEmpleado.getInstance().getAll());
         cbEmpleados.addDefaultValue(new Empleado());
         edicion.addComponent("Seleccione El Empleado", cbEmpleados);
         edicion.addComponent("Seleccione El Remito", comboBox);
@@ -99,6 +100,17 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item {
                 comboBox.selectedDefault();
             }
         });
+        
+       search.getTable().getTabla().addMouseListener(new MouseAdapter() {
+               @Override
+            public void mousePressed(MouseEvent e) {
+               if(e.getClickCount() == 3){
+                   Remito selected = (Remito)  search.getTable().getSelected();
+                   selected.setPago(!selected.getPago());
+                   home.update(selected);
+               }
+        }
+    });
 
         porcentageSpinner.addChangeListener(new ActionMethodListener(this, "updateCosto"));
         ActionMethodListener listenerCosto = new ActionMethodListener(this, "updateCostoChofer");
@@ -115,8 +127,10 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item {
 
     @Override
     public void comboboxListener() {
-        montoViejo = ((Remito) comboBox.getSelectedItem()).getCosto();
-        super.comboboxListener();
+        if(!comboBox.getSelectedItem().getId().equals("")){
+            montoViejo = ((Remito) comboBox.getSelectedItem()).getCosto();
+            super.comboboxListener();
+        }
     }
 
     @Override
@@ -128,11 +142,10 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item {
     protected void edicionAgregar() {
         Remito model = edicion.getModel();
         if (tengo && !model.getId().equals("")) {
-//            home.agregar(model);
-            Empleado empleado = cbEmpleados.getSelectedItem();
-            empleado.addRemito(model);
-            HomeEmpleado.getInstance().actualizar(empleado);
+            model.setEmpleado(cbEmpleados.getSelectedItem());
+            home.save(model);
             edicion.setModel(home.createExample());
+            clearCombos();
             this.updateCombo();
         }
     }
@@ -141,16 +154,25 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item {
     protected void edicionModificar() {
         Remito model = edicion.getModel();
         if (!model.getId().equals("")) {
-            home.actualizar(model);
-            CostoEmpleado costo = ((Empleado) cbEmpleados.getSelectedItem()).getCostoEmpleado();
+            CostoEmpleado costo = model.getEmpleado().getCostoEmpleado();
             if(montoViejo != null)
                 costo.aumentarCosto(model.getCostoChofer() - montoViejo);
-            HomeCostoempleado.getInstance().actualizar(costo);
+            home.update(model);
             edicion.setModel(home.createExample());
             edicion.getBotonModificar().setEnabled(false);
+            clearCombos();
             SwingUtilities.updateComponentTreeUI(this);
         }
 
+    }
+    
+    @Override
+    public void setModel(Remito observable) {
+        super.setModel(observable);
+        if(cbEmpleados.getSelectedItem().getId().equals("")){
+            cbEmpleados.setSelectedItem(observable.getEmpleado());
+        }
+        comboBox.setSelectedItem(observable);
     }
 
     @Override
@@ -160,11 +182,13 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item {
     }
 
     private void updateCombo() {
-        remitos.removeAll(remitos);
-        remitos.addAll(((Empleado) cbEmpleados.getSelectedItem()).getRemitos());
-        comboBox.update(remitos);
-        comboBox.addDefaultValue(home.createExample());
-        SwingUtilities.updateComponentTreeUI(RemitoUI.this);
+        if(!cbEmpleados.getSelectedItem().equals("")){
+            remitos.removeAll(remitos);
+            remitos.addAll(((Empleado) cbEmpleados.getSelectedItem()).getRemitos());
+            comboBox.update(remitos);
+            comboBox.addDefaultValue(home.createExample());
+            SwingUtilities.updateComponentTreeUI(RemitoUI.this);
+        }
     }
 
     public void updateCosto() {
@@ -189,6 +213,17 @@ public class RemitoUI extends GeneralFrame<Remito> implements Item {
         search.addAutocompletetextField(Remito.ID, "Numero de Remito");
         ((RemitoSearchPanel) search).addFields();
         search.getTable().getTabla().setEditingColumn(6);
+    }
+    
+       @Override
+    protected void edicionCancelar() {
+        super.edicionCancelar();
+        clearCombos();
+    }
+
+    protected void clearCombos() {
+        remitos.removeAll(remitos);
+        cbEmpleados.setDefaultValue();
     }
 
 }

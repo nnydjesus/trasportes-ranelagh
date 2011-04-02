@@ -1,7 +1,10 @@
 package ar.com.syr.transportes.bean;
 
-public enum FormaDePago {
-    EFECTIVO,
-    CHEQUE;
+import ar.com.syr.transportes.bean.enums.FormaDePagoType;
+
+public class FormaDePago {
+    
+    private FormaDePagoType type;
+    private Double monto;
 
 }

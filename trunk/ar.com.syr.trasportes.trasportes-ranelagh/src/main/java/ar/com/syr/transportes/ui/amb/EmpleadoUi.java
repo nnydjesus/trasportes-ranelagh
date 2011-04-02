@@ -1,5 +1,7 @@
 package ar.com.syr.transportes.ui.amb;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +15,13 @@ import ar.com.nny.base.ui.swing.components.GeneralTable;
 import ar.com.nny.base.ui.swing.components.Generator;
 import ar.com.nny.base.ui.swing.components.abms.PanelEdicion;
 import ar.com.nny.base.ui.swing.components.search.SearchPanel;
-import ar.com.syr.transportes.bean.Categoria;
 import ar.com.syr.transportes.bean.Direccion;
 import ar.com.syr.transportes.bean.Empleado;
 import ar.com.syr.transportes.bean.Licencia;
 import ar.com.syr.transportes.bean.Remito;
+import ar.com.syr.transportes.bean.enums.Categoria;
 import ar.com.syr.transportes.search.HomeEmpleado;
+import ar.com.syr.transportes.search.HomeRemito;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.beans.BeanAdapter;
@@ -60,10 +63,22 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
         // direccion.addBindingIntegerField(Direccion.CODPOSTAL, "CodPostal");
 
     }
-
-    public static void main(final String[] args) {
-        new EmpleadoUi();
+    
+    @Override
+    protected void addActions() {
+        super.addActions();
+        viajesRealizados.getTabla().addMouseListener(new MouseAdapter() {
+            @Override
+         public void mousePressed(MouseEvent e) {
+            if(e.getClickCount() == 3){
+                Remito selected = (Remito)  viajesRealizados.getSelected();
+                selected.setPago(!selected.getPago());
+                HomeRemito.getInstance().update(selected);
+            }
+         }
+     });
     }
+
 
     @Override
     protected void createHome() {

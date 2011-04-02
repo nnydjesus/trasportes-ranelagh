@@ -6,11 +6,11 @@ import org.apache.commons.lang.RandomStringUtils;
 
 import ar.com.nny.base.generator.InitialDataGenerator;
 import ar.com.nny.base.generator.annotations.DataGeneratorMethod;
-import ar.com.syr.transportes.bean.Categoria;
 import ar.com.syr.transportes.bean.CostoEmpleado;
 import ar.com.syr.transportes.bean.Direccion;
 import ar.com.syr.transportes.bean.Empleado;
 import ar.com.syr.transportes.bean.Licencia;
+import ar.com.syr.transportes.bean.enums.Categoria;
 import ar.com.syr.transportes.dao.CostoEmpleadoDao;
 import ar.com.syr.transportes.dao.EmpleadoDao;
 

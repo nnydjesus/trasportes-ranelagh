@@ -22,7 +22,7 @@ public class HomeRemito extends Home<Remito> {
     }
 
     @Override
-    protected Predicate getCriterio(final Remito example) {
+    protected Predicate getCriteria(final Remito example) {
         return this.getCriterioTodas();
     }
 

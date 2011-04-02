@@ -7,10 +7,15 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import ar.com.nny.base.generator.annotations.DataGenerator;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
@@ -88,6 +93,10 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 
     @Transient
     private Double costoChofer;
+    
+    
+    @ManyToOne()
+    private Empleado empleado;
 
     public Date getFecha() {
         return fecha;
@@ -210,6 +219,14 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
             costoChofer = porcentage * this.getCosto() / 100;
         }
         return costoChofer;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
     @Override
