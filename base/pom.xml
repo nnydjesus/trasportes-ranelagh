@@ -120,25 +120,30 @@
 <!-- 	      <scope>compile</scope> -->
 <!-- 	    </dependency> -->
 		
-<!--				<dependency>-->
-<!--			<groupId>jasperreports</groupId>-->
-<!--			<artifactId>jasperreports</artifactId>-->
-<!--			<version>3.5.1</version>-->
-<!--			<exclusions>-->
-<!--				<exclusion>-->
-<!--					<groupId>commons-collections</groupId>-->
-<!--					<artifactId>commons-collections</artifactId>-->
-<!--				</exclusion>-->
-<!--				<exclusion>-->
-<!--					<groupId>commons-digester</groupId>-->
-<!--					<artifactId>commons-digester</artifactId>-->
-<!--				</exclusion>-->
-<!--				<exclusion>-->
-<!--					<groupId>commons-logging</groupId>-->
-<!--					<artifactId>commons-logging</artifactId>-->
-<!--				</exclusion>-->
-<!--			</exclusions>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>3.5.1</version>
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>commons-collections</groupId> -->
+<!-- 					<artifactId>commons-collections</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>commons-digester</groupId> -->
+<!-- 					<artifactId>commons-digester</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>commons-logging</groupId> -->
+<!-- 					<artifactId>commons-logging</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+		</dependency>
+		<dependency>
+		    <groupId>opensymphony</groupId>
+		    <artifactId>xwork</artifactId>
+		    <version>2.0.3</version>
+		</dependency>
 		
 <!--	<dependency>
 		  <groupId>ar.com.mindset</groupId>
@@ -146,6 +151,13 @@
 		  <version>7.0.6-SNAPSHOT</version>
 		  <scope>compile</scope>
   		</dependency>-->
+		<dependency>
+			<groupId>org.codehaus.xfire</groupId>
+			<artifactId>xfire-java5</artifactId>
+			<version>1.2.6</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<build>
 	<pluginManagement>
