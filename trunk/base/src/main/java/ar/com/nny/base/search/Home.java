@@ -1,6 +1,5 @@
 package ar.com.nny.base.search;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -11,11 +10,15 @@ import ar.com.nny.base.dao.GenericDao;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 import ar.com.nny.base.utils.ReflectionUtils;
 
+import com.jgoodies.binding.list.ArrayListModel;
+
 public class Home<T extends IdentificablePersistentObject> {
+
+    public static final String RESULTS = "objects";
 
     private int proximoId = 1;
 
-    private List<T> objects = new ArrayList<T>();
+    private final List<T> objects = new ArrayListModel<T>();
 
     protected GenericDao<T> dao;
     private Class<T> clazz;
@@ -46,12 +49,11 @@ public class Home<T extends IdentificablePersistentObject> {
     // ** Altas, bajas y modificaciones.
     // ********************************************************
 
-    public void save(final T object) {
+    public void saveOrUpdate(final T object) {
         this.validatingCreation(object);
-//        if (!object.getId().equals("")) {
-            this.objects.add(object);
-            dao.save(object);
-//        }
+        this.objects.remove(object);
+         this.objects.add(object);
+         dao.saveOrUpdate(object);
     }
 
     protected void validatingCreation(final T object) {
@@ -97,7 +99,7 @@ public class Home<T extends IdentificablePersistentObject> {
 
     public List<T> refresh() {
         this.objects.removeAll(objects);
-        this.objects = dao.getAll();
+        this.objects.addAll(dao.getAll());
         return this.objects;
     }
 

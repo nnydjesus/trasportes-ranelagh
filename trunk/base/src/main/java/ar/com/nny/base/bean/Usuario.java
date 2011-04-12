@@ -67,4 +67,9 @@ public class Usuario extends IdentificablePersistentObject implements Serializab
     public String[] atributos() {
         return null;
     }
+
+    @Override
+    public String getName() {
+        return "Usuario";
+    }
 }

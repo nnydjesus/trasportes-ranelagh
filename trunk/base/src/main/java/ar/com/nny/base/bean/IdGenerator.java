@@ -62,6 +62,12 @@ public class IdGenerator extends IdentificablePersistentObject implements Serial
 //        System.out.println((double)1/1000);
         System.out.println(IdGenerator.getInstance().nextId());
     }
+
+
+    @Override
+    public String getName() {
+        return null;
+    }
     
 
 }

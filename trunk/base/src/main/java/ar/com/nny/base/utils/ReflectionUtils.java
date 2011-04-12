@@ -281,7 +281,7 @@ public class ReflectionUtils {
         }
     }
 
-    public static void invokeMethod(final Object model, final String actionName, final Class c, final Object... args) {
+    public static void invokeMethod(final Object model, final String actionName, final Class[] c, final Object... args) {
         try {
             model.getClass().getMethod(actionName, c).invoke(model, args);
         } catch (Exception e) {
@@ -289,12 +289,22 @@ public class ReflectionUtils {
         }
     }
 
-    public static void invokeMethod(final Class model, final String actionName, final Class c, final Object... args) {
+    public static void invokeMethod(final Class model, final String actionName, final Class[] c, final Object... args) {
         try {
             model.getMethod(actionName, c).invoke(model, args);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void invokeMethod(Object object, String method, Object[] args) {
+        Class[] clazz = new Class[args.length] ;
+        int i = 0;
+        for (Object object2 : args) {
+            clazz[i] = object2.getClass();
+            i++;
+        }
+        invokeMethod(object, method, clazz, args);
     }
 
 }
