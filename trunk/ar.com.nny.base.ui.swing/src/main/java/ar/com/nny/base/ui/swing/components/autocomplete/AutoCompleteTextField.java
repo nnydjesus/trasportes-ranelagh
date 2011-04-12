@@ -527,11 +527,10 @@ public class AutoCompleteTextField extends KeyProcessingTextField {
     public static void main(final String[] args) {
         JFrame frame = new JFrame();
         AutoCompleteTextField text = new AutoCompleteTextField();
-        text.addToDictionary();
-        text.dict.addEntry("aaaa");
-        text.dict.addEntry("aaee");
-        text.dict.addEntry("arrr");
-        text.dict.addEntry("aaaer");
+        text.addToDictionary("aaaa");
+        text.addToDictionary("aaee");
+        text.addToDictionary("arrr");
+        text.addToDictionary("aaaer");
         frame.add(text);
         frame.setSize(200, 200);
         frame.setVisible(true);

@@ -30,9 +30,6 @@ public class GeneralTable extends GeneralPanel {
     /** Modelo de la tabla */
     private ModelBinding modelo = null;
 
-    /** Para modificar el modelo */
-    private Control control = null;
-
     private JScrollPane scroll = new JScrollPane();
 
     private JTable tabla;
@@ -42,15 +39,14 @@ public class GeneralTable extends GeneralPanel {
      * llama al metodo construyeVentana() que se encarga de crear los
      * componentes.
      */
-    public GeneralTable(final ModelBinding modelo, final Control control) {
-        this(modelo, control, new JTable());
+    public GeneralTable(final ModelBinding modelo){
+        this(modelo, new JTable());
     }
 
-    public GeneralTable(final ModelBinding modelo, final Control control, final JTable tabla) {
+    public GeneralTable(final ModelBinding modelo, final JTable tabla) {
         super(new GridBagLayout());
         this.tabla = tabla;
         this.setModelo(modelo);
-        this.setControl(control);
         this.construyeVentana();
 
     }
@@ -90,13 +86,6 @@ public class GeneralTable extends GeneralPanel {
         return scroll;
     }
 
-    public void setControl(final Control control) {
-        this.control = control;
-    }
-
-    public Control getControl() {
-        return control;
-    }
 
     public JTable getTabla() {
         return tabla;
@@ -117,6 +106,7 @@ public class GeneralTable extends GeneralPanel {
     public ModelBinding getModelo() {
         return modelo;
     }
+    
 
 //    static class MyRenderer extends BooleanRenderer {
 //        //

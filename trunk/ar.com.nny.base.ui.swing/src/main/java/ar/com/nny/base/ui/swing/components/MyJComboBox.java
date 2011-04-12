@@ -1,10 +1,16 @@
 package ar.com.nny.base.ui.swing.components;
 
 import java.util.List;
-import java.util.Vector;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.ListModel;
+
+import ar.com.nny.base.search.Home;
+
+import com.jgoodies.binding.adapter.ComboBoxAdapter;
+import com.jgoodies.binding.beans.BeanAdapter;
+import com.jgoodies.binding.list.SelectionInList;
+import com.jgoodies.binding.value.ValueModel;
 
 @SuppressWarnings({ "unused", "unchecked" })
 public class MyJComboBox<T> extends JComboBox {
@@ -13,21 +19,24 @@ public class MyJComboBox<T> extends JComboBox {
 
     private String method;
 
-    private Vector<T> vector = new Vector<T>();
+    private List<T> list ;
 
     public MyJComboBox() {
     }
-
-    public MyJComboBox(final List<T> list) {
-        super();
-        this.update(list);
-        // this.setRenderer(new MyRenderer());
-        this.setModel(new DefaultComboBoxModel(vector));
+    
+    public MyJComboBox(List<T> items, ValueModel selectionHolder) {
+        this.setModel(new ComboBoxAdapter<T>(items, selectionHolder));
+        list = items;
+    }
+    
+    public MyJComboBox(final List<T> anList) {
+        this(new SelectionInList<T>(anList));
     }
 
-    public void update(final List<T> list) {
-        vector.removeAll(vector);
-        vector.addAll(list);
+
+    public MyJComboBox(SelectionInList<T> selectionInList) {
+        this.setModel(new ComboBoxAdapter<T>(selectionInList));
+        list = selectionInList.getList();
     }
 
     @Override
@@ -41,7 +50,7 @@ public class MyJComboBox<T> extends JComboBox {
     }
 
     public void addDefaultValue(final T value) {
-        vector.add(0, value);
+        list.add(0, value);
         this.setSelectedIndex(0);
     }
     
@@ -51,6 +60,15 @@ public class MyJComboBox<T> extends JComboBox {
 
     public void selectedDefault() {
         this.setSelectedIndex(0);
+    }
+
+    public Object[] getArray() {
+        return list.toArray();
+    }
+    
+    public void updateList(List<T> all) {
+        //this.list.removeAll(list);
+        //this.list.addAll(all);
     }
 
     // class MyRenderer extends DefaultListCellRenderer{

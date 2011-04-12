@@ -1,7 +1,6 @@
 package ar.com.nny.base.ui.swing.components;
 
 import java.awt.Component;
-import java.text.NumberFormat;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -12,16 +11,11 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.text.NumberFormatter;
 
-import com.jgoodies.binding.adapter.BasicComponentFactory;
-import com.jgoodies.binding.adapter.Bindings;
-import com.jgoodies.binding.beans.BeanAdapter;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueModel;
+import com.jgoodies.forms.builder.ButtonBarBuilder2;
 import com.jgoodies.forms.builder.ButtonStackBuilder;
-import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
 
@@ -33,20 +27,14 @@ public class AbstractBindingPanel<T> extends JPanel {
 
     private JLabel titulo;
 
-    private ButtonStackBuilder panelDeBotones;
+    private ButtonBarBuilder2 panelDeBotones;
 
-    private DefaultFormBuilder panelDeAtributos;
-
-    private T model;
-
-    protected BeanAdapter beanAdapter;
+    private FormBuilder<T> builder;
 
     public AbstractBindingPanel(final T model) {
-        this.model = model;
-        panelDeAtributos = new DefaultFormBuilder(new FormLayout("p, 2dlu, p:g"));
-        panelDeAtributos.setDefaultDialogBorder();
+        builder = new FormBuilder<T>(model);
         this.titulo = new JLabel();
-        panelDeBotones = new ButtonStackBuilder();
+        panelDeBotones = new ButtonBarBuilder2();
         this.construirPanelEdicion();
 
     }
@@ -54,9 +42,8 @@ public class AbstractBindingPanel<T> extends JPanel {
     private void construirPanelEdicion() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.addButtons();
-        this.beanAdapter = new BeanAdapter(model);
         this.add(this.titulo);
-        this.add(panelDeAtributos.getPanel());
+        this.add(builder.build());
         this.add(this.getPanelDeBotones().getPanel());
 
     }
@@ -74,108 +61,76 @@ public class AbstractBindingPanel<T> extends JPanel {
      * @return
      */
     public JTextField addBindingTextField(final String property, final String label) {
-        ValueModel nameModel = beanAdapter.getValueModel(property);
-        JTextField createTextField = BasicComponentFactory.createTextField(nameModel);
-        panelDeAtributos.append(label, createTextField);
-        return createTextField;
+        return builder.addBindingTextField(property, label);
     }
 
     public JFormattedTextField addBindingIntegerField(final String property, final String label) {
-        ValueModel nameModel = beanAdapter.getValueModel(property);
-        JFormattedTextField createIntegerField = BasicComponentFactory.createIntegerField(nameModel,
-                NumberFormat.getNumberInstance());
-        panelDeAtributos.append(label, createIntegerField);
-        return createIntegerField;
+        return builder.addBindingIntegerField(property, label);
     }
 
     public JFormattedTextField addBindingDoubleField(final String property, final String label) {
-        ValueModel valueModel = beanAdapter.getValueModel(property);
-        // DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        NumberFormatter decimalFormat = new NumberFormatter();
-        decimalFormat.setValueClass(Double.class);
-        // decimalFormat.setDecimalSeparatorAlwaysShown(true);
-        JFormattedTextField textField = new JFormattedTextField(decimalFormat);
-        Bindings.bind(textField, valueModel);
-        panelDeAtributos.append(label, textField);
-        return textField;
+        return builder.addBindingDoubleField(property, label);
     }
 
     public JDateChooser addBindingDateField(final String property, final String label) {
-        JDateChooser date = new JDateChooser();
-        ValueModel nameModel = beanAdapter.getValueModel(property);
-        Bindings.bind(date, "date", nameModel);
-        panelDeAtributos.append(label, date);
-        return date;
+        return builder.addBindingDateField(property, label);
     }
 
     public JCheckBox addBindingCheckBox(final String property, final String label) {
-        ValueModel nameModel = beanAdapter.getValueModel(property);
-        JCheckBox createCheckBox = BasicComponentFactory.createCheckBox(nameModel, label);
-        panelDeAtributos.append(label, createCheckBox);
-        return createCheckBox;
+        return builder.addBindingCheckBox(property, label);
     }
 
     public void addComponent(final String label, final Component component) {
-        panelDeAtributos.append(label, component);
+        builder.addComponent(label, component);
     }
 
     public JComboBox addBindingComboBox(final String property, final List<?> list) {
-        return addBindingComboBox(property,  new SelectionInList(list));
+        return builder.addBindingComboBox(property, list);
     }
 
     public JComboBox addBindingComboBox(String property, Object[] values) {
-        return addBindingComboBox(property,  new SelectionInList(values));
+        return addBindingComboBox(property,  new SelectionInList<Object>(values));
     }
     public JComboBox addBindingComboBox(String property, SelectionInList<?> selectionInList) {
-        ValueModel valueModel = beanAdapter.getValueModel(property);
-//        JComboBox createCombobox = BasicComponentFactory.createComboBox(selectionInList);
-        JComboBox createCombobox = new JComboBox(selectionInList.getList().toArray());
-        this.bind(createCombobox, "selectedItem", valueModel);
-        panelDeAtributos.append(property, createCombobox);
-        return createCombobox;
+        return builder.addBindingComboBox(property, selectionInList);
     }
     
     public void bind(final JComponent component, final String propertyName, final String property) {
-        ValueModel valueModel = beanAdapter.getValueModel(property);
-        bind(component, propertyName, valueModel);
+        builder.bind(component, propertyName, property);
     }
     public void bind(final JComponent component, final String propertyName, ValueModel valueModel) {
-        Bindings.bind(component, propertyName, valueModel);
+        builder.bind(component, propertyName, valueModel);
     }
 
     public void setTitulo(final String title) {
         this.titulo.setText(title);
     }
 
-    public DefaultFormBuilder getPanelDeAtributos() {
-        return panelDeAtributos;
+    public FormBuilder<T> getBuilder() {
+        return builder;
     }
 
-    public ButtonStackBuilder getPanelDeBotones() {
+    public ButtonBarBuilder2 getPanelDeBotones() {
         return panelDeBotones;
     }
 
-    public void setPanelDeBotones(final ButtonStackBuilder buttonStackBuilder) {
-        this.panelDeBotones = buttonStackBuilder;
-    }
 
     public T getModel() {
-        return model;
+        return builder.getModel();
     }
 
     public void setModel(final Object object) {
-        this.model = (T) object;
-        beanAdapter.setBean(object);
+        builder.setModel(object);
 
-    }
-
-    public BeanAdapter getBeandAdapter() {
-        return beanAdapter;
     }
 
     @Override
     public String toString() {
-        return model.toString();
+        return getModel().toString();
+    }
+    
+    public void setComboBoxModel(JComboBox combo,String property){
+        builder.setComboBoxModel(combo, property);
     }
 
 }
