@@ -21,6 +21,7 @@ public class ActionMethodListener implements ActionListener, ChangeListener, Mou
 
     private Object[] args;
 
+
     public ActionMethodListener(final Object object, final String method, final Object... args) {
         this.object = object;
         this.method = method;
@@ -29,7 +30,7 @@ public class ActionMethodListener implements ActionListener, ChangeListener, Mou
 
     @Override
     public void actionPerformed(final ActionEvent e) {
-        ReflectionUtils.invokeMethod(object, method);
+        ReflectionUtils.invokeMethod(object, method, args);
     }
 
     @Override
@@ -86,5 +87,5 @@ public class ActionMethodListener implements ActionListener, ChangeListener, Mou
     public void focusLost(final FocusEvent e) {
         ReflectionUtils.invokeMethod(object, method);
     }
-
+    
 }

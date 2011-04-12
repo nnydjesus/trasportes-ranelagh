@@ -1,6 +1,7 @@
 package ar.com.nny.base.ui.swing.components;
 
 import javax.swing.ListModel;
+import javax.swing.event.TableModelListener;
 
 import ar.com.nny.base.common.Observable;
 
@@ -37,4 +38,5 @@ public class ModelBinding extends AbstractTableAdapter implements Model {
             return Object.class;
     }
     
+     
 }

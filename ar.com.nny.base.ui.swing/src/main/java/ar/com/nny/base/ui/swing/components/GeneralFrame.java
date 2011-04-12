@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.print.PrinterException;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -12,19 +11,20 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable.PrintMode;
 import javax.swing.SwingUtilities;
 
 import ar.com.nny.base.common.Item;
 import ar.com.nny.base.search.Home;
-import ar.com.nny.base.ui.swing.components.abms.PanelEdicion;
+import ar.com.nny.base.ui.swing.components.abms.ABMFrame;
+import ar.com.nny.base.ui.swing.components.abms.WindowsEdition;
 import ar.com.nny.base.ui.swing.components.search.SearchPanel;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 import ar.com.nny.base.utils.PrintUtilities;
 import ar.com.nny.base.utils.ReflectionUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public abstract class GeneralFrame<T extends IdentificablePersistentObject> extends JFrame implements Item {
+public abstract class GeneralFrame<T extends IdentificablePersistentObject> extends JFrame implements
+                                            Item, WindowsEdition,WindowsSearch {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,17 +34,17 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
     private JTabbedPane panel = new JTabbedPane();
 
-    protected PanelEdicion<T> edicion;
+    protected Class<ABMFrame<T>> ambClass;
 
     protected Home<T> home;
 
     private String nombre;
 
-    protected MyJComboBox<T> comboBox;
+//    protected MyJComboBox<T> comboBox;
 
     protected Boolean tengo;
 
-    protected SearchPanel<T> search;
+    private SearchPanel<T> search;
 
     private Class<T> clazz;
 
@@ -57,25 +57,25 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
         
 
         newInstance = (T) ReflectionUtils.instanciate(clase);
-        edicion = new PanelEdicion<T>(name, newInstance);
+        ambClass = abmClass();
         search = this.createSearchPanel(newInstance);
 
         this.createComboBox();
-        comboBox.addDefaultValue(home.createExample());
+//        comboBox.addDefaultValue(home.createExample());
         this.topPanel = new TopPanel();
         this.table = this.createTable(newInstance);
-        this.createForm(edicion);
-        this.createSearchForm(search);
+        this.createSearchForm(getSearch());
+        this.add(topPanel);
         this.addPanels(panel);
         this.addActions();
-        this.add(topPanel);
-        this.add(panel);
         this.setSize(1024, 780);
         this.setVisible(false);
     }
 
+    public abstract Class abmClass();
+
     protected SearchPanel<T> createSearchPanel(final T newInstance) {
-        return new SearchPanel<T>( newInstance, home);
+        return new SearchPanel<T>( newInstance, home, this);
     }
 
     protected void setLayout() {
@@ -97,7 +97,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     }
 
     protected void createComboBox() {
-        this.comboBox = new MyJComboBox(home.getAll());
+//        this.comboBox = new MyJComboBox(home.getAll());
     }
 
     protected void createHome() {
@@ -105,9 +105,9 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     }
 
     protected void addPanels(final JTabbedPane panel) {
-        panel.addTab("General", null, edicion, "Edicion");
-        // panel.addTab("Tabla", null, table, "tabla");
-        panel.addTab("Filtro", null, search, "Filtro");
+         panel.addTab("Tabla", null, table, "tabla");
+        panel.addTab("Filtro", null, getSearch(), "Filtro");
+        this.add(panel);
     }
 
     protected void addActions() {
@@ -115,7 +115,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
             @Override
             public void actionPerformed(final ActionEvent arg0) {
-                PrintUtilities.printComponent(search.getTable().getScroll());
+                PrintUtilities.printComponent(getSearch().getTable().getScroll());
             }
         });
 
@@ -127,34 +127,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
             }
         });
 
-        edicion.getBotonAgregar().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                tengo = true;
-                GeneralFrame.this.edicionAgregar();
-                tengo = false;
-            }
-        });
-
-        edicion.getBotonModificar().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                GeneralFrame.this.edicionModificar();
-                setEditionModel(home.createExample());
-            }
-        });
-        edicion.getBotonCancelar().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                GeneralFrame.this.edicionCancelar();
-                setEditionModel(home.createExample());
-            }
-        });
-
-        search.getTable().addtableListener(new MouseAdapter() {
+        getSearch().getTable().addtableListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(final MouseEvent e) {
@@ -165,45 +138,41 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
             }
         });
 
-        comboBox.addActionListener(new ActionMethodListener(this, "comboboxListener"));
+//        comboBox.addActionListener(new ActionMethodListener(this, "comboboxListener"));
     }
 
-    protected void edicionAgregar() {
-        home.save(edicion.getModel());
-        edicion.setModel(home.createExample());
-        SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
+    public void edicionAceptar(Object object) {
+        update();
     }
 
     public void comboboxListener() {
-        this.setModel((T) comboBox.getSelectedItem());
+//        this.setModel((T) comboBox.getSelectedItem());
     }
 
     protected void tableListener(final MouseEvent e) {
-        this.setModel((T) search.getTable().getSelected());
+        this.setModel((T) getSearch().getTable().getSelected());
     }
 
     public void setModel(final T observable) {
-        setEditionModel(observable);
-        edicion.getBotonModificar().setEnabled(true);
-        SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
+//        ambClass.setModel(observable);
+        update();
+    }
+//
+//    protected void setEditionModel(final T observable) {
+//        ambClass.setModel(observable);
+//    }
+
+    public void edicionModificar() {
+        update();
     }
 
-    protected void setEditionModel(final T observable) {
-        edicion.setModel(observable);
+    public void edicionCancelar() {
     }
-
-    protected void edicionModificar() {
-        T model = edicion.getModel();
-        if (model.getId() != null) {
-            home.update(model);
-            edicion.getBotonModificar().setEnabled(false);
-            SwingUtilities.updateComponentTreeUI(GeneralFrame.this);
-        }
-    }
-
-    protected void edicionCancelar() {
-        panel.setSelectedComponent(edicion);
-        edicion.getBotonModificar().setEnabled(false);
+    
+    @Override
+    public void editSelected(Object selected) {
+        ABMFrame<T> edition = ReflectionUtils.instanciate(ambClass, selected);
+        edition.setVisible(true);
     }
 
     @Override
@@ -216,10 +185,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
         return nombre;
     }
 
-    protected abstract void createForm(AbstractBindingPanel<T> edicion2);
-
     protected void createSearchForm(final SearchPanel<T> panel) {
-        this.createForm(search);
     }
 
     public List<T> getObjects() {
@@ -228,6 +194,10 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     
     public void update(){
         SwingUtilities.updateComponentTreeUI(this);
+    }
+
+    public SearchPanel<T> getSearch() {
+        return search;
     }
 
 }
