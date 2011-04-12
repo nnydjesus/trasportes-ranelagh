@@ -12,7 +12,16 @@ abstract public class ItemComposite extends Vector<Object> implements Item {
     @Override
     public void mostrar() {
     }
+    public void addItem(Object object) {
+    }
 
     public abstract void mostrar(Object item);
+
+    @Override
+    public  void update() {
+        for (Object item : this) {
+            ((Item) item).update();
+        }
+    }
 
 }
