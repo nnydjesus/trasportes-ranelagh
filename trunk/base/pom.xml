@@ -7,7 +7,31 @@
   <url>http://maven.apache.org</url>
   <description>Base de para proyectos chicos</description>
   
+   <parent>
+	    <groupId>org.sonatype.oss</groupId>
+	    <artifactId>oss-parent</artifactId>
+	    <version>7</version>
+  </parent>
   
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://trasportes-ranelagh.googlecode.com/svn/trunk/base/</url>
+    <connection>https://trasportes-ranelagh.googlecode.com/svn/trunk/base/</connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>ronny</id>
+      <name>ronny</name>
+      <email>nnydjesus@gmail.com</email>
+    </developer>
+  </developers>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -234,6 +258,10 @@
 		</pluginManagement>
 	</build>
 
-
+  <!--
+  AVOID RELEASE REPOSITORY/PLUGINREPOSITORY:
+  <repositories></repositories>
+  <pluginRepositories></pluginRepositories>
+  -->
 </project>
 
