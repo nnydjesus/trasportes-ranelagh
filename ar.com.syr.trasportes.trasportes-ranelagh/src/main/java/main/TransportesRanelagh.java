@@ -21,16 +21,18 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import ar.com.nny.base.common.Item;
+import ar.com.nny.base.common.ItemComposite;
 import ar.com.nny.base.generator.DDLGenerator;
 import ar.com.nny.base.ui.swing.components.ActionMethodListener;
 import ar.com.nny.base.ui.swing.components.FrameLook;
 import ar.com.nny.base.ui.swing.components.GeneralPanel;
 import ar.com.nny.base.ui.swing.components.Preloader;
 import ar.com.nny.base.ui.swing.components.Registrar;
+import ar.com.nny.base.ui.swing.components.WindowsFame;
 import ar.com.nny.base.utils.Path;
 import ar.com.syr.transportes.categoria.Operaciones;
 import ar.com.syr.transportes.categoria.PersonalCategoria;
-import ar.com.syr.transportes.ui.Tree;
+import ar.com.syr.transportes.ui.TreePanel;
 
 import com.jgoodies.forms.builder.ButtonStackBuilder;
 
@@ -58,13 +60,13 @@ public class TransportesRanelagh extends FrameLook {
 
     private GeneralPanel topPanel = new GeneralPanel(new BorderLayout());
 
-    private Tree tree = new Tree();
+    private TreePanel tree = new TreePanel();
 
     private Registrar registro = new Registrar();
 
-    private Operaciones tablasTree = new Operaciones();
+    private Operaciones tablasTree;
 
-    private PersonalCategoria personalTree = new PersonalCategoria();
+    private PersonalCategoria personalTree;
 
     public TransportesRanelagh(final Preloader loader) {
         this();
@@ -74,6 +76,8 @@ public class TransportesRanelagh extends FrameLook {
 
     public TransportesRanelagh() {
         super();
+        tablasTree = new Operaciones(this);
+        personalTree = new PersonalCategoria(this);
         topPanel.add(new JLabel(new ImageIcon(Path.path() + "Images/logo.jpg")), BorderLayout.WEST);
         JLabel subTitulo = new JLabel("TRASPORTES RANELAGH", SwingConstants.CENTER);
         Font dejavuFont = new Font("DejaVu Sans", 1, 30);
@@ -108,6 +112,94 @@ public class TransportesRanelagh extends FrameLook {
         this.setSize(1024, 780);
         this.setVisible(false);
 
+    }
+
+    public ButtonStackBuilder getPanelBotones() {
+        return panelBotones;
+    }
+
+    public void setPanelBotones(ButtonStackBuilder panelBotones) {
+        this.panelBotones = panelBotones;
+    }
+
+    public JButton getOperaciones() {
+        return Operaciones;
+    }
+
+    public void setOperaciones(JButton operaciones) {
+        Operaciones = operaciones;
+    }
+
+    public JButton getAdministracion() {
+        return administracion;
+    }
+
+    public void setAdministracion(JButton administracion) {
+        this.administracion = administracion;
+    }
+
+    public JButton getPersonal() {
+        return Personal;
+    }
+
+    public void setPersonal(JButton personal) {
+        Personal = personal;
+    }
+
+    public JButton getControlDeUnidades() {
+        return controlDeUnidades;
+    }
+
+    public void setControlDeUnidades(JButton controlDeUnidades) {
+        this.controlDeUnidades = controlDeUnidades;
+    }
+
+    public JPanel getPanelDerecho() {
+        return panelDerecho;
+    }
+
+    public void setPanelDerecho(JPanel panelDerecho) {
+        this.panelDerecho = panelDerecho;
+    }
+
+    public GeneralPanel getTopPanel() {
+        return topPanel;
+    }
+
+    public void setTopPanel(GeneralPanel topPanel) {
+        this.topPanel = topPanel;
+    }
+
+    public TreePanel getTree() {
+        return tree;
+    }
+
+    public void setTree(TreePanel tree) {
+        this.tree = tree;
+    }
+
+    public Registrar getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(Registrar registro) {
+        this.registro = registro;
+    }
+
+    public Operaciones getTablasTree() {
+        return tablasTree;
+    }
+
+    public void setTablasTree(Operaciones tablasTree) {
+        this.tablasTree = tablasTree;
+    }
+
+    public PersonalCategoria getPersonalTree() {
+        return personalTree;
+    }
+
+    public void setPersonalTree(PersonalCategoria personalTree) {
+        this.personalTree = personalTree;
     }
 
     public void Mostrarregistro() {
@@ -157,15 +249,19 @@ public class TransportesRanelagh extends FrameLook {
         UIManager.setLookAndFeel(look);
         SwingUtilities.updateComponentTreeUI(TransportesRanelagh.this);
         SwingUtilities.updateComponentTreeUI(registro);
-        for (Object component : tablasTree) {
-            SwingUtilities.updateComponentTreeUI((Component) component);
+
+    }
+    
+    public void updateTree(){
+        for (ItemComposite component : tree.getVector()) {
+            component.update();
         }
     }
 
     class ListenerButtonPanel implements ActionListener {
-        private Item item;
+        private ItemComposite item;
 
-        public ListenerButtonPanel(final Item item) {
+        public ListenerButtonPanel(final ItemComposite item) {
             this.item = item;
         }
 
@@ -174,6 +270,10 @@ public class TransportesRanelagh extends FrameLook {
             tree.updateTree(item);
             SwingUtilities.updateComponentTreeUI(TransportesRanelagh.this);
         }
+    }
+    
+    public static void main(String[] args) {
+        new TransportesRanelagh().setVisible(true);
     }
 
 }

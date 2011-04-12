@@ -13,12 +13,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import ar.com.nny.base.bean.IdGenerator;
+import ar.com.nny.base.generator.annotations.GeneratedId;
 import ar.com.nny.base.persistence.SerializationStrategy;
 import ar.com.nny.base.persistence.Through;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 
 @Entity
 @Table(name = "adelanto")
+@GeneratedId
 public class Adelanto extends IdentificablePersistentObject  implements Serializable{
     
     public static final String FECHA = "fecha";
@@ -36,9 +38,6 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     
     @Basic
     private String comentario;
-    
-    @Id
-    private String id = IdGenerator.getInstance().nextId();
     
     @OneToOne(fetch = FetchType.EAGER)
     @SerializationStrategy(access = Through.ACCESSOR)
@@ -64,15 +63,6 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     }
 
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String numeroDeOrden) {
-        this.firePropertyChange(NUMERO_DE_ORDEN, this.id, id);
-        this.id = numeroDeOrden;
-    }
-
     public FormaDePago getFornaDePago() {
         return fornaDePago;
     }
@@ -95,5 +85,10 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     @Override
     public String[] atributos() {
         return new String[] {NUMERO_DE_ORDEN,FECHA, EMPLEADO, COMENTARIO};
+    }
+
+    @Override
+    public String getName() {
+        return "Adelanto";
     }
 }

@@ -11,11 +11,12 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -24,6 +25,7 @@ import ar.com.nny.base.generator.annotations.DataGenerator;
 import ar.com.nny.base.persistence.SerializationStrategy;
 import ar.com.nny.base.persistence.Through;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
+import ar.com.nny.base.utils.Nombrable;
 import ar.com.syr.transportes.bean.enums.Categoria;
 import ar.com.syr.transportes.initialData.DataGeneratorEmpleado;
 
@@ -50,10 +52,14 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     public static final String PROPIO = "propio";
 
     public static final String LICENCIA = "licencia";
+    
     public static final String CATEGORIA = "categoria";
 
-    @Id
-    private String id = "";
+    public static final String FECHA_DE_NACIMIENTO = "fechaDeNacimiento";
+    
+    public static final String NUMBER_CNRT = "numberCnrt";
+//    @Id
+//    private String id = "";
 
     @Basic
     private String apellido = "";
@@ -69,10 +75,16 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 
     @Basic
     @Column(name = "registro_conducir")
-    private Integer registroConducir;
+    private String registroConducir;
+    
+    @Basic
+    private String numberCnrt;
 
     @Basic
     private String cuil;
+    
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeNacimiento;
 
     @Embedded
     private Licencia licencia = new Licencia();
@@ -108,15 +120,19 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
     private List<Sancion> sanciones = new ArrayList<Sancion>();
     
-    @Override
-    public String getId() {
-        return id;
+    
+    public Empleado() {
+        this.setId("");
     }
-
-    @Override
-    public void setId(final String legajo) {
-    	firePropertyChange(LEGAJO, this.id, legajo);
-        id = legajo;
+    
+    public String getLegajo() {
+        return super.getId();
+    }
+    
+    public void setLegajo(final String legajo) {
+        firePropertyChange(LEGAJO, this.getId(), legajo);
+        super.setId(legajo);
+       
     }
 
     public String getApellido() {
@@ -153,11 +169,11 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
         this.dni = dni;
     }
 
-    public Integer getRegistroConducir() {
+    public String getRegistroConducir() {
         return registroConducir;
     }
 
-    public void setRegistroConducir(final Integer registro) {
+    public void setRegistroConducir(final String registro) {
         registroConducir = registro;
     }
 
@@ -186,7 +202,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public Date getRegistro() {
-        return licencia.getRegistro();
+        return  licencia != null ?licencia.getRegistro():null;
     }
 
     public void setRegistro(final Date registro) {
@@ -194,15 +210,22 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public Date getCnrt() {
-        return licencia.getCnrt();
+        return licencia != null ?licencia.getCnrt():null;
     }
 
     public void setCnrt(final Date cnrt) {
         licencia.setCnrt(cnrt);
     }
+    public Date getArt() {
+        return licencia != null ? licencia.getArt():null;
+    }
+    
+    public void setArt(final Date cnrt) {
+        licencia.setArt(cnrt);
+    }
 
     public Date getLibretaSanitaria() {
-        return licencia.getLibretaSanitaria();
+        return licencia != null ?licencia.getLibretaSanitaria():null;
     }
 
     public void setLibretaSanitaria(final Date libretaSanitaria) {
@@ -210,15 +233,15 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public Date getFechaDeNacimiento() {
-        return licencia.getFechaDeNacimiento();
+        return fechaDeNacimiento;
     }
 
     public void setFechaDeNacimiento(final Date categoria) {
-        licencia.setFechaDeNacimiento(categoria);
+        fechaDeNacimiento = categoria;
     }
 
     public String getLocalidad() {
-        return direccion.getLocalidad();
+        return licencia != null ?direccion.getLocalidad():null;
     }
 
     public void setLocalidad(final String localidad) {
@@ -226,7 +249,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public String getCalle() {
-        return direccion.getCalle();
+        return direccion != null ?direccion.getCalle():null;
     }
 
     public void setCalle(final String direccion) {
@@ -234,7 +257,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public int getTelefono() {
-        return direccion.getTelefono();
+        return direccion != null ?direccion.getTelefono():null;
     }
 
     public void setTelefono(final int telefono) {
@@ -242,7 +265,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public int getCodPostal() {
-        return direccion.getCodPostal();
+        return  direccion != null ?direccion.getCodPostal():null;
     }
 
     public void setCodPostal(final int codPostal) {
@@ -305,7 +328,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     @Override
     public String[] atributos() {
         return new String[] { LEGAJO, REGISTRO, APELLIDO, CUIL, NOMBRE, DNI, PROPIO, CATEGORIA, Direccion.CALLE,
-                Direccion.LOCALIDAD, Direccion.TELEFONO, Direccion.TELEFONO, Licencia.FECHA_DE_NACIMIENTO, Licencia.CNRT,
+                Direccion.LOCALIDAD, FECHA_DE_NACIMIENTO, Licencia.CNRT,
                 Licencia.LIBRETA_SANITARIA, Licencia.REGISTRO };
     }
 
@@ -324,6 +347,19 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
 	public List<Sancion> getSanciones() {
 		return sanciones;
 	}
+
+    public void setNumberCnrt(String numbreCnrt) {
+        this.numberCnrt = numbreCnrt;
+    }
+
+    public String getNumberCnrt() {
+        return numberCnrt;
+    }
+
+    @Override
+    public String getName() {
+        return "Empleado";
+    }
 
 
 

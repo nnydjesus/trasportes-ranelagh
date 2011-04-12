@@ -46,7 +46,7 @@ public class DataGeneratorEmpleado  extends InitialDataGenerator<Empleado> {
 		empleado.setId("Legajo "+i);
 		empleado.setNombre("Nombre "+i);
 		empleado.setPropio(true);
-		empleado.setRegistroConducir(2542*i);
+		empleado.setRegistroConducir(""+2542*i);
 		empleado.setCategoria(Categoria.CHOFER);
 		Direccion direccion = new Direccion();
 		direccion.setCodPostal(i*55);
@@ -55,7 +55,7 @@ public class DataGeneratorEmpleado  extends InitialDataGenerator<Empleado> {
 		direccion.setTelefono(i*60);
 		empleado.setDireccion(direccion);
 		Licencia licencia = new Licencia();
-		licencia.setFechaDeNacimiento(new Date(22254));
+		empleado.setFechaDeNacimiento(new Date(22254));
 		licencia.setCnrt(new Date());
 		licencia.setLibretaSanitaria(new Date(555454));
 		licencia.setRegistro(new Date(999595955));

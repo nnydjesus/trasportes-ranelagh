@@ -8,24 +8,23 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.JTree.DynamicUtilTreeNode;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 
 import ar.com.nny.base.common.Item;
+import ar.com.nny.base.common.ItemComposite;
 
 
-public class Tree extends JPanel{
+public class TreePanel extends JPanel{
 
 	private static final long serialVersionUID = 3686547751000945641L;
 	
-	private Vector<Item> vector= new Vector<Item>();
+	private Vector<ItemComposite> vector= new Vector<ItemComposite>();
 	private JTree tree =  new JTree(vector);
 	
 	
-	public Tree() {
+	public TreePanel() {
 		this.setLayout(new GridLayout(1, 1));
 		addListener();
-		this.add(tree);
+		this.add(tree); 
 		this.setSize(300, 300);
 	}
 
@@ -46,7 +45,7 @@ public class Tree extends JPanel{
 		});
 	}
 	
-	public void updateTree(Item tablasTree) {
+	public void updateTree(ItemComposite tablasTree) {
 		vector.removeAll(vector);
 		vector.add(tablasTree);
 		this.remove(tree);
@@ -54,14 +53,11 @@ public class Tree extends JPanel{
 		this.addListener();
 		this.add(tree);
 	}
-	
-	
-
-	public void setVector(Vector<Item> vector) {
-		this.vector = vector;
+	public void updateTree() {
+	    this.updateTree(vector.get(0));
 	}
-
-	public Vector<Item> getVector() {
+	
+	public Vector<ItemComposite> getVector() {
 		return vector;
 	}
 	public JTree getTree() {
@@ -72,7 +68,7 @@ public class Tree extends JPanel{
 	}
 
 	public static void main(String[] args) {
-		new Tree();
+		new TreePanel();
 	}
 
 }

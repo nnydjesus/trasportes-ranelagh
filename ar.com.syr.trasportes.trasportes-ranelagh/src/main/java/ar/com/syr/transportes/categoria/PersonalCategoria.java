@@ -1,21 +1,55 @@
 package ar.com.syr.transportes.categoria;
 
+import javax.swing.JFrame;
+
 import ar.com.nny.base.common.Item;
 import ar.com.nny.base.common.ItemComposite;
-import ar.com.syr.transportes.ui.amb.AdelantosUI;
-import ar.com.syr.transportes.ui.amb.AusenciaUI;
-import ar.com.syr.transportes.ui.amb.SancionesUI;
-import ar.com.syr.transportes.ui.amb.VacacionesUI;
+import ar.com.syr.transportes.ui.amb.ABMEmpleado;
+import ar.com.syr.transportes.ui.amb.EmpleadoUi;
 
 public class PersonalCategoria extends ItemComposite {
     private static final long serialVersionUID = -6130962545676299492L;
+    private Nomina nomina;
+    private ABMEmpleado abmEmpleado;
+    private EmpleadoUi empleadoUI;
 
-    public PersonalCategoria() {
-        this.add(new Nomina());
-        this.add(new AdelantosUI());
-        this.add(new SancionesUI());
-        this.add(new AusenciaUI());
-        this.add(new VacacionesUI());
+    public Nomina getNomina() {
+        return nomina;
+    }
+
+    public void setNomina(Nomina nomina) {
+        this.nomina = nomina;
+    }
+
+    public ABMEmpleado getAbmEmpleado() {
+        return abmEmpleado;
+    }
+
+    public void setAbmEmpleado(ABMEmpleado abmEmpleado) {
+        this.abmEmpleado = abmEmpleado;
+    }
+
+    public EmpleadoUi getEmpleadoUI() {
+        return empleadoUI;
+    }
+
+    public void setEmpleadoUI(EmpleadoUi empleadoUI) {
+        this.empleadoUI = empleadoUI;
+    }
+
+    public PersonalCategoria(JFrame parent) {
+        this.nomina = new Nomina(parent);
+        this.add(nomina);
+        this.abmEmpleado = new ABMEmpleado(parent);
+        this.add(abmEmpleado.setNombre("Nuevo Empleado"));
+        this.empleadoUI = new EmpleadoUi();
+        this.add(empleadoUI);
+//        this.add(new AdelantosUI());
+//        this.add(new SancionesUI());
+//        this.add(new AusenciaUI());
+//        this.add(new VacacionesUI());
+//        this.add(new CostoEmpleadoUi());
+        
     }
 
     @Override
@@ -30,8 +64,4 @@ public class PersonalCategoria extends ItemComposite {
     }
     
     
-    public static void main(String[] args) {
-        new Operaciones();
-    }
-
 }

@@ -10,9 +10,12 @@ import ar.com.syr.transportes.dao.EmpleadoDao;
 
 public class HomeEmpleado extends Home<Empleado> {
 
-    private final static HomeEmpleado INSTANCE = new HomeEmpleado();
+    private static HomeEmpleado INSTANCE;
 
-    public static HomeEmpleado getInstance() {
+    public synchronized static HomeEmpleado getInstance() {
+        if(INSTANCE == null){
+            INSTANCE = new HomeEmpleado();
+        }
         return INSTANCE;
     }
 
@@ -33,6 +36,11 @@ public class HomeEmpleado extends Home<Empleado> {
     @Override
     public Empleado createExample() {
         return new Empleado();
+    }
+    
+    @Override
+    public List<Empleado> getAll() {
+        return super.getAll();
     }
 
 }

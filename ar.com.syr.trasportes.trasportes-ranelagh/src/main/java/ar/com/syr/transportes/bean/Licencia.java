@@ -8,6 +8,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import ar.com.nny.base.common.Observable;
+import ar.com.nny.base.generator.annotations.GeneratedId;
 
 @Embeddable
 public class Licencia extends Observable implements Serializable {
@@ -19,19 +20,17 @@ public class Licencia extends Observable implements Serializable {
 
     public static final String LIBRETA_SANITARIA = "libretaSanitaria";
 
-    public static final String FECHA_DE_NACIMIENTO = "fechaDeNacimiento";
-
     @Temporal(TemporalType.DATE)
     private Date registro; 
 
+    @Temporal(TemporalType.DATE)
+    private Date art;
     @Temporal(TemporalType.DATE)
     private Date cnrt;
 
     @Temporal(TemporalType.DATE)
     private Date libretaSanitaria;
 
-    @Temporal(TemporalType.DATE)
-    private Date fechaDeNacimiento;
 
     public Date getRegistro() {
         return registro;
@@ -57,17 +56,18 @@ public class Licencia extends Observable implements Serializable {
         this.libretaSanitaria = libretaSanitaria;
     }
 
-    public Date getFechaDeNacimiento() {
-        return fechaDeNacimiento;
-    }
-
-    public void setFechaDeNacimiento(final Date categoria) {
-        this.fechaDeNacimiento = categoria;
-    }
 
     @Override
     public String[] atributos() {
-        return new String[] { FECHA_DE_NACIMIENTO, CNRT, REGISTRO, LIBRETA_SANITARIA };
+        return new String[] { CNRT, REGISTRO, LIBRETA_SANITARIA };
+    }
+
+    public void setArt(Date art) {
+        this.art = art;
+    }
+
+    public Date getArt() {
+        return art;
     }
 
 }

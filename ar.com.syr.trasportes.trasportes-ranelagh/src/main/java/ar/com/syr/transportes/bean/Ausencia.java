@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ar.com.nny.base.generator.annotations.GeneratedId;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 
 @Entity
+@GeneratedId
 public class Ausencia extends IdentificablePersistentObject {
 	
 	public static final String FECHA = "fecha";
@@ -23,10 +25,6 @@ public class Ausencia extends IdentificablePersistentObject {
 	public static final String FECHAREINICIO = "fechaReinicio";
 	public static final String COSTO = "costo";
 	
-	@GeneratedValue
-	@Id
-	private String id;
-
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	@Basic
@@ -108,17 +106,14 @@ public class Ausencia extends IdentificablePersistentObject {
 		this.fechaReinicio = fechaReinicio;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getId() {
-		return id;
-	}
-
 	@Override
 	public String[] atributos() {
 		return new String[] {LEGAJO, NOMBRE,APELLIDO,AVISO,COSTO,FECHA,FECHAREINICIO,MOTIVO};
 	}
+
+    @Override
+    public String getName() {
+        return "Ausencia";
+    }
 
 }

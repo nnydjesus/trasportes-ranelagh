@@ -19,24 +19,22 @@ public class CostoEmpleadoUi extends GeneralFrame<CostoEmpleado> implements Item
     }
 
     @Override
-    protected void createForm(final AbstractBindingPanel<CostoEmpleado> edicion) {
-        edicion.addComponent("Seleccione El Empleado", comboBox);
-        edicion.addBindingDoubleField(CostoEmpleado.COSTO_TOTAL, "Costo");
-    }
-
-    @Override
     protected void createSearchForm(final SearchPanel<CostoEmpleado> panel) {
     }
 
     @Override
     protected void addPanels(final JTabbedPane panel) {
-        panel.addTab("General", null, edicion, "Edicion");
         panel.addTab("Tabla", null, table, "tabla");
     }
 
     @Override
     protected void createHome() {
         home = HomeCostoempleado.getInstance();
+    }
+
+    @Override
+    public Class abmClass() {
+        return ABMCostoEmpleado.class;
     }
 
 }
