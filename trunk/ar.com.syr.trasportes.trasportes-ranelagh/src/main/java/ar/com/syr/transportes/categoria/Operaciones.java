@@ -1,16 +1,16 @@
 package ar.com.syr.transportes.categoria;
 
+import javax.swing.JFrame;
+
 import ar.com.nny.base.common.Item;
 import ar.com.nny.base.common.ItemComposite;
-import ar.com.syr.transportes.costos.CostoEmpleadoUi;
-import ar.com.syr.transportes.ui.amb.RemitoUI;
 
 public class Operaciones extends ItemComposite {
 	private static final long serialVersionUID = -6130962545676299492L;
 
-	public Operaciones() {
-		this.add(new RemitoUI());
-		this.add(new CostoEmpleadoUi());
+	public Operaciones(JFrame parent) {
+	    this.add(new Cocacola());
+	    this.add(new LomaNegra(parent));
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class Operaciones extends ItemComposite {
 	
 	
 	public static void main(String[] args) {
-		new Operaciones();
+		new Operaciones(null);
 	}
 
 	

@@ -1,14 +1,16 @@
 package ar.com.syr.transportes.ui;
 
+import javax.swing.SwingUtilities;
+
 import ar.com.nny.base.common.Item;
 import ar.com.syr.transportes.bean.Empleado;
-import ar.com.syr.transportes.ui.amb.EmpleadoUi;
+import ar.com.syr.transportes.ui.amb.ABMEmpleado;
 
 public class Itemempleado implements Item  {
 	private Empleado empleado;
-	private EmpleadoUi empleadoUi;
+	private ABMEmpleado empleadoUi;
 	
-	public Itemempleado(Empleado empl, EmpleadoUi eplUi) {
+	public Itemempleado(Empleado empl, ABMEmpleado eplUi) {
 		this.empleado =empl;
 		this.empleadoUi = eplUi;
 	}
@@ -23,6 +25,12 @@ public class Itemempleado implements Item  {
 		empleadoUi.setModel(empleado);
 		empleadoUi.mostrar();
 	}
+
+    @Override
+    public void update() {
+        SwingUtilities.updateComponentTreeUI(empleadoUi);
+        
+    }
 
 
 }

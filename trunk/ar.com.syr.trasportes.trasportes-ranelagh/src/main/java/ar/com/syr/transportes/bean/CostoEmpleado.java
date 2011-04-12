@@ -82,4 +82,9 @@ public class CostoEmpleado extends IdentificablePersistentObject implements Seri
         return new String[] { COSTO_TOTAL };
     }
 
+    @Override
+    public String getName() {
+        return "CostoEmpleado";
+    }
+
 }

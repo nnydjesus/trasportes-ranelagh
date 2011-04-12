@@ -14,17 +14,26 @@ public class Direccion extends Observable implements Serializable {
     public static final String LOCALIDAD = "localidad";
 
     public static final String CALLE = "calle";
+    public static final String NUMERO = "numero";
+    public static final String ENTRE_X = "entreX";
+    public static final String ENTRE_Y = "entreY";
+    
 
     public static final String TELEFONO = "telefono";
 
     public static final String CODPOSTAL = "codPostal";
 
     @Basic
-    private String localidad;
+    private String localidad="";
 
     @Basic
-    private String calle;
-
+    private String calle="";
+    @Basic
+    private String entreX="";
+    @Basic
+    private String entreY="";
+    @Basic
+    private Integer numero;
     @Basic
     private Integer telefono;
 
@@ -47,11 +56,11 @@ public class Direccion extends Observable implements Serializable {
         calle = direccion;
     }
 
-    public int getTelefono() {
+    public Integer getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(final int telefono) {
+    public void setTelefono(final Integer telefono) {
         this.telefono = telefono;
     }
 
@@ -66,6 +75,30 @@ public class Direccion extends Observable implements Serializable {
     @Override
     public String[] atributos() {
         return new String[] { CODPOSTAL, LOCALIDAD, TELEFONO, CALLE };
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setEntreY(String entreY) {
+        this.entreY = entreY;
+    }
+
+    public String getEntreY() {
+        return entreY;
+    }
+
+    public void setEntreX(String entreX) {
+        this.entreX = entreX;
+    }
+
+    public String getEntreX() {
+        return entreX;
     }
 
 }

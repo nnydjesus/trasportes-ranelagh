@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ar.com.nny.base.generator.annotations.GeneratedId;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 
 @Entity
+@GeneratedId
 public class Vacacion extends IdentificablePersistentObject {
 	
 	public static final String DESDE = "desde";
@@ -65,4 +67,8 @@ public class Vacacion extends IdentificablePersistentObject {
 	public String[] atributos() {
 		return new String[] {APELLIDO, NOMBRE, LEGAJO,DESDE,HASTA};
 	}
+    @Override
+    public String getName() {
+        return "Vacacion";
+    }
 }

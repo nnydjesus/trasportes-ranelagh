@@ -13,20 +13,22 @@ import ar.com.nny.base.generator.DDLGenerator;
 import ar.com.syr.transportes.ui.LoginUser;
 
 public class Main implements Runnable {
-
+    
+    private static TransportesRanelagh app;
+    
     @Override
     public void run() {
         try {
             UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-            new LoginUser();
+            app = new TransportesRanelagh();
+            getApp().setVisible(true);
+//            new LoginUser();
         } catch (Exception e) {
         }
 
     }
 
     public static void main(final String[] args) {
-        BasicConfigurator.configure();
-        Logger.getAnonymousLogger().setLevel(Level.INFO);
         // JFrame.setDefaultLookAndFeelDecorated(true);
         // TransportesRanelagh reproductor = new TransportesRanelagh(new
         // PreInicio());
@@ -35,6 +37,11 @@ public class Main implements Runnable {
         EventQueue.invokeLater(main);
         // new Login();
         // HibernateUtil.getSession();
+    }
+
+
+    public static  TransportesRanelagh getApp() {
+        return app;
     }
 
 }

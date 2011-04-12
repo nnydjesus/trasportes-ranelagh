@@ -17,7 +17,7 @@ public class HomeRemito extends Home<Remito> {
         return INSTANCE;
     }
 
-    private HomeRemito() {
+    private HomeRemito() { 
         super(new RemitoDao());
     }
 
@@ -33,19 +33,10 @@ public class HomeRemito extends Home<Remito> {
 
     @Override
     public List<Remito> searchByExample(final Remito example) {
-        return ((RemitoDao) dao).find(example.getId());
+        return ((RemitoDao) dao).find(example);
     }
 
-    public List<Remito> searchByExample(final String id, final Date desde, final Date hasta) {
-        RemitoDao remitoDao = (RemitoDao) dao;
-        if (!id.equals("") && desde != null && hasta != null)
-            return remitoDao.find(id, desde, hasta);
-        if (!id.equals("") && desde == null && hasta == null)
-            return remitoDao.find(id);
-        if (desde != null && hasta == null)
-            return remitoDao.find(id, desde);
-        if (id.equals("") && desde != null && hasta != null)
-            return remitoDao.find(desde, hasta);
-        return remitoDao.getAll();
+    public List<Remito> searchByExample(Remito example, final Date desde, final Date hasta) {
+        return ((RemitoDao) dao).searchByExample(example, desde, hasta);
     }
 }

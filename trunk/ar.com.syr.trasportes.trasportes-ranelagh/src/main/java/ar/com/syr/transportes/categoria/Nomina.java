@@ -2,26 +2,34 @@ package ar.com.syr.transportes.categoria;
 
 import java.util.Collection;
 
+import javax.swing.JFrame;
+
 import ar.com.nny.base.common.ItemComposite;
 import ar.com.syr.transportes.bean.Empleado;
+import ar.com.syr.transportes.search.HomeEmpleado;
 import ar.com.syr.transportes.ui.Itemempleado;
-import ar.com.syr.transportes.ui.amb.EmpleadoUi;
+import ar.com.syr.transportes.ui.amb.ABMEmpleado;
 
 public class Nomina extends ItemComposite {
     private static final long serialVersionUID = 1L;
 
-    EmpleadoUi empleadoUi = new EmpleadoUi();
+    ABMEmpleado empleadoUi;
 
-    public Nomina() {
-        this.addAll(empleadoUi.getObjects());
+    public Nomina(JFrame parent) {
+        empleadoUi = new ABMEmpleado(parent);
+        this.addAll(HomeEmpleado.getInstance().getAll());
     }
-
+    
     @Override
     public synchronized boolean addAll(final Collection<? extends Object> c) {
         for (Object object : c) {
-            this.add(new Itemempleado((Empleado) object, empleadoUi));
+            addItem(object);
         }
         return true;
+    }
+
+    public void addItem(Object object) {
+        this.add(new Itemempleado((Empleado) object, empleadoUi));
     }
 
     @Override
@@ -35,11 +43,11 @@ public class Nomina extends ItemComposite {
 
     @Override
     public void mostrar(final Object item) {
-        empleadoUi.setModel((Empleado) item);
+        empleadoUi.setModel((Empleado) item, this);
     }
 
     public static void main(final String[] args) {
-        new Operaciones();
+        new Operaciones(null);
     }
 
 }

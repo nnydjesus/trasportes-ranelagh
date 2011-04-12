@@ -54,6 +54,8 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
     public static final String PATENTE = "patente";
 
     public static final String PAGO = "pago";
+    
+    public static final String EMPLEADO = "empleado";
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
@@ -93,7 +95,6 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 
     @Transient
     private Double costoChofer;
-    
     
     @ManyToOne()
     private Empleado empleado;
@@ -232,10 +233,15 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
     @Override
     public String[] atributos() {
         return new String[] { ID, FECHA, ORIGEN, DESTINO, COSTO, COSTO_CHOFER, PAGO, PORCENTAGE, COMBUSTIBLE, LITROS,
-                KM, PEAJE, PATENTE };
+                KM, PEAJE, PATENTE, EMPLEADO };
     }
 
     public static void main(final String[] args) {
+    }
+
+    @Override
+    public String getName() {
+        return "Remito";
     }
 
 }
