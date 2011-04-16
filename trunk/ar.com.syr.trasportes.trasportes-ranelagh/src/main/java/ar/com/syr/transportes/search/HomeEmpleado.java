@@ -37,10 +37,5 @@ public class HomeEmpleado extends Home<Empleado> {
     public Empleado createExample() {
         return new Empleado();
     }
-    
-    @Override
-    public List<Empleado> getAll() {
-        return super.getAll();
-    }
 
 }

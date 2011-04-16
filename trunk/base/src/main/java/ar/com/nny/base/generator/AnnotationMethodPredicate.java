@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Helper for common usage.
  *
- * @author hernan.liendo@gmail.com
  */
 public final class AnnotationMethodPredicate implements Predicate<Method> {
 

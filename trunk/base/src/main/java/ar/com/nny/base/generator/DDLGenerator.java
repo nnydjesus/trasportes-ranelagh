@@ -1,13 +1,21 @@
 package ar.com.nny.base.generator;
 
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.TreeSet;
 
+import org.apache.commons.collections15.CollectionUtils;
+import org.apache.commons.collections15.ListUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.dialect.Dialect;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import ar.com.nny.base.configuration.ApplicationRegistryReader;
 import ar.com.nny.base.generator.annotations.DataGenerator;
+import ar.com.nny.base.generator.annotations.DataGeneratorMethod;
 import ar.com.nny.base.persistence.PersistenceManager;
 import ar.com.nny.base.persistence.PersistentObject;
 import ar.com.nny.base.utils.ReflectionUtils;
@@ -19,8 +27,9 @@ public class DDLGenerator {
 
     private void initializeSchema() {
         SchemaExport exporter = new SchemaExport(PersistenceManager.getInstance().getConfiguration());
-        PersistenceManager.getInstance().clearCurrentSession();
+//        PersistenceManager.getInstance().clearCurrentSession();
         LOGGER.debug("Eliminando la tabla...");
+        exporter.setOutputFile("script.sql");
         exporter.drop(true, true);
         LOGGER.debug("Creando el schema...");
         exporter.create(true, true);
@@ -39,14 +48,26 @@ public class DDLGenerator {
         // final List<CharacteristicGenerator> _caracteristicaGenerators = new
         // ArrayList<CharacteristicGenerator>();
 
-        for (final Class<? extends PersistentObject> persistentClass : persistentClasses) {
+        
+        TreeSet<Class<? extends PersistentObject>> orderedInitialdata = new TreeSet<Class<? extends PersistentObject>>(new Comparator<Class<? extends PersistentObject>>() {
+            public int compare(Class<? extends PersistentObject> data1, Class<? extends PersistentObject> data2) {
+                int order1 = data1.getAnnotation(DataGenerator.class).order();
+                int order2 = data2.getAnnotation(DataGenerator.class).order();
+                return order1 >= order2 ? 1 : -1;
+            }
+        });
+
+        //Ordenando las los inialdata por orden
+        CollectionUtils.select(persistentClasses, new AnnotationClassPredicate(DataGenerator.class), orderedInitialdata);
+        
+
+        for (Class<? extends PersistentObject> persistentClass : orderedInitialdata) {
             final DataGenerator generatorAnnotation = persistentClass.getAnnotation(DataGenerator.class);
             if (generatorAnnotation != null) {
                 _dependencyManager.add(ReflectionUtils.instanciate(generatorAnnotation.value()));
             }
 
         }
-
         for (final InitialDataGenerator _initialDataGenerator : _dependencyManager) {
             this.runGenerator(dummyMode, _initialDataGenerator);
         }

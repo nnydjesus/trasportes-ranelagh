@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -25,12 +24,7 @@ public class CostoEmpleado extends IdentificablePersistentObject implements Seri
 
     public static final String COSTO_TOTAL = "costoTotal";
 
-    @Id
-    private String id;
-
     @OneToOne(fetch = FetchType.LAZY)
-    // @org.hibernate.annotations.LazyToOne
-    // (org.hibernate.annotations.LazyToOneOption.NO_PROXY))
     @SerializationStrategy(access = Through.TRANSIENT)
     private Empleado empleado;
 
@@ -51,16 +45,6 @@ public class CostoEmpleado extends IdentificablePersistentObject implements Seri
 
     public Double getCostoTotal() {
         return costoTotal;
-    }
-
-    @Override
-    public void setId(final String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getId() {
-        return id;
     }
 
     public void aumentarCosto(final Double monto) {

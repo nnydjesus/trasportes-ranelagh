@@ -5,7 +5,9 @@ import javax.swing.JFrame;
 import ar.com.nny.base.common.Item;
 import ar.com.nny.base.common.ItemComposite;
 import ar.com.syr.transportes.ui.amb.ABMEmpleado;
-import ar.com.syr.transportes.ui.amb.EmpleadoUi;
+import ar.com.syr.transportes.ui.amb.ABMUnidad;
+import ar.com.syr.transportes.ui.principales.EmpleadoUi;
+import ar.com.syr.transportes.ui.principales.UnidadUI;
 
 public class PersonalCategoria extends ItemComposite {
     private static final long serialVersionUID = -6130962545676299492L;
@@ -44,6 +46,8 @@ public class PersonalCategoria extends ItemComposite {
         this.add(abmEmpleado.setNombre("Nuevo Empleado"));
         this.empleadoUI = new EmpleadoUi();
         this.add(empleadoUI);
+        this.add(new UnidadUI());
+        this.add( new ABMUnidad(parent).setNombre("Nueva Unidad"));
 //        this.add(new AdelantosUI());
 //        this.add(new SancionesUI());
 //        this.add(new AusenciaUI());

@@ -10,11 +10,7 @@ public class DDLGenerator implements Runnable {
 
     @Override
     public void run() {
-        try {
-            ar.com.nny.base.generator.DDLGenerator.main();
-        } catch (Exception e) {
-        }
-
+          ar.com.nny.base.generator.DDLGenerator.main();
     }
 
     public static void main(final String[] args) {

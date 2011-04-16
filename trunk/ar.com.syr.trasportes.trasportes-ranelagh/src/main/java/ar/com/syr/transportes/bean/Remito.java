@@ -5,17 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import ar.com.nny.base.generator.annotations.DataGenerator;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
@@ -23,7 +19,7 @@ import ar.com.syr.transportes.initialData.DataGeneratorRemito;
 
 @Entity
 @Table(name = "remito")
-@DataGenerator(DataGeneratorRemito.class)
+@DataGenerator(DataGeneratorRemito.class )
 public class Remito extends IdentificablePersistentObject implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +31,7 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 
     public static final String DESTINO = "destino";
 
-    public static final String ID = "id";
+    public static final String NUMERO_REMITO = "numero";
 
     public static final String COSTO = "costo";
 
@@ -66,9 +62,6 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
     @Basic
     private String destino = "";
 
-    @Id
-    private String id = "";
-
     @Basic
     private Double costo;
 
@@ -87,8 +80,8 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
     @Basic
     private Double peaje;
 
-    @Basic
-    private String patente = "";
+    @ManyToOne(cascade=CascadeType.ALL)
+    private Unidad patente;
 
     @Basic
     private Boolean pago = false;
@@ -96,7 +89,7 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
     @Transient
     private Double costoChofer;
     
-    @ManyToOne()
+    @ManyToOne(cascade=CascadeType.ALL)
     private Empleado empleado;
 
     public Date getFecha() {
@@ -125,16 +118,6 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
 
     public void setDestino(final String destino) {
         this.destino = destino;
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(final String nroRemito1) {
-        id = nroRemito1;
     }
 
     public Double getCosto() {
@@ -183,12 +166,11 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
         this.peaje = peaje;
     }
 
-    public String getPatente() {
-        return patente;
+    public void setNumero(final String numero) {
+        this.setId(numero);
     }
-
-    public void setPatente(final String patente) {
-        this.patente = patente;
+    public String getNumero() {
+        return getId();
     }
 
     public void setPago(final Boolean pago) {
@@ -229,10 +211,18 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
     public Empleado getEmpleado() {
         return empleado;
     }
+    
+//    public void setPatente(Unidad patente) {
+//        this.patente = patente;
+//    }
+//
+//    public Unidad getPatente() {
+//        return patente;
+//    }
 
     @Override
     public String[] atributos() {
-        return new String[] { ID, FECHA, ORIGEN, DESTINO, COSTO, COSTO_CHOFER, PAGO, PORCENTAGE, COMBUSTIBLE, LITROS,
+        return new String[] { NUMERO_REMITO, FECHA, ORIGEN, DESTINO, COSTO, COSTO_CHOFER, PAGO, PORCENTAGE, COMBUSTIBLE, LITROS,
                 KM, PEAJE, PATENTE, EMPLEADO };
     }
 
@@ -243,5 +233,14 @@ public class Remito extends IdentificablePersistentObject implements Serializabl
     public String getName() {
         return "Remito";
     }
+
+    public void setPatente(Unidad patente) {
+        this.patente = patente;
+    }
+
+    public Unidad getPatente() {
+        return patente;
+    }
+
 
 }

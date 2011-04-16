@@ -15,7 +15,6 @@ import ar.com.syr.transportes.dao.CostoEmpleadoDao;
 import ar.com.syr.transportes.dao.EmpleadoDao;
 
 
-@SuppressWarnings("unchecked")
 public class DataGeneratorEmpleado  extends InitialDataGenerator<Empleado> {
 	private EmpleadoDao dao = new EmpleadoDao();
 	private CostoEmpleadoDao daoCosto = new CostoEmpleadoDao();
@@ -62,5 +61,9 @@ public class DataGeneratorEmpleado  extends InitialDataGenerator<Empleado> {
 		empleado.setLicencia(licencia);
 		return empleado;
 	}
+	
+	public static void main(String[] args) {
+        new DataGeneratorEmpleado().generateEmpleados();
+    }
 	
 }

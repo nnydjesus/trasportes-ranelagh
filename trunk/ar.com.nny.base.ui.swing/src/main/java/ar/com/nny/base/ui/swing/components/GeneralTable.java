@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;

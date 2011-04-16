@@ -1,7 +1,8 @@
-package ar.com.syr.transportes.ui.amb;
+package ar.com.syr.transportes.ui.principales;
 
 import ar.com.nny.base.ui.swing.components.GeneralFrame;
 import ar.com.syr.transportes.bean.Sancion;
+import ar.com.syr.transportes.ui.amb.ABMSanciones;
 
 public class SancionesUI extends GeneralFrame<Sancion> {
 

@@ -11,8 +11,7 @@ import org.apache.commons.collections15.collection.AbstractCollectionDecorator;
 
 /**
  * Se banca una lista de objetos agregados en cualquier orden. Los devuelve
- * iterados por orden de dependencias. Se penso originalmente para @GeneratorDepends
- * de los dataGenerators asociados a los beans de negocio.
+ * iterados por orden de dependencias. 
  * 
  */
 public final class DependencyManager<E extends DependecyAware> extends AbstractCollectionDecorator<E> implements

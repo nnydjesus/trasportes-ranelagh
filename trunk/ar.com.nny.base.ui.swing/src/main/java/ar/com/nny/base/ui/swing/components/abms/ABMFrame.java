@@ -57,7 +57,7 @@ public abstract class ABMFrame<T extends IdentificablePersistentObject> extends 
         this.item = item;
     }
     public void setModel(final T observable) {
-        edicion.setModel(observable);
+        setEditionModel(observable);
         update();
     }
 

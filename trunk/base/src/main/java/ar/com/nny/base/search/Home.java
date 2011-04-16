@@ -18,7 +18,7 @@ public class Home<T extends IdentificablePersistentObject> {
 
     private int proximoId = 1;
 
-    private final List<T> objects = new ArrayListModel<T>();
+    private final List<T> cache = new ArrayListModel<T>();
 
     protected GenericDao<T> dao;
     private Class<T> clazz;
@@ -51,9 +51,9 @@ public class Home<T extends IdentificablePersistentObject> {
 
     public void saveOrUpdate(final T object) {
         this.validatingCreation(object);
-        this.objects.remove(object);
-         this.objects.add(object);
-         dao.saveOrUpdate(object);
+        this.cache.remove(object);
+        this.cache.add(object);
+        dao.saveOrUpdate(object);
     }
 
     protected void validatingCreation(final T object) {
@@ -63,14 +63,14 @@ public class Home<T extends IdentificablePersistentObject> {
     public void update(final T object) {
         // T replaced = this.buscarPorId(object.getId());
         // this.objects.remove(this.objects.indexOf(replaced));
-        this.objects.remove(object);
-        this.objects.add(object);
+        this.cache.remove(object);
+        this.cache.add(object);
         dao.update(object);
     }
 
     public void delete(final T object) {
         this.validatingDeleting(object);
-        this.objects.remove(object);
+        this.cache.remove(object);
         dao.undelete(object);
     }
 
@@ -84,7 +84,7 @@ public class Home<T extends IdentificablePersistentObject> {
 
     @SuppressWarnings("unchecked")
     public List<T> searchByExample(final T example) {
-        return (List<T>) CollectionUtils.select(this.objects, this.getCriteria(example));
+        return (List<T>) CollectionUtils.select(this.cache, this.getCriteria(example));
     }
 
     protected Predicate getCriteria(T example){
@@ -98,13 +98,13 @@ public class Home<T extends IdentificablePersistentObject> {
     }
 
     public List<T> refresh() {
-        this.objects.removeAll(objects);
-        this.objects.addAll(dao.getAll());
-        return this.objects;
+        this.cache.removeAll(cache);
+        this.cache.addAll(dao.getAll());
+        return this.cache;
     }
 
     public List<T> getAll() {
-        return this.objects;
+        return this.cache;
     }
 
     // ********************************************************

@@ -58,7 +58,7 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
         newInstance = (T) ReflectionUtils.instanciate(clase);
         ambClass = abmClass();
-        search = this.createSearchPanel(newInstance);
+        search = this.createSearchPanel(newInstance); 
 
         this.createComboBox();
 //        comboBox.addDefaultValue(home.createExample());

@@ -83,6 +83,7 @@ public class FormBuilder<T> extends DefaultFormBuilder{
 
     public JDateChooser addBindingDateField(final String property, final String label) {
         JDateChooser date = new JDateChooser();
+        date.setDateFormatString("dd/mm/yy");
         ValueModel nameModel = beanAdapter.getValueModel(property);
         Bindings.bind(date, "date", nameModel);
         this.append(label, date);

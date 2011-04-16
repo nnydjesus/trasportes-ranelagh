@@ -29,7 +29,9 @@ public class Nomina extends ItemComposite {
     }
 
     public void addItem(Object object) {
-        this.add(new Itemempleado((Empleado) object, empleadoUi));
+        Itemempleado item = new Itemempleado((Empleado) object, empleadoUi);
+        this.remove(item);
+        this.add(item);
     }
 
     @Override

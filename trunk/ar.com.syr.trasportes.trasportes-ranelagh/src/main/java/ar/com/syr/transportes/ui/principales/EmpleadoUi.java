@@ -1,9 +1,10 @@
-package ar.com.syr.transportes.ui.amb;
+package ar.com.syr.transportes.ui.principales;
 
 import ar.com.nny.base.ui.swing.components.GeneralFrame;
 import ar.com.nny.base.ui.swing.components.search.SearchPanel;
 import ar.com.syr.transportes.bean.Empleado;
 import ar.com.syr.transportes.search.HomeEmpleado;
+import ar.com.syr.transportes.ui.amb.ABMEmpleado;
 
 public class EmpleadoUi extends GeneralFrame<Empleado> {
     private static final long serialVersionUID = 7725064134440510100L;
