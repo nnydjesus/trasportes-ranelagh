@@ -23,6 +23,7 @@ import ar.com.syr.transportes.bean.Empleado;
 import ar.com.syr.transportes.bean.Remito;
 import ar.com.syr.transportes.search.HomeEmpleado;
 import ar.com.syr.transportes.search.HomeRemito;
+import ar.com.syr.transportes.search.HomeUnidad;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -74,13 +75,13 @@ public class ABMRemito extends ABMFrame<Remito>{
         edicion.addBindingDateField(Remito.FECHA, "Fecha");
         edicion.addBindingTextField(Remito.ORIGEN, "Origen");
         edicion.addBindingTextField(Remito.DESTINO, "Destino");
-        edicion.addBindingTextField(Remito.ID, "Remito");
+        edicion.addBindingTextField(Remito.NUMERO_REMITO, "Remito");
         costoTextField = edicion.addBindingDoubleField(Remito.COSTO, "Costo");
         edicion.addComponent("Costo Chofer", panelCostoChofer);
         edicion.addBindingDoubleField(Remito.COMBUSTIBLE, "Combustible");
         edicion.addBindingDoubleField(Remito.LITROS, "Litros");
         edicion.addBindingIntegerField(Remito.KM, "Kilometros");
-        edicion.addBindingTextField(Remito.PATENTE, "Patente");
+        edicion.addBindingComboBox(Remito.PATENTE, HomeUnidad.getInstance().getAll());
 
         edicion.bind(porcentageSpinner, "value", Remito.PORCENTAGE);
         
@@ -89,7 +90,7 @@ public class ABMRemito extends ABMFrame<Remito>{
     @Override
     protected void addActions() {
         super.addActions();
-        cbEmpleados.addActionListener(new ActionMethodListener(this, "setEmpleado"));
+        cbEmpleados.addActionListener(new ActionMethodListener(this, "updateEmpleado"));
         porcentageSpinner.addChangeListener(new ActionMethodListener(this, "updateCosto"));
         ActionMethodListener listenerCosto = new ActionMethodListener(this, "updateCostoChofer");
         costoTextField.addKeyListener(listenerCosto);
@@ -102,18 +103,6 @@ public class ABMRemito extends ABMFrame<Remito>{
         return  HomeRemito.getInstance();
     }
     
-    public void edicionModificar() {
-        Remito model = getEdicion().getModel();
-        if (!model.getId().equals("")) {
-            CostoEmpleado costo = model.getEmpleado().getCostoEmpleado();
-            if(montoViejo != null)
-                costo.aumentarCosto(model.getCostoChofer() - montoViejo);
-            getHome().update(model);
-            getEdicion().setModel(getHome().createExample());
-            SwingUtilities.updateComponentTreeUI(this);
-        }
-
-    }
     
     @Override
     public void setModel(Remito observable) {
@@ -122,8 +111,14 @@ public class ABMRemito extends ABMFrame<Remito>{
             cbEmpleados.setSelectedItem(observable.getEmpleado());
         }
     }
-    public void setEmpleado() {
+    public void updateEmpleado() {
        getEdicion().getModel().setEmpleado(cbEmpleados.getSelectedItem());
+    }
+    
+    @Override
+    public void edicionAceptar(Object object) {
+        cbEmpleados.getSelectedItem().addRemito((Remito) object);
+        super.edicionAceptar(object);
     }
 
 

@@ -113,6 +113,8 @@ public class ABMEmpleado extends ABMFrame<Empleado>{
     protected void setEditionModel(Empleado observable) {
         vencimientos.setModel(observable.getLicencia());
         direccionEditor.setModel(observable.getDireccion());
+        viajes.removeAll(viajes);
+        viajes.addAll(observable.getRemitos());
         super.setEditionModel(observable);
     }
     

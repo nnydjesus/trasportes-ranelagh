@@ -41,7 +41,7 @@ public class DataGeneratorRemito extends InitialDataGenerator<Remito>{
 		remito.setLitros(i*5.6);
 		remito.setKm(i);
 		remito.setPeaje(i*3.2);
-		remito.setPatente("Patente "+i);
+		//remito.setPatente("Patente "+i);
 		return remito;
 	}
 	

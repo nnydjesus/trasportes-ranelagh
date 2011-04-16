@@ -77,7 +77,7 @@ public class RemitoDao extends GenericDao<Remito> {
     }
     
     private List<Remito> find(QueryStatement<Remito> query, Remito example){
-        if(!example.getEmpleado().getId().equals("")){
+        if(example.getEmpleado() != null && !example.getEmpleado().getId().equals("")){
             query.addQuery(" AND this.empleado = ?");
             query.addParameter(example.getEmpleado());
         }

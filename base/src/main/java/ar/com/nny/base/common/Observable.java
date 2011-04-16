@@ -66,6 +66,7 @@ public abstract class Observable extends Model implements Beans {
     public String getId() {
         return "";
     }
+    
 
     public String mostrar() {
         return this.getId();

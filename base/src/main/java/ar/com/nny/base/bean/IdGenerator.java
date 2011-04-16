@@ -18,14 +18,16 @@ public class IdGenerator extends IdentificablePersistentObject implements Serial
     @Transient
     private static  IdGenerator INSTANCE = null;
 //    
-    @Id
-    private String id="00001";
 
     @Transient
     private static  GenericDao<PersistentObject> dao;
     
     @Basic
     private Double current = (double)1/10000;
+    
+    private IdGenerator() {
+        setId("00001");
+    }
     
     public static synchronized IdGenerator getInstance(){
         dao = new GenericDao<PersistentObject>(IdGenerator.class);
@@ -54,7 +56,6 @@ public class IdGenerator extends IdentificablePersistentObject implements Serial
 
     @Override
     public String[] atributos() {
-        // TODO Auto-generated method stub
         return null;
     }
     

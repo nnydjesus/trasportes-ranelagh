@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import ar.com.nny.base.generator.annotations.DataGenerator;
@@ -18,9 +17,6 @@ import ar.com.nny.base.utils.IdentificablePersistentObject;
 public class Usuario extends IdentificablePersistentObject implements Serializable {
     private static final long serialVersionUID = 5332067114052738292L;
 
-    @Id
-    private String id;
-
     @Basic
     private String pass;
 
@@ -31,16 +27,8 @@ public class Usuario extends IdentificablePersistentObject implements Serializab
     }
 
     public Usuario(final String nombre, final String pass) {
-        this.id = nombre;
+        this.setId(nombre);
         this.pass = pass;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(final String nombre) {
-        this.id = nombre;
     }
 
     public String getPass() {

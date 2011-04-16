@@ -25,11 +25,27 @@ public class Itemempleado implements Item  {
 		empleadoUi.setModel(empleado);
 		empleadoUi.mostrar();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if(!(obj instanceof Itemempleado)){
+	        return false;
+	    }
+	    return empleado.equals(((Itemempleado)obj).getEmpleado());
+	}
+	
+	@Override
+	public int hashCode() {
+	    return empleado.hashCode();
+	}
 
     @Override
     public void update() {
         SwingUtilities.updateComponentTreeUI(empleadoUi);
-        
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
 

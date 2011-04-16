@@ -1,33 +1,22 @@
 package ar.com.syr.transportes.bean;
 
 import javax.persistence.Basic;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
 
-import ar.com.nny.base.persistence.SerializationStrategy;
-import ar.com.nny.base.persistence.Through;
+import ar.com.nny.base.generator.annotations.GeneratedId;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 import ar.com.syr.transportes.bean.enums.Banco;
 
 @Entity
-//@MappedSuperclass
 @DiscriminatorValue("Efectivo")
+@GeneratedId
 public class FormaDePago extends IdentificablePersistentObject {
     
+    private static final long serialVersionUID = 4067419003302477676L;
+
     public static final String MONTO = "monto";
-    
-    @Id
-    @SerializationStrategy(access = Through.ACCESSOR)
-    @GeneratedValue
-    private String id;
     
     @Enumerated
     private Banco banco;

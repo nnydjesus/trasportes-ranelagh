@@ -22,7 +22,11 @@ public class JasperReportBasic {
 
             // 2-Llenamos el reporte con la información y parámetros necesarios
             // (En este caso nada)
-            jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap(), new JREmptyDataSource());
+            HashMap parameters = new HashMap();
+            parameters.put("NAME", "Ronny");
+            parameters.put("COST", 2.5);
+            
+            jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
 
             // 3-Exportamos el reporte a pdf y lo guardamos en disco
             JasperExportManager.exportReportToPdfFile(jasperPrint, path + reportName + ".pdf");

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -18,24 +19,20 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import ar.com.nny.base.generator.annotations.DataGenerator;
 import ar.com.nny.base.persistence.SerializationStrategy;
 import ar.com.nny.base.persistence.Through;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
-import ar.com.nny.base.utils.Nombrable;
 import ar.com.syr.transportes.bean.enums.Categoria;
 import ar.com.syr.transportes.initialData.DataGeneratorEmpleado;
 
 @Entity
 @Table(name = "empleado")
-@DataGenerator(DataGeneratorEmpleado.class)
+@DataGenerator(value=DataGeneratorEmpleado.class, order=1)
 public class Empleado extends IdentificablePersistentObject implements Serializable {
     private static final long serialVersionUID = 15580157969060161L;
 
-    public static final String LEGAJO = "id";
+    public static final String LEGAJO = "legajo";
 
     public static final String APELLIDO = "apellido";
 
@@ -95,29 +92,24 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     @Enumerated
     private Categoria categoria;
     
-    @OneToMany()
-    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name = "empleado_id")
     private List<Remito> remitos = new ArrayList<Remito>();
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true,fetch = FetchType.EAGER)
     @SerializationStrategy(access = Through.ACCESSOR)
-    private CostoEmpleado costoEmpleado;
+    private CostoEmpleado costoEmpleado = new CostoEmpleado();
     
-    @OneToMany()
-    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Adelanto> adelantos = new ArrayList<Adelanto>();
     
-    @OneToMany()    
-    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Ausencia> ausencias = new ArrayList<Ausencia>();
     
-    @OneToMany()    
-    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Vacacion> vacaciones = new ArrayList<Vacacion>();
     
-    @OneToMany()    
-    @Cascade({ CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Sancion> sanciones = new ArrayList<Sancion>();
     
     
@@ -130,7 +122,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
     
     public void setLegajo(final String legajo) {
-        firePropertyChange(LEGAJO, this.getId(), legajo);
+        firePropertyChange("id", this.getId(), legajo);
         super.setId(legajo);
        
     }
@@ -255,6 +247,7 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     public void setCalle(final String direccion) {
         this.direccion.setCalle(direccion);
     }
+    
 
     public int getTelefono() {
         return direccion != null ?direccion.getTelefono():null;
@@ -360,7 +353,8 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     public String getName() {
         return "Empleado";
     }
-
-
+    
+    
+    
 
 }

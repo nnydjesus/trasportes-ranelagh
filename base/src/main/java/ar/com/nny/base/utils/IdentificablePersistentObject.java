@@ -20,8 +20,8 @@ public abstract class IdentificablePersistentObject extends PersistentObject imp
     private static final long serialVersionUID = 1L;
     
     @Id
-    @SerializationStrategy(access = Through.ACCESSOR)
-    private String id;
+//    @SerializationStrategy(access = Through.ACCESSOR)
+    private String id="";
 
     public IdentificablePersistentObject() {
         if(this.getClass().isAnnotationPresent(GeneratedId.class)){

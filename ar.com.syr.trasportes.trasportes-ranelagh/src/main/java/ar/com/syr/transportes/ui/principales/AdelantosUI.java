@@ -1,8 +1,9 @@
-package ar.com.syr.transportes.ui.amb;
+package ar.com.syr.transportes.ui.principales;
 
 import ar.com.nny.base.ui.swing.components.GeneralFrame;
 import ar.com.nny.base.ui.swing.components.search.SearchPanel;
 import ar.com.syr.transportes.bean.Adelanto;
+import ar.com.syr.transportes.ui.amb.ABMAdelanto;
 
 public class AdelantosUI extends GeneralFrame<Adelanto> {
     private static final long serialVersionUID = 7725064134440510100L;

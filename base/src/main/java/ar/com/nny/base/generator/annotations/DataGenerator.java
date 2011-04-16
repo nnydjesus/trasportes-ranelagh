@@ -20,4 +20,5 @@ import ar.com.nny.base.generator.InitialDataGenerator;
 public @interface DataGenerator {
 
     public Class<? extends InitialDataGenerator> value();
+    public int order() default Integer.MAX_VALUE;
 }
