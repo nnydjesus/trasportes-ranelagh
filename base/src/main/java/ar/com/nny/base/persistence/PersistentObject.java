@@ -14,6 +14,7 @@ import ar.com.nny.base.common.Observable;
  */
 @MappedSuperclass
 public abstract class PersistentObject extends Observable {
+    private static final long serialVersionUID = 1L;
 
     @Version
     @SerializationStrategy(access = Through.READ_ONLY_FIELD)

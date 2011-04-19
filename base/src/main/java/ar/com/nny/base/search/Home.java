@@ -1,5 +1,6 @@
 package ar.com.nny.base.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -10,33 +11,34 @@ import ar.com.nny.base.dao.GenericDao;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 import ar.com.nny.base.utils.ReflectionUtils;
 
-import com.jgoodies.binding.list.ArrayListModel;
-
 public class Home<T extends IdentificablePersistentObject> {
 
     public static final String RESULTS = "objects";
 
     private int proximoId = 1;
 
-    private final List<T> cache = new ArrayListModel<T>();
+    private final List<T> cache = new ArrayList<T>();
 
     protected GenericDao<T> dao;
+
     private Class<T> clazz;
 
-    public Home(final Class<T> clazz, boolean refresh ) {
+    public Home(final Class<T> clazz, final boolean refresh) {
         this(new GenericDao<T>(clazz, clazz.getCanonicalName()), refresh);
     }
-    
+
     public Home(final Class<T> clazz) {
         this(clazz, true);
     }
 
-    public Home(final GenericDao<T> genreDao, Boolean refresh) {
+    public Home(final GenericDao<T> genreDao, final Boolean refresh) {
         this.dao = genreDao;
         this.clazz = genreDao.getPersistentClass();
-        if(refresh)
+        if (refresh) {
             this.refresh();
+        }
     }
+
     public Home(final GenericDao<T> genreDao) {
         this(genreDao, true);
     }
@@ -71,7 +73,7 @@ public class Home<T extends IdentificablePersistentObject> {
     public void delete(final T object) {
         this.validatingDeleting(object);
         this.cache.remove(object);
-        dao.undelete(object);
+        dao.delete(object);
     }
 
     protected void validatingDeleting(final T object) {
@@ -87,14 +89,15 @@ public class Home<T extends IdentificablePersistentObject> {
         return (List<T>) CollectionUtils.select(this.cache, this.getCriteria(example));
     }
 
-    protected Predicate getCriteria(T example){
-        return getCriterioTodas();
+    protected Predicate getCriteria(final T example) {
+        return this.getCriterioTodas();
     }
 
     public T getById(final String id) {
         return dao.getById(id);
         // TODO Mejorar el mensaje de error
-//        throw new RuntimeException("No se encontro el objeto con el id: " + id);
+        // throw new RuntimeException("No se encontro el objeto con el id: " +
+        // id);
     }
 
     public List<T> refresh() {
@@ -128,7 +131,7 @@ public class Home<T extends IdentificablePersistentObject> {
         };
     }
 
-    public T createExample(){
+    public T createExample() {
         return ReflectionUtils.instanciate(this.clazz);
     }
 

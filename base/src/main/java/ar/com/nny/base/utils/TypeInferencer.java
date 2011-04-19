@@ -42,7 +42,6 @@ import ar.com.nny.base.exception.NonBusinessException;
  * This implementation is NOT thread safe.
  * This implementation does not work for inner classes.
  *
- * @author hernan.liendo@gmail.com
  */
 public final class TypeInferencer {
 

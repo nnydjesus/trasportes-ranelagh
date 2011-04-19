@@ -14,6 +14,7 @@ abstract public class ItemComposite extends Vector<Object> implements Item {
     }
     public void addItem(Object object) {
     }
+    public abstract void updateTree();
 
     public abstract void mostrar(Object item);
 

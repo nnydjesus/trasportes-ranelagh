@@ -11,7 +11,6 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  *
- * @author rkpost
  */
 public class MD5 {
 

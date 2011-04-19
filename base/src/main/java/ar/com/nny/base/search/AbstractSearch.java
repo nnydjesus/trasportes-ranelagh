@@ -29,7 +29,6 @@ public abstract class AbstractSearch<T extends Observable> extends Observable im
     public void search() {
         List<T> oldList = this.list;
         this.list = this.doSearch();
-        this.firePropertyChange(LIST, oldList, this.list);
         this.setSelected(null);
     }
 
@@ -52,6 +51,5 @@ public abstract class AbstractSearch<T extends Observable> extends Observable im
     public void setSelected(final T selected) {
         T oldSelected = this.selected;
         this.selected = selected;
-        this.firePropertyChange(SELECTED, oldSelected, this.selected);
     }
 }
