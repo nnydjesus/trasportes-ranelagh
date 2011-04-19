@@ -1,5 +1,6 @@
 package ar.com.nny.base.ui.swing.components;
 import java.awt.Component;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -7,14 +8,18 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
+
+import org.apache.commons.beanutils.PropertyUtilsBean;
 
 import ar.com.nny.base.common.Observable;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.beans.BeanAdapter;
+import com.jgoodies.binding.beans.PropertyAdapter;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueModel;
 import com.jgoodies.forms.layout.FormLayout;
@@ -71,11 +76,10 @@ public class FormBuilder<T> extends DefaultFormBuilder{
 
     public JFormattedTextField addBindingDoubleField(final String property, final String label) {
         ValueModel valueModel = beanAdapter.getValueModel(property);
-        // DecimalFormat decimalFormat = new DecimalFormat("#.##");
         NumberFormatter decimalFormat = new NumberFormatter();
         decimalFormat.setValueClass(Double.class);
         // decimalFormat.setDecimalSeparatorAlwaysShown(true);
-        JFormattedTextField textField = new JFormattedTextField(decimalFormat);
+        JFormattedTextField textField = new JFormattedTextField();
         Bindings.bind(textField, valueModel);
         this.append(label, textField);
         return textField;
@@ -113,7 +117,7 @@ public class FormBuilder<T> extends DefaultFormBuilder{
         JComboBox createCombobox = ComponentFactory.createComboBox(selectionInList);
 //        JComboBox createCombobox = new JComboBox(selectionInList.getList().toArray());
         this.bind(createCombobox, "selectedItem", valueModel);
-        this.append(property, createCombobox);
+        JLabel append = this.append(property, createCombobox);
         createCombobox.addActionListener(new ActionMethodListener(this, "setComboBoxModel", createCombobox, property));
         return createCombobox;
     }

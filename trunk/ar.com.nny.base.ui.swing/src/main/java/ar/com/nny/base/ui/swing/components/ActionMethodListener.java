@@ -27,6 +27,10 @@ public class ActionMethodListener implements ActionListener, ChangeListener, Mou
         this.method = method;
         this.args = args;
     }
+    
+    public void execute(){
+        ReflectionUtils.invokeMethod(object, method, args);
+    }
 
     @Override
     public void actionPerformed(final ActionEvent e) {
