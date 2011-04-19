@@ -49,7 +49,6 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     }
 
     public void setEmpleado(Empleado empleado) {
-        this.firePropertyChange(EMPLEADO, this.empleado, empleado);
         this.empleado = empleado;
     }
 
@@ -58,7 +57,6 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     }
 
     public void setComentario(String comentario) {
-        this.firePropertyChange(COMENTARIO, this.comentario, comentario);
         this.comentario = comentario;
     }
 
@@ -68,13 +66,11 @@ public class Adelanto extends IdentificablePersistentObject  implements Serializ
     }
 
     public void setFornaDePago(FormaDePago fornaDePago) {
-        this.firePropertyChange(FORMA_DE_PAGO, this.fornaDePago, fornaDePago);
         this.fornaDePago = fornaDePago;
     }
 
 
     public void setFecha(Date fecha) {
-        this.firePropertyChange(FECHA, this.fecha, fecha);
         this.fecha = fecha;
     }
 

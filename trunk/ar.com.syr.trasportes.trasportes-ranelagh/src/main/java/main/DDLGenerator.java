@@ -14,8 +14,6 @@ public class DDLGenerator implements Runnable {
     }
 
     public static void main(final String[] args) {
-        BasicConfigurator.configure();
-        Logger.getAnonymousLogger().setLevel(Level.INFO);
         DDLGenerator main = new DDLGenerator();
         EventQueue.invokeLater(main);
     }

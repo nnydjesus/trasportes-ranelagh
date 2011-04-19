@@ -66,6 +66,12 @@ public class PersonalCategoria extends ItemComposite {
     public void mostrar(Object item) {
         ((Item)item).mostrar();     
     }
+
+    @Override
+    public void updateTree() {
+        nomina.updateTree();
+        super.update();
+    }
     
     
 }

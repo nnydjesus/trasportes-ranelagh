@@ -1,5 +1,7 @@
 package ar.com.syr.transportes.ui.principales;
 
+import main.Main;
+import main.TransportesRanelagh;
 import ar.com.nny.base.ui.swing.components.GeneralFrame;
 import ar.com.nny.base.ui.swing.components.search.SearchPanel;
 import ar.com.syr.transportes.bean.Empleado;
@@ -34,6 +36,11 @@ public class EmpleadoUi extends GeneralFrame<Empleado> {
     @Override
     public Class<ABMEmpleado> abmClass() {
         return ABMEmpleado.class;
+    }
+
+    @Override
+    public void deleteObject(Object selected) {
+        Main.getApp().updateTree();        
     }
 
 

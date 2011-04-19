@@ -1,11 +1,7 @@
 package ar.com.syr.transportes.search;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.SwingUtilities;
 
-import ar.com.nny.base.ui.swing.components.ActionMethodListener;
 import ar.com.nny.base.ui.swing.components.WindowsSearch;
 import ar.com.nny.base.ui.swing.components.search.SearchPanel;
 import ar.com.syr.transportes.bean.Remito;
@@ -31,6 +27,11 @@ public class RemitoSearchPanel extends SearchPanel<Remito> {
     public void addFields() {
         this.getBuilder().append("desde", desde);
         this.getBuilder().append("hasta", hasta);
+        
+        this.addTextTotal(Remito.COSTO, "ganancia total");
+        this.addTextTotal(Remito.COSTO_CHOFER, "costo total");
+        this.addTextTotal(Remito.COMBUSTIBLE, "combustible total");
+        this.addTextTotal(Remito.PEAJE, "gasto de peaje totales");
     }
     
 
@@ -38,6 +39,7 @@ public class RemitoSearchPanel extends SearchPanel<Remito> {
     public void search() {
         result.removeAll(result);
         result.addAll(((HomeRemito) home).searchByExample(this.getModel(), desde.getDate(), hasta.getDate()));
+        updateTotals();
         SwingUtilities.updateComponentTreeUI(this);
     }
 

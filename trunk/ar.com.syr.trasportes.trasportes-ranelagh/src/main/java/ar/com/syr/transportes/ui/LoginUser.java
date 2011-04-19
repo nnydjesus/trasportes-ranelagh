@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import main.Main;
 import main.TransportesRanelagh;
 import ar.com.nny.base.generator.DDLGenerator;
 import ar.com.nny.base.ui.swing.components.Login;
@@ -31,7 +32,7 @@ public class LoginUser extends Login {
         this.setVisible(false);
         this.dispose();
         // new TransportesRanelagh(new PreInicio());
-        new TransportesRanelagh().setVisible(true);
+        Main.createApp();
     }
 
     @Override

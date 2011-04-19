@@ -1,4 +1,5 @@
 alter table Sancion drop foreign key FKD267FC85B0DD2B95
+alter table Unidad drop foreign key FK974B44B7324151DA
 alter table Unidad_remito drop foreign key FK29F22E52BEDDBAD5
 alter table Unidad_remito drop foreign key FK29F22E52A96B3BF5
 alter table adelanto drop foreign key FKB8BA4A726673BDC0
@@ -35,7 +36,7 @@ create table Ausencia (id varchar(255) not null, stateVersion bigint, apellido v
 create table FormaDePago (DTYPE varchar(31) not null, id varchar(255) not null, stateVersion bigint, banco integer, monto double precision, numeroCheque varchar(255), primary key (id))
 create table IdGenerator (id varchar(255) not null, stateVersion bigint, current double precision, primary key (id))
 create table Sancion (id varchar(255) not null, stateVersion bigint, cantDeDias integer not null, fecha date, empleado_id varchar(255), primary key (id))
-create table Unidad (id varchar(255) not null, stateVersion bigint, anio integer, clase integer, combustible double precision, fechaAlta date, fechaBaja date, marca varchar(255), modelo varchar(255), numeroChaziz varchar(255), tipo integer, primary key (id))
+create table Unidad (id varchar(255) not null, stateVersion bigint, anio integer, clase integer, fechaAlta date, fechaBaja date, marca varchar(255), modelo varchar(255), numeroChaziz varchar(255), numeroMotor varchar(255), tipo integer, unidadAsociada_id varchar(255), primary key (id))
 create table Unidad_remito (Unidad_id varchar(255) not null, viajes_id varchar(255) not null, unique (viajes_id))
 create table Vacacion (id varchar(255) not null, stateVersion bigint, apellido varchar(255), desde date, hasta date, legajo varchar(255), nombre varchar(255), primary key (id))
 create table adelanto (id varchar(255) not null, stateVersion bigint, comentario varchar(255), fecha datetime, adelanto_id varchar(255), fornaDePago_id varchar(255), primary key (id))
@@ -48,6 +49,7 @@ create table empleado_adelanto (empleado_id varchar(255) not null, adelantos_id 
 create table remito (id varchar(255) not null, stateVersion bigint, combustible double precision, costo double precision, destino varchar(255), fecha datetime, km integer, litros double precision, origen varchar(255), pago bit, peaje double precision, porcentage integer, empleado_id varchar(255), patente_id varchar(255), primary key (id))
 create table usuario (id varchar(255) not null, stateVersion bigint, conectado bit not null, pass varchar(255), primary key (id))
 alter table Sancion add index FKD267FC85B0DD2B95 (empleado_id), add constraint FKD267FC85B0DD2B95 foreign key (empleado_id) references empleado (id)
+alter table Unidad add index FK974B44B7324151DA (unidadAsociada_id), add constraint FK974B44B7324151DA foreign key (unidadAsociada_id) references Unidad (id)
 alter table Unidad_remito add index FK29F22E52BEDDBAD5 (Unidad_id), add constraint FK29F22E52BEDDBAD5 foreign key (Unidad_id) references Unidad (id)
 alter table Unidad_remito add index FK29F22E52A96B3BF5 (viajes_id), add constraint FK29F22E52A96B3BF5 foreign key (viajes_id) references remito (id)
 alter table adelanto add index FKB8BA4A726673BDC0 (fornaDePago_id), add constraint FKB8BA4A726673BDC0 foreign key (fornaDePago_id) references FormaDePago (id)

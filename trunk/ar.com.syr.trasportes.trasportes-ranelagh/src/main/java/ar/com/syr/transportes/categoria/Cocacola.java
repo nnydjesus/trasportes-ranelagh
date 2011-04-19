@@ -14,4 +14,9 @@ public class Cocacola extends ItemComposite{
         
     }
 
+    @Override
+    public void updateTree() {
+        
+    }
+
 }
