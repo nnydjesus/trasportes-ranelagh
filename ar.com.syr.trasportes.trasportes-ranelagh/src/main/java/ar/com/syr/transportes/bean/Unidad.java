@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -39,7 +40,9 @@ public class Unidad  extends IdentificablePersistentObject implements Serializab
 
     public static final String FECHA_BAJA = "fechaBaja";
 
-    public static final String COMBUSTIBLE = "combustible";
+    public static final String NUMERO_MOTOR = "numeroMotor";
+    
+    public static final String UNIDAD_ASOCIADA = "unidadAsociada";
 
     @Basic
     private String modelo;
@@ -66,10 +69,13 @@ public class Unidad  extends IdentificablePersistentObject implements Serializab
     private Date fechaBaja;
 
     @Basic
-    private Double combustible;
+    private String numeroMotor;
     
     @OneToMany(cascade= CascadeType.ALL)
     private List<Remito> viajes= new ArrayList<Remito>();
+    
+    @OneToOne
+    private Unidad unidadAsociada;
 
     public String getPatente() {
         return this.getId();
@@ -143,14 +149,6 @@ public class Unidad  extends IdentificablePersistentObject implements Serializab
         this.fechaBaja = fechaBaja;
     }
 
-    public void setCombustible(Double combustible) {
-        this.combustible = combustible;
-    }
-
-    public Double getCombustible() {
-        return combustible;
-    }
-
     public void setViajes(List<Remito> viajes) {
         this.viajes = viajes;
     }
@@ -164,9 +162,25 @@ public class Unidad  extends IdentificablePersistentObject implements Serializab
         return "Unidad";
     }
 
+    public void setNumeroMotor(String numeroMotor) {
+        this.numeroMotor = numeroMotor;
+    }
+
+    public String getNumeroMotor() {
+        return numeroMotor;
+    }
+
     @Override
     public String[] atributos() {
-        return new String[] { PATENTE, MODELO, MARCA, TIPO, CLASE, ANIO, NUMERO_CHAZIS, FECHA_ALTA, COMBUSTIBLE };
+        return new String[] { PATENTE, MODELO, MARCA, TIPO, CLASE, ANIO, NUMERO_CHAZIS, FECHA_ALTA, NUMERO_MOTOR, UNIDAD_ASOCIADA };
     }
+
+	public void setUnidadAsociada(Unidad unidadAsociada) {
+		this.unidadAsociada = unidadAsociada;
+	}
+
+	public Unidad getUnidadAsociada() {
+		return unidadAsociada;
+	}
 
 }

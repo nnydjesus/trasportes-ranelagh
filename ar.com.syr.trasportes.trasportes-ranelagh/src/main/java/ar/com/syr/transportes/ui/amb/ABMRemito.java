@@ -8,17 +8,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
 import javax.swing.text.NumberFormatter;
 
 import main.Main;
-
 import ar.com.nny.base.search.Home;
 import ar.com.nny.base.ui.swing.components.AbstractBindingPanel;
 import ar.com.nny.base.ui.swing.components.ActionMethodListener;
 import ar.com.nny.base.ui.swing.components.MyJComboBox;
 import ar.com.nny.base.ui.swing.components.abms.ABMFrame;
-import ar.com.syr.transportes.bean.CostoEmpleado;
 import ar.com.syr.transportes.bean.Empleado;
 import ar.com.syr.transportes.bean.Remito;
 import ar.com.syr.transportes.search.HomeEmpleado;
@@ -53,7 +50,7 @@ public class ABMRemito extends ABMFrame<Remito>{
     }
     public ABMRemito(Remito model, JFrame parent) {
         super(model, parent);
-        cbEmpleados.setSelectedItem(getEdicion().getModel().getEmpleado());
+        cbEmpleados.setSelectedItem(this.getEdicion().getModel().getEmpleado());
     }
 
     @Override
@@ -117,7 +114,7 @@ public class ABMRemito extends ABMFrame<Remito>{
     
     @Override
     public void edicionAceptar(Object object) {
-        cbEmpleados.getSelectedItem().addRemito((Remito) object);
+        cbEmpleados.getSelectedItem().addRemito((Remito) object); 
         super.edicionAceptar(object);
     }
 

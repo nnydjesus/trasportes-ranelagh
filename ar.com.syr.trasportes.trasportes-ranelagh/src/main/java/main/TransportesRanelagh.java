@@ -254,8 +254,9 @@ public class TransportesRanelagh extends FrameLook {
     
     public void updateTree(){
         for (ItemComposite component : tree.getVector()) {
-            component.update();
+            component.updateTree();
         }
+        getTree().updateTree();
     }
 
     class ListenerButtonPanel implements ActionListener {

@@ -122,7 +122,6 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
     
     public void setLegajo(final String legajo) {
-        firePropertyChange("id", this.getId(), legajo);
         super.setId(legajo);
        
     }
@@ -132,7 +131,6 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public void setApellido(final String apellido) {
-    	firePropertyChange(APELLIDO, this.apellido, apellido);
         this.apellido = apellido;
     }
 
@@ -141,7 +139,6 @@ public class Empleado extends IdentificablePersistentObject implements Serializa
     }
 
     public void setNombre(final String nombre) {
-    	firePropertyChange(NOMBRE, this.nombre, nombre);
         this.nombre = nombre;
     }
 

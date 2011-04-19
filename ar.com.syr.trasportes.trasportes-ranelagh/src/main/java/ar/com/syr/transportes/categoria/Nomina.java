@@ -17,7 +17,12 @@ public class Nomina extends ItemComposite {
 
     public Nomina(JFrame parent) {
         empleadoUi = new ABMEmpleado(parent);
+    }
+    @Override
+    public void updateTree() {
+        this.removeAll(this);
         this.addAll(HomeEmpleado.getInstance().getAll());
+        super.update();
     }
     
     @Override

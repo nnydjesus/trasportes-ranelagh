@@ -30,6 +30,21 @@
 		        
                 <!-- Drop and re-create the database schema on startup -->
 <!--                 <property name="hbm2ddl.auto">create</property> -->
+				<mapping class="ar.com.syr.transportes.bean.Adelanto"/>
+				<mapping class="ar.com.syr.transportes.bean.Ausencia"/>
+				<mapping class="ar.com.syr.transportes.bean.CostoEmpleado"/>
+				<mapping class="ar.com.syr.transportes.bean.Direccion"/>
+				<mapping class="ar.com.syr.transportes.bean.Empleado"/>
+				<mapping class="ar.com.syr.transportes.bean.FormaDePago"/>
+				<mapping class="ar.com.syr.transportes.bean.Licencia"/>
+				<mapping class="ar.com.syr.transportes.bean.PagoCheque"/>
+				<mapping class="ar.com.syr.transportes.bean.Remito"/>
+				<mapping class="ar.com.syr.transportes.bean.Sancion"/>
+				<mapping class="ar.com.syr.transportes.bean.Unidad"/>
+				<mapping class="ar.com.syr.transportes.bean.Vacacion"/>
+				<mapping class="ar.com.syr.transportes.bean.Vacacion"/>
+				<mapping class="ar.com.nny.base.bean.Usuario"/>
+				<mapping class="ar.com.nny.base.bean.IdGenerator"/>
         
         </session-factory>
 </hibernate-configuration>
