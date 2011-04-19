@@ -81,7 +81,7 @@ public class DDLGenerator {
     public void runGenerator(final boolean dummyMode, final InitialDataGenerator generator) {
         generator.run(dummyMode);
     }
-
+    
     public static void main() {
         // final DatabaseInitializerService service =
         // ServiceLocator.locate(DatabaseInitializerService.class);
@@ -90,12 +90,15 @@ public class DDLGenerator {
         // ************************************************//
         // service.runInitialPrevStatements();
         // ************************************************//
+        ApplicationRegistryReader.getInstance().buildTypeInferencer();
         DDLGenerator ddlGenerator = new DDLGenerator();
-        // build up dataBase with entities and generators
-        // ************************************************//
         final boolean dummyMode = true;
         ddlGenerator.initializeSchema();
         ddlGenerator.initializeData(dummyMode);
+        
+        // build up dataBase with entities and generators
+        // ************************************************//
+
         // ************************************************//
 
         // run initial post statements

@@ -14,11 +14,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.search.annotations.Indexed;
 
+import ar.com.nny.base.configuration.jfig.BaseConfiguration;
+import ar.com.nny.base.configuration.jfig.ConfigurationInjector;
 import ar.com.nny.base.generator.AnnotationClassPredicate;
-import ar.com.nny.base.persistence.PersistenceManager;
 import ar.com.nny.base.persistence.PersistentObject;
-import ar.com.nny.base.utils.HibernateUtil;
-import ar.com.nny.base.utils.ReflectionUtils;
+import ar.com.nny.base.persistence.injector.Injector;
 import ar.com.nny.base.utils.TypeInferencer;
 
 /**
@@ -30,12 +30,10 @@ public class ApplicationRegistryReader {
 
     private static final Log LOGGER = LogFactory.getLog(ApplicationRegistryReader.class);
     public static final String STANDARD_BASE_PACKAGE = "ar.com.nny.base";
-    private String specialPackage = PersistenceManager.getStaticConfiguration().getProperty("package");
-
 
     private static ApplicationRegistryReader INSTANCE;
 
-    private TypeInferencer inferencer = new TypeInferencer();
+    private TypeInferencer inferencer ;;
 
 
     public static ApplicationRegistryReader getInstance() {
@@ -44,6 +42,10 @@ public class ApplicationRegistryReader {
         	INSTANCE = new ApplicationRegistryReader();
         }
         return INSTANCE;
+    }
+    
+    public void buildTypeInferencer(){
+        inferencer = new TypeInferencer();
     }
 
 
@@ -71,6 +73,8 @@ public class ApplicationRegistryReader {
 //            descriptor.registerPersistentClasses(result);
 //        }
         loadPersitentBeans(result, STANDARD_BASE_PACKAGE);
+         String specialPackage = BaseConfiguration.getPackagePrefix();
+
         if(specialPackage != null)
         	loadPersitentBeans(result,	specialPackage);
 
@@ -101,47 +105,12 @@ public class ApplicationRegistryReader {
     public Collection<Class<? extends PersistentObject>> getAllLuceneIndexedClasses() {
         return CollectionUtils.select(this.getAllPersistentClasses(), new AnnotationClassPredicate(Indexed.class));
     }
-
-
-
-//    public List<Synchronizer> getBusinessObjectSynchronizers() {
-//        final List<Synchronizer> result = new ArrayList();
-//        for ( final AbstractModuleDescriptor descriptor : this.getAllModuleDescritors() ) {
-//            descriptor.registerBusinessObjectSynchronizers(result);
-//        }
-//        return result;
-//    }
-
-
-//    public List<AdministrativeAction> getAdministrativeActions() {
-//        final List<AdministrativeAction> result = new ArrayList<AdministrativeAction>();
-//        for ( final AbstractModuleDescriptor descriptor : this.getAllModuleDescritors() ) {
-//            descriptor.registerAdministrativeAction(result);
-//        }
-//        return result;
-//    }
-
-
-//    
-//    public Collection<Class> getAllServices() {
-//    	LOGGER.debug("getAllServices()");
-//        final AnnotationClassPredicate serviceFilter = new AnnotationClassPredicate(Service.class);
-//        final List<Class> serviceClasses = inferencer.getClassesFor(encodePackage(STANDARD_BASE_PACKAGE) + "\\..*\\.service\\..*", serviceFilter);
-//
-//        final List<String> modules = FlexyConfiguration.getModules();
-//        final String packagePrefix = FlexyConfiguration.getPackagePrefix();
-//
-//        for (String moduleName : modules) {
-//        	if ( !(packagePrefix + "." + moduleName).equals(STANDARD_BASE_PACKAGE) ) {
-//                serviceClasses.addAll(inferencer.getClassesFor(encodePackage(packagePrefix + "." + moduleName) + "\\..*\\.service\\..*", serviceFilter));
-//        	}
-//		}
-//        
-//        return serviceClasses;
-//    }
-
-
-    public Collection<Class> getWebserviceTypes(final Class typeClass) {
-    	return inferencer.getClassesFor(encodePackage(STANDARD_BASE_PACKAGE) + "\\..*\\.service\\..*", new SuperclassPredicate(typeClass));
+    
+    public List<Injector> getAllInjectors() {
+        final List<Injector> result = new ArrayList();
+        result.add(new ConfigurationInjector());
+        return result;
     }
+
+
 }

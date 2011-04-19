@@ -5,13 +5,12 @@ import java.lang.reflect.Method;
 
 import ar.com.nny.base.bean.Beans;
 
-import com.jgoodies.binding.beans.Model;
-
 /**
  * @author Ronny
  * 
  */
-public abstract class Observable extends Model implements Beans {
+public abstract class Observable implements Beans {
+    private static final long serialVersionUID = 1L;
 
     public void setProperty(final String property, final Object value) {
         try {
@@ -66,7 +65,6 @@ public abstract class Observable extends Model implements Beans {
     public String getId() {
         return "";
     }
-    
 
     public String mostrar() {
         return this.getId();

@@ -1,27 +1,13 @@
 package ar.com.nny.base.persistence;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.BasicConfigurator;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.search.FullTextSession;
-
-import ar.com.nny.base.configuration.ApplicationRegistryReader;
-import ar.com.nny.base.exception.NonBusinessException;
-import ar.com.nny.base.utils.HibernateUtil;
 
 /**
  * This class is responsible for handling the initialization and configuration of the
@@ -34,9 +20,14 @@ public class PersistenceManager {
     private static Log LOGGER = LogFactory.getLog(PersistenceManager.class);
     private static PersistenceManager INSTANCE;
     private static org.hibernate.classic.Session session;
+    
     private static AnnotationConfiguration cfg = new AnnotationConfiguration().configure("hibernate.cfg.xml");
     private SessionFactory sessionFactory;
 
+//    static{
+//        final ConfigurationFactory configurationBuilder = new ConfigurationFactory();
+//        cfg = configurationBuilder.buildConfiguration(null, BaseConfiguration.getHibernateProperties());
+//    }
 
     public static PersistenceManager getInstance() {
         if (INSTANCE == null) {
@@ -53,16 +44,14 @@ public class PersistenceManager {
 
     private PersistenceManager() {
         LOGGER.debug("Starting persistence framework...");
-//        final ConfigurationFactory configurationBuilder = new ConfigurationFactory();
-
+      
+        this.sessionFactory = this.cfg.buildSessionFactory();
 //        this.cfg = configurationBuilder.buildConfiguration(null, FlexyConfiguration.getHibernateProperties());
-        final Collection<Class<? extends PersistentObject>> persistentClasses = ApplicationRegistryReader.getInstance().getAllPersistentClasses();
-        for (Class<? extends PersistentObject> class1 : persistentClasses) {
-        	cfg.addAnnotatedClass(class1);
-		}
+//        final Collection<Class<? extends PersistentObject>> persistentClasses = ApplicationRegistryReader.getInstance().getAllPersistentClasses();
+//        for (Class<? extends PersistentObject> class1 : persistentClasses) {
+//        	cfg.addAnnotatedClass(class1);
+//		}
         sessionFactory = cfg.buildSessionFactory();
-        BasicConfigurator.configure();
-        Logger.getAnonymousLogger().setLevel(Level.INFO);
 //        final Map<String, Properties> alternates = FlexyConfiguration.getAlternateHibernateProperties();
 //        for (final Map.Entry<String, Properties> each : alternates.entrySet()) {
 //            final FlexyAnnotationConfiguration alternateConfiguration = configurationBuilder.buildConfiguration(each.getKey(), each.getValue());

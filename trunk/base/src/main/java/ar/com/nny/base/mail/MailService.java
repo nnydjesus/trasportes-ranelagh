@@ -8,31 +8,40 @@ import java.util.Properties;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 
+import ar.com.nny.base.configuration.jfig.InjectFromConfig;
+import ar.com.nny.base.configuration.jfig.Service;
 import ar.com.nny.base.exception.NonBusinessException;
 
+@Service(denyable = true)
 public class MailService {
-	
+
+    @InjectFromConfig(section = "mailing", key = "from.defaultSender")
     private String defaultSender;
+
+    @InjectFromConfig(section = "mailing", key = "from.defaultAddress")
     private String defaultAddress;
+
+    @InjectFromConfig(section = "mailing", key = "activated")
     private boolean mailingActivated;
+
+    @InjectFromConfig(section = "mailing", key = "disabledAccount")
     private String disabledAccount;
+
+    @InjectFromConfig(section = "mailing")
     private Properties mailingProperties;
+
+    @InjectFromConfig(section = "mailing", key = "user")
     private String mailingUser;
+
+    @InjectFromConfig(section = "mailing", key = "password")
     private String mailingPassword;
-	private PropertyMail property;
 
 	  public MailService(){
-		  	this.property = new PropertyMail();
-		  	defaultSender = "nny.fwk";
-	        defaultAddress = "nny.fwk@gmail.com";
-	        mailingActivated = true;
-	        mailingUser = "nny.fwk@gmail.com";
-	        mailingPassword = "sarasaza";
         }
 
 	    public void send(Mail mail)
 	    {
-			mail.setSession(MailSessionProvider.getSession(property, mailingUser, mailingPassword));
+			mail.setSession(MailSessionProvider.getSession(mailingProperties, mailingUser, mailingPassword));
 	        try
 	        {
 	            Transport.send(mail.buildMail(this));
