@@ -1,5 +1,6 @@
 package ar.com.nny.base.ui.swing.components.abms;
 
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -11,6 +12,7 @@ import ar.com.nny.base.common.Item;
 import ar.com.nny.base.common.ItemComposite;
 import ar.com.nny.base.search.Home;
 import ar.com.nny.base.ui.swing.components.AbstractBindingPanel;
+import ar.com.nny.base.ui.swing.components.ActionMethodListener;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 
 public abstract class ABMFrame<T extends IdentificablePersistentObject> extends JFrame implements WindowsEdition, Item  {
@@ -24,6 +26,8 @@ public abstract class ABMFrame<T extends IdentificablePersistentObject> extends 
     private ItemComposite item;
     
     private JFrame parent;
+    
+    private ActionMethodListener onSaveListener;
 
     public ABMFrame(T model,  JFrame parent) {
         this.parent = parent;
@@ -71,7 +75,9 @@ public abstract class ABMFrame<T extends IdentificablePersistentObject> extends 
     
     public void edicionAceptar(Object object) {
         update();
-        edicionCancelar();        
+        if(onSaveListener!= null)
+            onSaveListener.execute();
+        edicionCancelar();   
     }
 
     @Override
@@ -113,6 +119,10 @@ public abstract class ABMFrame<T extends IdentificablePersistentObject> extends 
 
     public JFrame getParent() {
         return parent;
+    }
+
+    public void onSave(ActionMethodListener actionMethodListener) {
+        onSaveListener = actionMethodListener;
     }
 
 }

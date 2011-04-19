@@ -8,9 +8,11 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.text.Format;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
@@ -22,7 +24,7 @@ import javax.swing.undo.UndoManager;
 /**
  * A better JTextField.
  */
-public class LimeTextField extends JTextField {
+public class LimeTextField extends JFormattedTextField {
 
     private static final long serialVersionUID = 1L;
 
@@ -105,6 +107,9 @@ public class LimeTextField extends JTextField {
     /**
      * Constructs a new LimeTextField.
      */
+    public LimeTextField(Format format) {
+        super(format);
+    }
     public LimeTextField() {
         super();
         this.init();
@@ -130,7 +135,7 @@ public class LimeTextField extends JTextField {
      * Constructs a new LimeTextField with the given text & number of columns.
      */
     public LimeTextField(final String text, final int columns) {
-        super(text, columns);
+//        super(text, columns);
         this.init();
     }
 
@@ -139,7 +144,7 @@ public class LimeTextField extends JTextField {
      * columns.
      */
     public LimeTextField(final Document doc, final String text, final int columns) {
-        super(doc, text, columns);
+//        super(doc, text, columns);
         this.init();
     }
 

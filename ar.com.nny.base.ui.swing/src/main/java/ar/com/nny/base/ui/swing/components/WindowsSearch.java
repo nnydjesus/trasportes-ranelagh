@@ -4,4 +4,6 @@ public interface WindowsSearch<T> {
     
     public void editSelected(T selected);
 
+    public void deleteObject(Object selected);
+
 }

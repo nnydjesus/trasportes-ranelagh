@@ -172,11 +172,13 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
     @Override
     public void editSelected(Object selected) {
         ABMFrame<T> edition = ReflectionUtils.instanciate(ambClass, selected);
+        edition.onSave(new ActionMethodListener(search, SearchPanel.UPDATE_TOTAL));
         edition.setVisible(true);
     }
 
     @Override
     public void mostrar() {
+        home.refresh();
         this.setVisible(true);
     }
 
@@ -198,6 +200,10 @@ public abstract class GeneralFrame<T extends IdentificablePersistentObject> exte
 
     public SearchPanel<T> getSearch() {
         return search;
+    }
+    
+    @Override
+    public void deleteObject(Object selected) {
     }
 
 }

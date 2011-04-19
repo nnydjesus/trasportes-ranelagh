@@ -5,19 +5,18 @@ import javax.swing.SwingUtilities;
 
 import ar.com.nny.base.common.Item;
 import ar.com.nny.base.search.Home;
-import ar.com.nny.base.search.HomeLocator;
 import ar.com.nny.base.utils.IdentificablePersistentObject;
 
-public class WindowsSearch<T extends IdentificablePersistentObject> extends JFrame implements Item, ar.com.nny.base.ui.swing.components.WindowsSearch<T>{
+public class WindowsSearchImpl<T extends IdentificablePersistentObject> extends JFrame implements Item, ar.com.nny.base.ui.swing.components.WindowsSearch<T>{
     private SearchPanel<T> search;
     
     
-    public WindowsSearch(T model, Home<T> home) {
+    public WindowsSearchImpl(T model, Home<T> home) {
          search = new SearchPanel<T>(model, home, this);
          this.add(search);
          this.setSize(1024, 768);
     }
-    public WindowsSearch(SearchPanel<T> search) {
+    public WindowsSearchImpl(SearchPanel<T> search) {
         this.search = search;
         this.add(search);
         this.setSize(1024, 768);
@@ -25,7 +24,7 @@ public class WindowsSearch<T extends IdentificablePersistentObject> extends JFra
     
     @Override
     public String toString() {
-        return "Totalidad remitos";
+        return "Totalidad";
     }
 
     @Override
@@ -39,6 +38,9 @@ public class WindowsSearch<T extends IdentificablePersistentObject> extends JFra
     @Override
     public void update() {
         SwingUtilities.updateComponentTreeUI(search);        
+    }
+    @Override
+    public void deleteObject(Object selected) {
     }
 
 }

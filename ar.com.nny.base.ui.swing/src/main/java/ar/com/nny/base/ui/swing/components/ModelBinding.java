@@ -1,25 +1,36 @@
 package ar.com.nny.base.ui.swing.components;
 
-import javax.swing.ListModel;
-import javax.swing.event.TableModelListener;
+import java.util.List;
 
 import ar.com.nny.base.common.Observable;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
+import com.jgoodies.binding.list.SelectionInList;
 
 @SuppressWarnings({ "rawtypes" })
 public class ModelBinding extends AbstractTableAdapter implements Model {
 
     private static final long serialVersionUID = 1L;
+    
+    /**
+     * Lista con los datos. Cada elemento de la lista es una instancia de
+     */
+    private SelectionInList datos;
 
-    public ModelBinding(final ListModel listModel, final String[] columnNames) {
+
+    public ModelBinding(final SelectionInList listModel, final String[] columnNames) {
         super(listModel, columnNames);
+        this.datos = listModel;
     }
 
     public Object getSelected(final int i) {
         return this.getRow(i);
     }
-
+    
+    public List<Observable> getDatos() {
+        return datos.getList();
+    }    
+    
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
         Observable observable = (Observable) this.getRow(rowIndex);
@@ -37,6 +48,4 @@ public class ModelBinding extends AbstractTableAdapter implements Model {
         } else
             return Object.class;
     }
-    
-     
 }
